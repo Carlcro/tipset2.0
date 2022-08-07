@@ -1,0 +1,90 @@
+import { useState } from "react";
+import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import {
+  getAnswerSheet,
+  saveAnswerSheet,
+} from "../../services/championshipService";
+import BetSlip from "../bet-slip/components/BetSlip";
+import { betSlipState, goalscorerState } from "../bet-slip/recoil/atoms";
+import { setFromBetslipState } from "../bet-slip/recoil/selectors/selectors";
+
+const AnswerSheet = () => {
+  const setFromBetslip = useSetRecoilState(setFromBetslipState);
+  const goalscorer = useRecoilValue(goalscorerState);
+  const [password, setPassword] = useState("");
+  const [goals, setGoals] = useState(0);
+
+  const betslip = useRecoilValue(betSlipState);
+  const queryClient = useQueryClient();
+
+  useQuery(
+    "answerSheet",
+    async () => {
+      const { data } = await getAnswerSheet();
+      if (data) {
+        setFromBetslip({
+          goalscorer: data.goalscorer ? data.goalscorer?.player : undefined,
+          bets: [...data.results],
+        });
+        if (data.goalscorer) {
+          setGoals(data.goalscorer.goals);
+        }
+      }
+    },
+    {
+      staleTime: Infinity,
+      cacheTime: Infinity,
+    }
+  );
+
+  const mutation = useMutation(saveAnswerSheet, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(["answerSheet"]);
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+
+  const submitAnswer = () => {
+    mutation.mutate({
+      answerSheet: {
+        answers: betslip.map((matchResult) =>
+          Object.assign({}, matchResult, {
+            team1: matchResult.team1._id,
+            team2: matchResult.team2._id,
+          })
+        ),
+        goalscorer: { ...goalscorer, goals },
+      },
+      password,
+    });
+  };
+
+  return (
+    <>
+      <div className="flex justify-center mb-4">
+        <h1 className="text-3xl font-bold">Answer Sheet</h1>
+      </div>
+      <BetSlip bettingAllowed={true} handleSave={submitAnswer} mode={"answerSheet"}></BetSlip>
+      <div className="flex space-x-4 pb-10 pl-20 ">
+        <input
+          className="rounded-sm px-2 py-2"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          type="text"
+        ></input>
+        <input
+          className="rounded-sm px-2 py-2 "
+          type="number"
+          placeholder="Number of goals"
+          value={goals}
+          onChange={(e) => setGoals(e.target.value)}
+        ></input>
+      </div>
+    </>
+  );
+};
+export default AnswerSheet;
