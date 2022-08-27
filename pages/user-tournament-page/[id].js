@@ -1,28 +1,40 @@
 import React from "react";
-import UserTournament from "../../models/user-tournament";
 import { useQuery } from "react-query";
-import { getHighscore } from "../../services/userTournamentService";
+
 import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
 import HighScoreTable from "../../components/user-tournament-page/HighScoreTable";
+import { getHighscore } from "../../services/userTournamentService";
 
-const UserTournamentPage = ({ highscoreData }) => {
+const DynamicUserTournamentPanel = dynamic(
+  () => import("../../components/user-tournament-page/UserTournamentPanel"),
+  {
+    ssr: false,
+  }
+);
+
+const UserTournamentPage = () => {
   const router = useRouter();
   const { id } = router.query;
-  const query = useQuery(["highscoreData", id], () => getHighscore(id), {
-    initialData: highscoreData,
-  });
+  const { data, isLoading } = useQuery(["highscoreData", id], () =>
+    getHighscore(id)
+  );
+
+  if (isLoading) {
+    return <div>isLoading</div>;
+  }
 
   return (
     <div className="flex space-x-8 px-5">
-      <HighScoreTable highscoreData={query.data} />
+      <DynamicUserTournamentPanel />
+      <HighScoreTable highscoreData={data} />
     </div>
   );
 };
 
 export default UserTournamentPage;
 
-export async function getServerSideProps({ params }) {
+/* export async function getServerSideProps({ params }) {
   const userTournament = await UserTournament.findById(params.id).populate({
     path: "members",
     populate: [{ path: "betSlip" }],
@@ -41,4 +53,4 @@ export async function getServerSideProps({ params }) {
       highscoreData,
     },
   };
-}
+} */
