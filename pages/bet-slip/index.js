@@ -5,7 +5,15 @@ import { toast } from "react-toastify";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { setFromBetslipState } from "../../recoil/bet-slip/selectors/selectors";
 import { betSlipState, goalscorerState } from "../../recoil/bet-slip/atoms";
-import BetSlip from "../../components/bet-slip/BetSlip";
+
+import dynamic from "next/dynamic";
+
+const DynamicBetslip = dynamic(
+  () => import("../../components/bet-slip/BetSlip"),
+  {
+    ssr: false,
+  }
+);
 
 const BetSlipContainer = () => {
   const setFromBetslip = useSetRecoilState(setFromBetslipState);
@@ -93,7 +101,7 @@ const BetSlipContainer = () => {
   };
 
   return (
-    <BetSlip
+    <DynamicBetslip
       bettingAllowed={true}
       handleSave={submitBet}
       mode={"betslip"}

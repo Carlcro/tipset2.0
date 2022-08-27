@@ -7,7 +7,14 @@ import {
 } from "../../services/championshipService";
 import { betSlipState, goalscorerState } from "../../recoil/bet-slip/atoms";
 import { setFromBetslipState } from "../../recoil/bet-slip/selectors/selectors";
-import BetSlip from "../../components/bet-slip/BetSlip";
+import dynamic from "next/dynamic";
+
+const DynamicBetslip = dynamic(
+  () => import("../../components/bet-slip/BetSlip"),
+  {
+    ssr: false,
+  }
+);
 
 const AnswerSheet = () => {
   const setFromBetslip = useSetRecoilState(setFromBetslipState);
@@ -67,11 +74,11 @@ const AnswerSheet = () => {
       <div className="flex justify-center mb-4">
         <h1 className="text-3xl font-bold">Answer Sheet</h1>
       </div>
-      <BetSlip
+      <DynamicBetslip
         bettingAllowed={true}
         handleSave={submitAnswer}
         mode={"answerSheet"}
-      ></BetSlip>
+      ></DynamicBetslip>
       <div className="flex space-x-4 pb-10 pl-20 ">
         <input
           className="rounded-sm px-2 py-2"

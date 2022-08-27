@@ -6,6 +6,15 @@ import BetSlip from "../../components/bet-slip/BetSlip";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
+import dynamic from "next/dynamic";
+
+const DynamicBetslip = dynamic(
+  () => import("../../components/bet-slip/BetSlip"),
+  {
+    ssr: false,
+  }
+);
+
 const PlacedBets = () => {
   const setFromBetslip = useSetRecoilState(setFromBetslipState);
   const [name, setName] = useState("");
@@ -30,7 +39,8 @@ const PlacedBets = () => {
       <div className="bg-white rounded-sm mx-auto px-3 py-5 w-64 flex justify-center">
         <h1 className="text-lg">{name}</h1>
       </div>
-      <BetSlip bettingAllowed={true} mode={"placedBet"}></BetSlip>;
+      <DynamicBetslip bettingAllowed={true} mode={"placedBet"}></DynamicBetslip>
+      ;
     </div>
   );
 };
