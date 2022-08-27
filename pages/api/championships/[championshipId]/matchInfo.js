@@ -1,6 +1,7 @@
 import MatchInfo from "../../../../models/match-info";
 import Championship from "../../../../models/championship";
 import { matchInfoSchema } from "../../../../validation/match-info-schema";
+import connectDB from "../../../../middleware/mongodb";
 
 const createMatchInfo = async (req, res, championshipId) => {
   const { error } = matchInfoSchema.validate(req.body);
@@ -28,7 +29,7 @@ const createMatchInfo = async (req, res, championshipId) => {
   res.status(201).end();
 };
 
-export default function handler(req, res) {
+function handler(req, res) {
   const { championshipId } = req.query;
   if (req.method === "POST") {
     return createMatchInfo(req, res, championshipId);
@@ -36,3 +37,5 @@ export default function handler(req, res) {
     console.log("hej");
   }
 }
+
+export default connectDB(handler);

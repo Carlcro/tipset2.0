@@ -1,3 +1,4 @@
+import connectDB from "../../../middleware/mongodb";
 import Team from "../../../models/team";
 import { teamSchema } from "../../../validation/team-schema";
 
@@ -18,8 +19,10 @@ const createTeam = async (req, res) => {
   return res.send(newTeam);
 };
 
-export default function handler(req, res) {
+function handler(req, res) {
   if (req.method === "POST") {
     return createTeam(req, res);
   }
 }
+
+export default connectDB(handler);

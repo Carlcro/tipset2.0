@@ -1,3 +1,4 @@
+import connectDB from "../../../middleware/mongodb";
 import Team from "../../../models/team";
 
 const getTeam = async (req, res, teamId) => {
@@ -6,10 +7,12 @@ const getTeam = async (req, res, teamId) => {
   res.send(team);
 };
 
-export default function handler(req, res) {
+function handler(req, res) {
   const { teamId } = req.query;
 
   if (req.method === "GET") {
     return getTeam(re, res, teamId);
   }
 }
+
+export default connectDB(handler);

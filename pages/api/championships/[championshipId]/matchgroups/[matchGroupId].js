@@ -1,3 +1,4 @@
+import connectDB from "../../../../../middleware/mongodb";
 import Match from "../../../../../models/match";
 import MatchGroup from "../../../../../models/match-group";
 import { matchSchema } from "../../../../../validation/match-schema";
@@ -22,10 +23,12 @@ const createMatch = async (req, res, matchGroupId) => {
   res.send(newMatch);
 };
 
-export default function handler(req, res) {
+function handler(req, res) {
   const { matchGroupId } = req.query;
   if (req.method === "POST") {
     return createMatch(req, res, matchGroupId);
   }
 }
+
+export default connectDB(handler);
 

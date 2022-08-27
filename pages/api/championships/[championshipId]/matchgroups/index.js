@@ -2,6 +2,7 @@ import MatchGroup from "../../../../../models/match-group";
 import Championship from "../../../../../models/championship";
 import Team from "../../../../../models/team";
 import { matchGroupSchema } from "../../../../../validation/match-group-schema";
+import connectDB from "../../../../../middleware/mongodb";
 
 const createMatchGroup = async (req, res, championshipId) => {
   const { error } = matchGroupSchema.validate(req.body);
@@ -30,7 +31,7 @@ const createMatchGroup = async (req, res, championshipId) => {
   res.send(newMatchGroup);
 };
 
-export default function handler(req, res) {
+function handler(req, res) {
   const { championshipId } = req.query;
   if (req.method === "POST") {
     return createMatchGroup(req, res, championshipId);
@@ -38,3 +39,5 @@ export default function handler(req, res) {
     console.log("hej");
   }
 }
+
+export default connectDB(handler);
