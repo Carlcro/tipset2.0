@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { useMutation, useQueryClient } from "react-query";
-import { createUserTournament } from "../../../services/userTournamentService";
+import { createUserTournament } from "../../services/userTournamentService";
 
 const UserTournamentForm = () => {
   const [userTournamentName, setUserTournamentName] = useState("");

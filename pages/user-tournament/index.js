@@ -1,6 +1,6 @@
 import React from "react";
-import UserTournamentForm from "./components/UserTournamentForm";
-import UserTournamentsList from "./components/UserTournamentsList";
+import UserTournamentForm from "../../components/user-tournament/UserTournamentForm";
+import UserTournamentsList from "../../components/user-tournament/UserTournamentsList";
 
 const UserTournamentContainer = () => {
   return (

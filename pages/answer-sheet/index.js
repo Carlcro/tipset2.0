@@ -5,9 +5,9 @@ import {
   getAnswerSheet,
   saveAnswerSheet,
 } from "../../services/championshipService";
-import BetSlip from "../bet-slip/components/BetSlip";
 import { betSlipState, goalscorerState } from "../../recoil/bet-slip/atoms";
 import { setFromBetslipState } from "../../recoil/bet-slip/selectors/selectors";
+import BetSlip from "../../components/bet-slip/BetSlip";
 
 const AnswerSheet = () => {
   const setFromBetslip = useSetRecoilState(setFromBetslipState);

@@ -3,11 +3,11 @@ import UserTournament from "../../models/user-tournament";
 import { useQuery } from "react-query";
 import { getHighscore } from "../../services/userTournamentService";
 import { useRouter } from "next/router";
-import HighScoreTable from "./components/HighScoreTable";
 import dynamic from "next/dynamic";
+import HighScoreTable from "../../components/user-tournament-page/HighScoreTable";
 
 const DynamicUserTournamentPanel = dynamic(
-  () => import("./components/UserTournamentPanel"),
+  () => import("../../components/user-tournament-page/UserTournamentPanel"),
   {
     ssr: false,
   }

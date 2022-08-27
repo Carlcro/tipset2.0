@@ -3,19 +3,20 @@ import MatchGroup from "./MatchGroup";
 import GroupBoard from "./GroupBoard";
 import GoalscorerInput from "./GoalscorerInput";
 import { useRecoilValue, useSetRecoilState, useRecoilState } from "recoil";
-import { championshipState } from "../../../recoil/championship/selectors";
+
+import TiebreakerInfo from "./TiebreakerInfo";
+import { championshipState } from "../../recoil/championship/selectors";
+import { goalscorerState } from "../../recoil/bet-slip/atoms";
 import {
   resetAllBets,
   setAllMatchesState,
-} from "../../../recoil/bet-slip/selectors/selectors";
-import { goalscorerState } from "../../../recoil/bet-slip/atoms";
+} from "../../recoil/bet-slip/selectors/selectors";
 import {
-  getFinal,
   getGroupOf16,
   getGroupOf8,
   getSemifinals,
-} from "../../../recoil/bet-slip/selectors/matches";
-import TiebreakerInfo from "./TiebreakerInfo";
+  getFinal,
+} from "../../recoil/bet-slip/selectors/matches";
 
 const BetSlip = ({ mode, bettingAllowed, handleSave, error }) => {
   const championship = useRecoilValue(championshipState);

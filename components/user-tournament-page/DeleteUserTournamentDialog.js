@@ -3,7 +3,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import {
   deleteUserTournament,
   leaveUserTournament,
-} from "../../../services/userTournamentService";
+} from "../../services/userTournamentService";
 import { useRouter } from "next/router";
 
 export default function DeleteUserTournamentDialog({

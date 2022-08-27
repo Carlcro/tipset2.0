@@ -1,8 +1,8 @@
 import { useQuery } from "react-query";
 import { useSetRecoilState } from "recoil";
 import { setFromBetslipState } from "../../recoil/bet-slip/selectors/selectors";
-import BetSlip from "../bet-slip/components/BetSlip";
 import { getAnswerSheet } from "../../services/championshipService";
+import BetSlip from "../../components/bet-slip/BetSlip";
 
 const Championship = () => {
   const setFromBetslip = useSetRecoilState(setFromBetslipState);

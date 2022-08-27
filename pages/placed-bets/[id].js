@@ -2,7 +2,7 @@ import { useQuery } from "react-query";
 import { useSetRecoilState } from "recoil";
 import { setFromBetslipState } from "../../recoil/bet-slip/selectors/selectors";
 import { getPlacedBet } from "../../services/placedBetService";
-import BetSlip from "../bet-slip/components/BetSlip";
+import BetSlip from "../../components/bet-slip/BetSlip";
 import { useRouter } from "next/router";
 import { useState } from "react";
 

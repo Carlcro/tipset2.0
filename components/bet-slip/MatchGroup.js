@@ -1,5 +1,5 @@
 import React from "react";
-import Match from "../../../components/Match";
+import Match from "../Match";
 
 function MatchGroup(group, matchInfos, mode) {
   const matchIds = group.matches.map((m) => m.matchId);

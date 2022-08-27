@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { useQuery } from "react-query";
-import { getAllUserTournaments } from "../../../services/userTournamentService";
+import { getAllUserTournaments } from "../../services/userTournamentService";
 
 const UserTournamentsList = () => {
   const { data = [] } = useQuery("userTournaments", async () => {

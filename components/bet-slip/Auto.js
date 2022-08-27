@@ -1,7 +1,7 @@
 import Autosuggest from "react-autosuggest";
 import React, { useState, useEffect } from "react";
-import { getAllPlayers } from "../../../services/betSlipService";
 import { useQuery } from "react-query";
+import { getAllPlayers } from "../../services/betSlipService";
 
 const theme = {
   container: {

@@ -5,8 +5,7 @@ import { toast } from "react-toastify";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { setFromBetslipState } from "../../recoil/bet-slip/selectors/selectors";
 import { betSlipState, goalscorerState } from "../../recoil/bet-slip/atoms";
-
-import BetSlip from "./components/BetSlip";
+import BetSlip from "../../components/bet-slip/BetSlip";
 
 const BetSlipContainer = () => {
   const setFromBetslip = useSetRecoilState(setFromBetslipState);

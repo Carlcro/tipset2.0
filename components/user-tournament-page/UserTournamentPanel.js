@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
-import { addMember } from "../../../services/userTournamentService";
+import { addMember } from "../../services/userTournamentService";
 import AddMemberInput from "./AddMemberInput";
 import DeleteUserTournamentDialog from "./DeleteUserTournamentDialog";
 
