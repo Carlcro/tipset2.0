@@ -13,12 +13,10 @@ const DynamicUserTournamentPanel = dynamic(
   }
 );
 
-const UserTournamentPage = ({ highscoreData }) => {
+const UserTournamentPage = () => {
   const router = useRouter();
   const { id } = router.query;
-  const query = useQuery(["highscoreData", id], () => getHighscore(id), {
-    initialData: highscoreData,
-  });
+  const query = useQuery(["highscoreData", id], () => getHighscore(id));
 
   return (
     <div className="flex space-x-8 px-5">
@@ -30,7 +28,7 @@ const UserTournamentPage = ({ highscoreData }) => {
 
 export default UserTournamentPage;
 
-export async function getServerSideProps({ params }) {
+/* export async function getServerSideProps({ params }) {
   const userTournament = await UserTournament.findById(params.id).populate({
     path: "members",
     populate: [{ path: "betSlip" }],
@@ -50,3 +48,4 @@ export async function getServerSideProps({ params }) {
     },
   };
 }
+ */
