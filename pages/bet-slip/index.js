@@ -3,8 +3,8 @@ import { queryCache, useMutation, useQuery } from "react-query";
 import { createBetSlip, getBetSlip } from "../../services/betSlipService";
 import { toast } from "react-toastify";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { setFromBetslipState } from "./recoil/selectors/selectors";
-import { betSlipState, goalscorerState } from "./recoil/atoms";
+import { setFromBetslipState } from "../../recoil/bet-slip/selectors/selectors";
+import { betSlipState, goalscorerState } from "../../recoil/bet-slip/atoms";
 
 import BetSlip from "./components/BetSlip";
 

@@ -1,8 +1,8 @@
 import React from "react";
 import Group from "./Group";
 import { useRecoilValue } from "recoil";
-import { getSortedGroupResults } from "../recoil/selectors/results";
-import { getBestThirds } from "../recoil/selectors/matches";
+import { getSortedGroupResults } from "../../../recoil/bet-slip/selectors/results";
+import { getBestThirds } from "../../../recoil/bet-slip/selectors/matches";
 
 export default function GroupBoard() {
   const groupResults = useRecoilValue(getSortedGroupResults);

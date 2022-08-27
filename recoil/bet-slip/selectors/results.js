@@ -1,13 +1,13 @@
 import { selector } from "recoil";
-import { calculateTeamRanking } from "../../../../calculation/matchGroup/calculations/calculations";
+import { calculateTeamRanking } from "../../../calculation/matchGroup/calculations/calculations";
 import {
   calculateGroupOf16Results,
   calculateGroupOf8Results,
   calculateGroupResults,
   calculateSemiFinalsResults,
-} from "../../../../calculation/results/results";
-import { championshipState } from "../../../championship/recoil/selectors";
-import { betSlipState } from "../atoms";
+} from "../../../calculation/results/results";
+import { championshipState } from "../../../recoil/championship/selectors";
+import { betSlipState } from "../../../recoil/bet-slip/atoms";
 
 export const getGroupResults = selector({
   key: "getGroupResults",

@@ -5,7 +5,7 @@ import {
   calculateGroupOf8,
   calculateSemiFinals,
   calculateTeamRanking,
-} from "../../../../calculation/matchGroup/calculations/calculations";
+} from "../../../calculation/matchGroup/calculations/calculations";
 
 import { betSlipState } from "../atoms";
 import {
@@ -17,7 +17,7 @@ import {
 import {
   calculateTopFourThirdPlaces,
   getBestOfThirds,
-} from "../../../../calculation/matchGroup/calculations/thirdPlacements";
+} from "../../../calculation/matchGroup/calculations/thirdPlacements";
 
 export const getGroupOf16 = selector({
   key: "getGroupOf16State",

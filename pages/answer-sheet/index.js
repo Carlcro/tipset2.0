@@ -6,8 +6,8 @@ import {
   saveAnswerSheet,
 } from "../../services/championshipService";
 import BetSlip from "../bet-slip/components/BetSlip";
-import { betSlipState, goalscorerState } from "../bet-slip/recoil/atoms";
-import { setFromBetslipState } from "../bet-slip/recoil/selectors/selectors";
+import { betSlipState, goalscorerState } from "../../recoil/bet-slip/atoms";
+import { setFromBetslipState } from "../../recoil/bet-slip/selectors/selectors";
 
 const AnswerSheet = () => {
   const setFromBetslip = useSetRecoilState(setFromBetslipState);
@@ -67,7 +67,11 @@ const AnswerSheet = () => {
       <div className="flex justify-center mb-4">
         <h1 className="text-3xl font-bold">Answer Sheet</h1>
       </div>
-      <BetSlip bettingAllowed={true} handleSave={submitAnswer} mode={"answerSheet"}></BetSlip>
+      <BetSlip
+        bettingAllowed={true}
+        handleSave={submitAnswer}
+        mode={"answerSheet"}
+      ></BetSlip>
       <div className="flex space-x-4 pb-10 pl-20 ">
         <input
           className="rounded-sm px-2 py-2"

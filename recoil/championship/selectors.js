@@ -1,5 +1,5 @@
 import { selector } from "recoil";
-import { getOneChampionship } from "../../../services/championshipService";
+import { getOneChampionship } from "../../services/championshipService";
 
 export const championshipState = selector({
   key: "currentChampionship",

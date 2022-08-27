@@ -5,7 +5,7 @@ import {
   getMatchDrawState,
   getMatchState,
   setMatchState,
-} from "../pages/bet-slip/recoil/selectors/selectors";
+} from "../recoil/bet-slip/selectors/selectors";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 
 const Match = ({ match, matchInfo, finalsStage, mode }) => {

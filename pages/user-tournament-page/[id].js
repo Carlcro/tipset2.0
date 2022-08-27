@@ -4,7 +4,6 @@ import { useQuery } from "react-query";
 import { getHighscore } from "../../services/userTournamentService";
 import { useRouter } from "next/router";
 import HighScoreTable from "./components/HighScoreTable";
-import { useState } from "react";
 import dynamic from "next/dynamic";
 
 const DynamicUserTournamentPanel = dynamic(

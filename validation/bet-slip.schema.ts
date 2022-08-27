@@ -1,4 +1,5 @@
 import * as Joi from "@hapi/joi";
+//@ts-ignore
 import ObjectId from "joi-objectid";
 
 export const betSlipIdSchema = Joi.object({

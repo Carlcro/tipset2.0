@@ -6,7 +6,11 @@ import {
 } from "../../../services/userTournamentService";
 import { useRouter } from "next/router";
 
-export function DeleteUserTournamentDialog({ isOpen, setIsOpen, isOwner }) {
+export default function DeleteUserTournamentDialog({
+  isOpen,
+  setIsOpen,
+  isOwner,
+}) {
   const router = useRouter();
   const { id } = router.query;
   const exitUserTournament = async () => {

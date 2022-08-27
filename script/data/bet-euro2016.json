@@ -1,0 +1,365 @@
+{
+  "bets": [
+    {
+      "matchId": 1,
+      "team1Score": "2",
+      "team2Score": "1",
+      "team1": "FRANCE_ID",
+      "team2": "ROMANIA_ID"
+    },
+    {
+      "matchId": 2,
+      "team1Score": "2",
+      "team2Score": "0",
+      "team1": "FRANCE_ID",
+      "team2": "ALBANIA_ID"
+    },
+    {
+      "matchId": 3,
+      "team1Score": "0",
+      "team2Score": "0",
+      "team1": "FRANCE_ID",
+      "team2": "SWITZERLAND_ID"
+    },
+    {
+      "matchId": 4,
+      "team1Score": "0",
+      "team2Score": "1",
+      "team1": "ROMANIA_ID",
+      "team2": "ALBANIA_ID"
+    },
+    {
+      "matchId": 5,
+      "team1Score": "1",
+      "team2Score": "1",
+      "team1": "ROMANIA_ID",
+      "team2": "SWITZERLAND_ID"
+    },
+    {
+      "matchId": 6,
+      "team1Score": "0",
+      "team2Score": "1",
+      "team1": "ALBANIA_ID",
+      "team2": "SWITZERLAND_ID"
+    },
+    {
+      "matchId": 7,
+      "team1Score": "1",
+      "team2Score": "2",
+      "team1": "WALES_ID",
+      "team2": "ENGLAND_ID"
+    },
+    {
+      "matchId": 8,
+      "team1Score": "2",
+      "team2Score": "1",
+      "team1": "WALES_ID",
+      "team2": "SLOVAKIA_ID"
+    },
+    {
+      "matchId": 9,
+      "team1Score": "3",
+      "team2Score": "0",
+      "team1": "WALES_ID",
+      "team2": "RUSSIA_ID"
+    },
+    {
+      "matchId": 10,
+      "team1Score": "0",
+      "team2Score": "0",
+      "team1": "ENGLAND_ID",
+      "team2": "SLOVAKIA_ID"
+    },
+    {
+      "matchId": 11,
+      "team1Score": "1",
+      "team2Score": "1",
+      "team1": "ENGLAND_ID",
+      "team2": "RUSSIA_ID"
+    },
+    {
+      "matchId": 12,
+      "team1Score": "2",
+      "team2Score": "1",
+      "team1": "SLOVAKIA_ID",
+      "team2": "RUSSIA_ID"
+    },
+    {
+      "matchId": 13,
+      "team1Score": "0",
+      "team2Score": "0",
+      "team1": "GERMANY_ID",
+      "team2": "POLAND_ID"
+    },
+    {
+      "matchId": 14,
+      "team1Score": "1",
+      "team2Score": "0",
+      "team1": "GERMANY_ID",
+      "team2": "N_IRELAND_ID"
+    },
+    {
+      "matchId": 15,
+      "team1Score": "2",
+      "team2Score": "0",
+      "team1": "GERMANY_ID",
+      "team2": "UKRAINE_ID"
+    },
+    {
+      "matchId": 16,
+      "team1Score": "1",
+      "team2Score": "0",
+      "team1": "POLAND_ID",
+      "team2": "N_IRELAND_ID"
+    },
+    {
+      "matchId": 17,
+      "team1Score": "1",
+      "team2Score": "0",
+      "team1": "POLAND_ID",
+      "team2": "UKRAINE_ID"
+    },
+    {
+      "matchId": 18,
+      "team1Score": "2",
+      "team2Score": "0",
+      "team1": "N_IRELAND_ID",
+      "team2": "UKRAINE_ID"
+    },
+    {
+      "matchId": 19,
+      "team1Score": "1",
+      "team2Score": "2",
+      "team1": "SPAIN_ID",
+      "team2": "CROATIA_ID"
+    },
+    {
+      "matchId": 20,
+      "team1Score": "3",
+      "team2Score": "0",
+      "team1": "SPAIN_ID",
+      "team2": "TURKEY_ID"
+    },
+    {
+      "matchId": 21,
+      "team1Score": "1",
+      "team2Score": "0",
+      "team1": "SPAIN_ID",
+      "team2": "CZECH_ID"
+    },
+    {
+      "matchId": 22,
+      "team1Score": "1",
+      "team2Score": "0",
+      "team1": "CROATIA_ID",
+      "team2": "TURKEY_ID"
+    },
+    {
+      "matchId": 23,
+      "team1Score": "2",
+      "team2Score": "2",
+      "team1": "CROATIA_ID",
+      "team2": "CZECH_ID"
+    },
+    {
+      "matchId": 24,
+      "team1Score": "2",
+      "team2Score": "0",
+      "team1": "TURKEY_ID",
+      "team2": "CZECH_ID"
+    },
+    {
+      "matchId": 25,
+      "team1Score": "1",
+      "team2Score": "0",
+      "team1": "ITALY_ID",
+      "team2": "SWEDEN_ID"
+    },
+    {
+      "matchId": 26,
+      "team1Score": "0",
+      "team2Score": "1",
+      "team1": "ITALY_ID",
+      "team2": "IRELAND_ID"
+    },
+    {
+      "matchId": 27,
+      "team1Score": "2",
+      "team2Score": "0",
+      "team1": "ITALY_ID",
+      "team2": "BELGIUM_ID"
+    },
+    {
+      "matchId": 28,
+      "team1Score": "1",
+      "team2Score": "1",
+      "team1": "SWEDEN_ID",
+      "team2": "IRELAND_ID"
+    },
+    {
+      "matchId": 29,
+      "team1Score": "0",
+      "team2Score": "1",
+      "team1": "SWEDEN_ID",
+      "team2": "BELGIUM_ID"
+    },
+    {
+      "matchId": 30,
+      "team1Score": "0",
+      "team2Score": "3",
+      "team1": "IRELAND_ID",
+      "team2": "BELGIUM_ID"
+    },
+    {
+      "matchId": 31,
+      "team1Score": "1",
+      "team2Score": "1",
+      "team1": "HUNGARY_ID",
+      "team2": "ICELAND_ID"
+    },
+    {
+      "matchId": 32,
+      "team1Score": "3",
+      "team2Score": "3",
+      "team1": "HUNGARY_ID",
+      "team2": "PORTUGAL_ID"
+    },
+    {
+      "matchId": 33,
+      "team1Score": "2",
+      "team2Score": "0",
+      "team1": "HUNGARY_ID",
+      "team2": "AUSTRIA_ID"
+    },
+    {
+      "matchId": 34,
+      "team1Score": "1",
+      "team2Score": "1",
+      "team1": "ICELAND_ID",
+      "team2": "PORTUGAL_ID"
+    },
+    {
+      "matchId": 35,
+      "team1Score": "2",
+      "team2Score": "1",
+      "team1": "ICELAND_ID",
+      "team2": "AUSTRIA_ID"
+    },
+    {
+      "matchId": 36,
+      "team1Score": "0",
+      "team2Score": "0",
+      "team1": "PORTUGAL_ID",
+      "team2": "AUSTRIA_ID"
+    },
+    {
+      "matchId": 37,
+      "team1Score": "1",
+      "team2Score": "1",
+      "team1": "WALES_ID",
+      "team2": "PORTUGAL_ID",
+      "penaltyWinner": "PORTUGAL_ID"
+    },
+    {
+      "matchId": 38,
+      "team1Score": "0",
+      "team2Score": "1",
+      "team1": "FRANCE_ID",
+      "team2": "POLAND_ID"
+    },
+    {
+      "matchId": 39,
+      "team1Score": "1",
+      "team2Score": "0",
+      "team1": "HUNGARY_ID",
+      "team2": "IRELAND_ID"
+    },
+    {
+      "matchId": 40,
+      "team1Score": "0",
+      "team2Score": "4",
+      "team1": "SPAIN_ID",
+      "team2": "ITALY_ID"
+    },
+    {
+      "matchId": 41,
+      "team1Score": "3",
+      "team2Score": "0",
+      "team1": "BELGIUM_ID",
+      "team2": "IRELAND_ID"
+    },
+    {
+      "matchId": 42,
+      "team1Score": "2",
+      "team2Score": "0",
+      "team1": "CROATIA_ID",
+      "team2": "ICELAND_ID"
+    },
+    {
+      "matchId": 43,
+      "team1Score": "2",
+      "team2Score": "1",
+      "team1": "GERMANY_ID",
+      "team2": "SLOVAKIA_ID"
+    },
+    {
+      "matchId": 44,
+      "team1Score": "1",
+      "team2Score": "2",
+      "team1": "SWITZERLAND_ID",
+      "team2": "ENGLAND_ID"
+    },
+    {
+      "matchId": 45,
+      "team1Score": "1",
+      "team2Score": "1",
+      "team1": "PORTUGAL_ID",
+      "team2": "POLAND_ID",
+      "penaltyWinner": "POLAND_ID"
+    },
+    {
+      "matchId": 46,
+      "team1Score": "3",
+      "team2Score": "1",
+      "team1": "BELGIUM_ID",
+      "team2": "CROATIA_ID"
+    },
+    {
+      "matchId": 47,
+      "team1Score": "1",
+      "team2Score": "1",
+      "team1": "HUNGARY_ID",
+      "team2": "ITALY_ID",
+      "penaltyWinner": "HUNGARY_ID"
+    },
+    {
+      "matchId": 48,
+      "team1Score": "5",
+      "team2Score": "2",
+      "team1": "GERMANY_ID",
+      "team2": "ENGLAND_ID"
+    },
+    {
+      "matchId": 49,
+      "team1Score": "2",
+      "team2Score": "0",
+      "team1": "POLAND_ID",
+      "team2": "BELGIUM_ID"
+    },
+    {
+      "matchId": 50,
+      "team1Score": "0",
+      "team2Score": "2",
+      "team1": "HUNGARY_ID",
+      "team2": "GERMANY_ID"
+    },
+    {
+      "matchId": 51,
+      "team1Score": "1",
+      "team2Score": "0",
+      "team1": "POLAND_ID",
+      "team2": "GERMANY_ID"
+    }
+  ],
+  "goalscorer": "x"
+}

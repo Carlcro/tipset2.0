@@ -1,10 +1,9 @@
-import { Dialog, Transition } from "@headlessui/react";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { addMember } from "../../../services/userTournamentService";
 import AddMemberInput from "./AddMemberInput";
-import { DeleteUserTournamentDialog } from "./DeleteUserTournamentDialog";
+import DeleteUserTournamentDialog from "./DeleteUserTournamentDialog";
 
 const UserTournamentPanel = () => {
   const queryClient = useQueryClient();
@@ -49,23 +48,19 @@ const UserTournamentPanel = () => {
           </div>
 
           <div className="shadow-md p-3 rounded-sm bg-white flex flex-col">
-            {window && (
-              <>
-                <span className="text-sm">
-                  {window && window.location.href + "/join"}
-                </span>
-                <button
-                  className="cursor-pointer font-bold text-left active:text-gray-500"
-                  onClick={() => {
-                    navigator.clipboard.writeText(
-                      window && window.location.href + "/join"
-                    );
-                  }}
-                >
-                  Klicka här för att kopiera
-                </button>
-              </>
-            )}
+            {/*       <span className="text-sm">
+              {window && window.location.href + "/join"}
+            </span>
+            <button
+              className="cursor-pointer font-bold text-left active:text-gray-500"
+              onClick={() => {
+                navigator.clipboard.writeText(
+                  window && window.location.href + "/join"
+                );
+              }}
+            >
+              Klicka här för att kopiera
+            </button> */}
           </div>
           <div>
             <button
