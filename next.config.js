@@ -17,5 +17,4 @@ module.exports = {
     mongodburl:
       "mongodb+srv://carcro:8Pisn4PnWdqVnzVb@cluster0.y9hpyyt.mongodb.net/?",
   },
-  staticPageGenerationTimeout: 1000,
 };

@@ -5,7 +5,6 @@ import GoalscorerInput from "./GoalscorerInput";
 import { useRecoilValue, useSetRecoilState, useRecoilState } from "recoil";
 
 import TiebreakerInfo from "./TiebreakerInfo";
-import { championshipState } from "../../recoil/championship/selectors";
 import { goalscorerState } from "../../recoil/bet-slip/atoms";
 import {
   resetAllBets,
@@ -17,9 +16,10 @@ import {
   getSemifinals,
   getFinal,
 } from "../../recoil/bet-slip/selectors/matches";
+import { getOneChampionship } from "../../services/championshipService";
+import { useQuery } from "react-query";
 
 const BetSlip = ({ mode, bettingAllowed, handleSave, error }) => {
-  const championship = useRecoilValue(championshipState);
   const groupOf16 = useRecoilValue(getGroupOf16);
   const groupOf8 = useRecoilValue(getGroupOf8);
   const semiFinals = useRecoilValue(getSemifinals);
@@ -27,6 +27,10 @@ const BetSlip = ({ mode, bettingAllowed, handleSave, error }) => {
   const [goalscorer, setGoalscorer] = useRecoilState(goalscorerState);
   const setAllMatches = useSetRecoilState(setAllMatchesState);
   const resetAllMatches = useSetRecoilState(resetAllBets);
+  const { data: championship, isLoading } = useQuery(
+    "championship",
+    getOneChampionship
+  );
 
   const handleSetAllMatches = () => {
     const matches = championship.matchGroups.flatMap((group) => group.matches);
@@ -49,6 +53,10 @@ const BetSlip = ({ mode, bettingAllowed, handleSave, error }) => {
   const handleSetGoalscorer = (goalscorer) => {
     setGoalscorer(goalscorer);
   };
+
+  if (isLoading) {
+    return <span>Loading...</span>;
+  }
 
   return (
     <div>
