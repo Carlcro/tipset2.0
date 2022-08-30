@@ -1,11 +1,11 @@
 import { selector } from "recoil";
-import { calculateTeamRanking } from "../../../calculation/matchGroup/calculations/calculations";
 import {
   calculateGroupOf16Results,
   calculateGroupOf8Results,
   calculateGroupResults,
   calculateSemiFinalsResults,
-} from "../../../calculation/results/results";
+  calculateTeamRanking,
+} from "../../../calculation";
 import { championshipState } from "../../../recoil/championship/selectors";
 import { betSlipState } from "../../../recoil/bet-slip/atoms";
 

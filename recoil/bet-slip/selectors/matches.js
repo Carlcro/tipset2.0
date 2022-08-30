@@ -1,11 +1,13 @@
 import { selector } from "recoil";
 import {
+  calculateTopFourThirdPlaces,
   calculateFinal,
   calculateGroupOf16,
   calculateGroupOf8,
   calculateSemiFinals,
   calculateTeamRanking,
-} from "../../../calculation/matchGroup/calculations/calculations";
+  getBestOfThirds,
+} from "../../../calculation";
 
 import { betSlipState } from "../atoms";
 import {
@@ -14,10 +16,6 @@ import {
   selectGroupOf8Results,
   getSemiFinalsResults,
 } from "./results";
-import {
-  calculateTopFourThirdPlaces,
-  getBestOfThirds,
-} from "../../../calculation/matchGroup/calculations/thirdPlacements";
 
 export const getGroupOf16 = selector({
   key: "getGroupOf16State",

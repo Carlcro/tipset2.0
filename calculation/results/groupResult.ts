@@ -1,6 +1,5 @@
-import {TeamResult} from "../teamResult";
-
+import { TeamResult } from "./../teamResult";
 export interface GroupResult {
-  name: string,
+  name: string;
   results: TeamResult[];
 }

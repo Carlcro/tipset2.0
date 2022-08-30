@@ -2,8 +2,7 @@ import AnswerSheet from "../../../models/answer-sheet";
 import Result from "../../../models/result";
 import Championship from "../../../models/championship";
 import BetSlip from "../../../models/bet-slip";
-import { calculateGroupResults } from "../../../calculation/results/results";
-import { calculatePoints } from "../../../calculation/points/pointCalculation";
+import { calculateGroupResults, calculatePoints } from "../../../calculation";
 import connectDB from "../../../middleware/mongodb";
 
 function handler(req, res) {

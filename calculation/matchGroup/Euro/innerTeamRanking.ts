@@ -1,8 +1,8 @@
-import { TeamResult } from "../../teamResult";
+import { groupBy } from "ramda";
 import { MatchResult } from "../../matchResult";
 import { Team } from "../../team";
-import { groupBy } from "ramda";
-import { calculateTeamResults } from "./calculations";
+import { TeamResult } from "../../teamResult";
+import { calculateTeamResults } from "../common";
 
 export function calculateInnerTeamRanking(
   results: TeamResult[],
@@ -15,8 +15,7 @@ export function calculateInnerTeamRanking(
     if (tiedTeams.length === 2) {
       const team1 = tiedTeams[0];
       const team2 = tiedTeams[1];
-      const matchResult = 
-      getMatchResultTwoTeams(
+      const matchResult = getMatchResultTwoTeams(
         team1._id,
         team2._id,
         matchResults

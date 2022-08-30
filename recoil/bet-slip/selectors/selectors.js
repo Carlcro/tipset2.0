@@ -1,19 +1,17 @@
 import { betSlipState, goalscorerState } from "../../../recoil/bet-slip/atoms";
 import { selector, selectorFamily } from "recoil";
 import {
-  calculateGroupOf8Results,
   calculateGroupResults,
   calculateGroupOf16Results,
   calculateSemiFinalsResults,
-} from "../../../calculation/results/results";
-import {
   calculateFinal,
   calculateGroupOf16,
   calculateGroupOf8,
   calculateSemiFinals,
   calculateTeamRanking,
-} from "../../../calculation/matchGroup/calculations/calculations";
-import { getBestOfThirds } from "../../../calculation/matchGroup/calculations/thirdPlacements";
+  getBestOfThirds,
+  calculateGroupOf8Results,
+} from "../../../calculation";
 import { championshipState } from "../../../recoil/championship/selectors";
 
 export const setAllMatchesState = selector({

@@ -1,5 +1,5 @@
 import { calculateGroupOf16 } from "./calculations/calculations";
-import { Team } from "../team";
+import { Team } from "../../team";
 
 const team1: Team = { name: "1" };
 const team2: Team = { name: "2" };

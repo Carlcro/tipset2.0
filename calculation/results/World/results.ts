@@ -1,0 +1,32 @@
+import { Team } from "../../team";
+import { RawMatchResult } from "../../rawMatchResult";
+
+import {
+  calculateResults,
+  getGroupResults,
+  getGroupScores,
+  getScores,
+} from "../common";
+import { MatchGroup } from "../../matchGroup";
+import { GroupResult } from "../groupResult";
+
+export function calculateGroupResults(
+  results: RawMatchResult[],
+  matchGroups: MatchGroup[]
+): GroupResult[] {
+  const scores = getScores(results, 1, 36);
+  const groupScores = matchGroups.map(getGroupScores(scores));
+  return groupScores.map(getGroupResults());
+}
+
+export function calculateGroupOf16Results(results: RawMatchResult[]): Team[] {
+  return calculateResults(results, 37, 44);
+}
+
+export function calculateGroupOf8Results(results: RawMatchResult[]): Team[] {
+  return calculateResults(results, 45, 48);
+}
+
+export function calculateSemiFinalsResults(results: RawMatchResult[]): Team[] {
+  return calculateResults(results, 49, 50);
+}

@@ -1,7 +1,7 @@
-import {Team} from "../../team";
-import {calculateInnerTeamRanking, groupTiedTeams} from "./innerTeamRanking";
-import {TeamResult} from "../../teamResult";
-import {MatchResult} from "../../matchResult";
+import {Team} from "../../../team";
+import {calculateInnerTeamRanking, groupTiedTeams} from "../innerTeamRanking";
+import {TeamResult} from "../../../teamResult";
+import {MatchResult} from "../../../matchResult";
 
 const team1: Team = {name: 'Sverige'};
 const team2: Team = {name: 'Tyskland'};

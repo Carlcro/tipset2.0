@@ -1,13 +1,14 @@
-import { MatchResult } from "./../../matchResult";
+
+import { MatchGroup } from "../../matchGroup";
+import { MatchResult } from "../../matchResult";
 import { GroupResult } from "../../results/groupResult";
+import { Team } from "../../team";
 import { TeamResult } from "../../teamResult";
 import { calculateTeamRanking } from "./calculations";
 import {
   getKnockoutPhaseGroups,
   mapKnockoutPhaseLineup,
 } from "./knockoutPhase";
-import { MatchGroup } from "../../matchGroup";
-import { Team } from "../../team";
 
 export function getBestOfThirds(
   groupResults: GroupResult[],

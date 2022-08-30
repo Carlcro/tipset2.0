@@ -1,22 +1,13 @@
+import { Team } from "./../team";
 import { GroupResult } from "./groupResult";
-import { MatchResult } from "../matchResult";
+import { MatchGroupScores } from "./../matchGroupScores";
+import { MatchGroup } from "./../matchGroup";
+import { MatchResult } from "./../matchResult";
+import { RawMatchResult } from "./../rawMatchResult";
 import { Match } from "../match";
-import { MatchGroup } from "../matchGroup";
-import { MatchGroupScores } from "../matchGroupScores";
-import { calculateTeamResults } from "../matchGroup/calculations/calculations";
-import { Team } from "../team";
-import { RawMatchResult } from "../rawMatchResult";
+import { calculateTeamResults } from "../matchGroup/common";
 
-export function calculateGroupResults(
-  results: RawMatchResult[],
-  matchGroups: MatchGroup[]
-): GroupResult[] {
-  const scores = getScores(results, 1, 36);
-  const groupScores = matchGroups.map(getGroupScores(scores));
-  return groupScores.map(getGroupResults());
-}
-
-function getScores(
+export function getScores(
   matchResults: RawMatchResult[],
   fromId: number,
   toId: number
@@ -51,7 +42,7 @@ function parseScores(): (score: RawMatchResult) => MatchResult {
   };
 }
 
-function getGroupScores(
+export function getGroupScores(
   scores: MatchResult[]
 ): (mg: MatchGroup) => MatchGroupScores {
   return (mg) => {
@@ -78,7 +69,7 @@ function scoreExists(): (score: MatchResult | undefined) => boolean {
   return (score) => score !== undefined;
 }
 
-function getGroupResults(): (group: MatchGroupScores) => GroupResult {
+export function getGroupResults(): (group: MatchGroupScores) => GroupResult {
   return (mgs) => {
     return {
       name: "Grupp " + mgs.matchGroup.name,
@@ -87,19 +78,7 @@ function getGroupResults(): (group: MatchGroupScores) => GroupResult {
   };
 }
 
-export function calculateGroupOf16Results(results: RawMatchResult[]): Team[] {
-  return calculateResults(results, 37, 44);
-}
-
-export function calculateGroupOf8Results(results: RawMatchResult[]): Team[] {
-  return calculateResults(results, 45, 48);
-}
-
-export function calculateSemiFinalsResults(results: RawMatchResult[]): Team[] {
-  return calculateResults(results, 49, 50);
-}
-
-function calculateResults(
+export function calculateResults(
   results: RawMatchResult[],
   fromId: number,
   toId: number

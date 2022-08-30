@@ -1,5 +1,5 @@
-import {calculateGoalDifference} from "./calculations/calculations";
-import {Team} from "../team";
+import {calculateGoalDifference} from "../calculations";
+import {Team} from "../../../team";
 
 const team1: Team = {name: 'Sverige'};
 const team2: Team = {name: 'Tyskland'};

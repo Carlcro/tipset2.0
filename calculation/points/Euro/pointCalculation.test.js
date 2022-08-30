@@ -1,6 +1,6 @@
 import { calculatePoints } from "./pointCalculation";
-import MatchResultBuilder from "../__builders__/MatchResultBuilder";
-import GroupResultBuilder from "../__builders__/GroupResultBuilder";
+import MatchResultBuilder from "../../__builders__/MatchResultBuilder";
+import GroupResultBuilder from "../../__builders__/GroupResultBuilder";
 
 const betResults = [
   new MatchResultBuilder().build(),

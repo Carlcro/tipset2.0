@@ -1,88 +1,25 @@
-import { GoalScorer } from "../types/goalScorer";
-import { TeamResult } from "./../teamResult";
-import { MatchResult } from "../matchResult";
 import { GroupResult } from "../results/groupResult";
+import { TeamResult } from "../teamResult";
+import { GoalScorer } from "../types/goalScorer";
+import { MatchResult } from "./../matchResult";
 
-export function calculatePoints(
-  betGroupResults: GroupResult[],
-  betMatchResults: MatchResult[],
-  betGoalScorer: string,
-  adjustedPoints: number,
-  outcomeGroupsResults: GroupResult[],
-  outcomeMatchResults: MatchResult[],
-  outcomeGoalScorer: GoalScorer
-): number {
-  const positionPoints = betGroupResults
-    .map((groupResult, i): number => {
-      return calculatePointsFromGroup(
-        groupResult,
-        outcomeGroupsResults[i],
-        betMatchResults,
-        outcomeMatchResults
-      );
-    })
-    .reduce((x, y) => x + y, 0);
-
-  let bestOfThirdsPoints = 0;
-
-  if (allGroupMatchesSet(outcomeMatchResults)) {
-    bestOfThirdsPoints = calculateBestOfThirdPoints(
-      betGroupResults,
-      outcomeGroupsResults,
-      betMatchResults,
-      outcomeMatchResults
-    );
-  }
-
-  const matchPoints = outcomeMatchResults
-    .map((or) => {
-      const matchResult = betMatchResults.find((x) => x.matchId === or.matchId);
-      if (matchResult) {
-        return getMatchPoint(or, matchResult);
-      } else {
-        return 0;
-      }
-    })
-    .reduce((acc, x) => acc + x, 0);
-
-  const correctAdvancedTeam = calculateCorrectAdvanceTeam(
-    betMatchResults,
-    outcomeMatchResults
-  );
-
-  const goalScorerPoints = calculateGoalScorer(
-    betGoalScorer,
-    outcomeGoalScorer
-  );
-
-  return (
-    matchPoints +
-    goalScorerPoints +
-    positionPoints +
-    bestOfThirdsPoints +
-    correctAdvancedTeam +
-    adjustedPoints
-  );
-}
-
-export const calculateCorrectAdvanceTeam = (
-  betMatchResults: MatchResult[],
-  outcomeMatchResults: MatchResult[]
-): number => {
-  return (
-    calculateGroupOf16AdvancePoints(betMatchResults, outcomeMatchResults) +
-    calculateGroupOf8AdvancePoints(betMatchResults, outcomeMatchResults) +
-    calculateSemiFinalAdvancePoints(betMatchResults, outcomeMatchResults) +
-    calculateFinalAdvancePoints(betMatchResults, outcomeMatchResults)
-  );
-};
 export const calculateGroupOf16AdvancePoints = (
   betMatchResults: MatchResult[],
-  outcomeMatchResults: MatchResult[]
+  outcomeMatchResults: MatchResult[],
+  matchId1: number,
+  matchId2: number
 ): number => {
   let points = 0;
-  const teamsInBestOf8Bet = getTeamsInMatches(betMatchResults, 45, 48);
-  const teamsInBestOf8Outcome = getTeamsInMatches(outcomeMatchResults, 45, 48);
+  const teamsInBestOf8Bet = getTeamsInMatches(
+    betMatchResults,
+    matchId1,
+    matchId2
+  );
+  const teamsInBestOf8Outcome = getTeamsInMatches(
+    outcomeMatchResults,
+    matchId1,
+    matchId2
+  );
 
   teamsInBestOf8Bet.forEach((t) => {
     if (teamsInBestOf8Outcome.includes(t)) points = points + 25;
@@ -93,11 +30,21 @@ export const calculateGroupOf16AdvancePoints = (
 
 export const calculateGroupOf8AdvancePoints = (
   betMatchResults: MatchResult[],
-  outcomeMatchResults: MatchResult[]
+  outcomeMatchResults: MatchResult[],
+  matchId1: number,
+  matchId2: number
 ): number => {
   let points = 0;
-  const teamsInBestOf8Bet = getTeamsInMatches(betMatchResults, 49, 50);
-  const teamsInBestOf8Outcome = getTeamsInMatches(outcomeMatchResults, 49, 50);
+  const teamsInBestOf8Bet = getTeamsInMatches(
+    betMatchResults,
+    matchId1,
+    matchId2
+  );
+  const teamsInBestOf8Outcome = getTeamsInMatches(
+    outcomeMatchResults,
+    matchId1,
+    matchId2
+  );
 
   teamsInBestOf8Bet.forEach((t) => {
     if (teamsInBestOf8Outcome.includes(t)) points = points + 25;
@@ -108,14 +55,24 @@ export const calculateGroupOf8AdvancePoints = (
 
 export const calculateSemiFinalAdvancePoints = (
   betMatchResults: MatchResult[],
-  outcomeMatchResults: MatchResult[]
+  outcomeMatchResults: MatchResult[],
+  matchId1: number,
+  matchId2: number
 ): number => {
   let points = 0;
-  const teamsInBestOf8Bet = getTeamsInMatches(betMatchResults, 51, 51);
-  const teamsInBestOf8Outcome = getTeamsInMatches(outcomeMatchResults, 51, 51);
+  const teamsSemiFinalsBet = getTeamsInMatches(
+    betMatchResults,
+    matchId1,
+    matchId2
+  );
+  const teamsSemiFinalsOutcome = getTeamsInMatches(
+    outcomeMatchResults,
+    matchId1,
+    matchId2
+  );
 
-  teamsInBestOf8Bet.forEach((t) => {
-    if (teamsInBestOf8Outcome.includes(t)) points = points + 30;
+  teamsSemiFinalsBet.forEach((t) => {
+    if (teamsSemiFinalsOutcome.includes(t)) points = points + 30;
   });
 
   return points;
@@ -123,11 +80,12 @@ export const calculateSemiFinalAdvancePoints = (
 
 export const calculateFinalAdvancePoints = (
   betMatchResults: MatchResult[],
-  outcomeMatchResults: MatchResult[]
+  outcomeMatchResults: MatchResult[],
+  matchId: number
 ): number => {
   let points = 0;
-  const bet = betMatchResults.find((mr) => mr.matchId === 51);
-  const outcome = outcomeMatchResults.find((mr) => mr.matchId === 51);
+  const bet = betMatchResults.find((mr) => mr.matchId === matchId);
+  const outcome = outcomeMatchResults.find((mr) => mr.matchId === matchId);
 
   if (bet && outcome) {
     points = calculateAdvancePoints(bet, outcome, 35);
@@ -135,99 +93,6 @@ export const calculateFinalAdvancePoints = (
 
   return points;
 };
-
-export const getTeamsInMatches = (
-  betMatchResults: MatchResult[],
-  fromId: number,
-  toId: number
-): string[] => {
-  const teams = betMatchResults.reduce<string[]>((acc, curr) => {
-    if (curr.matchId >= fromId && curr.matchId <= toId) {
-      return [...acc, curr.team1._id, curr.team2._id];
-    }
-    return acc;
-  }, []);
-
-  return teams;
-};
-
-export const calculateBestOfThirdPoints = (
-  betGroupResults: GroupResult[],
-  groupOutcomes: GroupResult[],
-  betMatchResults: MatchResult[],
-  outcomeMatchResults: MatchResult[]
-): number => {
-  const betBestOfThirds = getBestOfThirds(betGroupResults, betMatchResults).map(
-    (r) => r._id
-  );
-  const outcomeBestOfThirds = getBestOfThirds(
-    groupOutcomes,
-    outcomeMatchResults
-  ).map((r) => r._id);
-
-  let points = 0;
-  if (betBestOfThirds.length === outcomeBestOfThirds.length) {
-    outcomeBestOfThirds.forEach((outcome) => {
-      if (betBestOfThirds.includes(outcome)) {
-        points = points + 10;
-      }
-    });
-  }
-  return points;
-};
-
-export const calculatePointsFromGroup = (
-  groupResult: GroupResult,
-  groupOutcome: GroupResult,
-  betMatchResults: MatchResult[],
-  outcomeMatchResults: MatchResult[]
-): number => {
-  const betTeamRanking = calculateTeamRanking(
-    groupResult.results,
-    betMatchResults
-  );
-  const outcomeTeamRanking = calculateTeamRanking(
-    groupOutcome.results,
-    outcomeMatchResults
-  );
-
-  if (isGroupFinished(groupOutcome)) {
-    return (
-      calculatePositionPoints(betTeamRanking, outcomeTeamRanking) +
-      calculateAdvanceToGroupOf16Points(betTeamRanking, outcomeTeamRanking)
-    );
-  } else {
-    return 0;
-  }
-};
-
-export const getMatchPoint = (
-  outcomeResult: MatchResult,
-  matchResult: MatchResult
-) => {
-  if (outcomeResult.matchId <= 36) {
-    return calculateGroupStageScorePoints(matchResult, outcomeResult);
-  } else if (outcomeResult.matchId <= 44) {
-    return calculateGroupOf16MatchPoints(matchResult, outcomeResult);
-  } else if (outcomeResult.matchId <= 48) {
-    return calculateGroupOf8MatchPoints(matchResult, outcomeResult);
-  } else if (outcomeResult.matchId <= 50) {
-    return calculateSemiFinalMatchPoints(matchResult, outcomeResult);
-  } else {
-    return calculateFinalMatchPoints(matchResult, outcomeResult);
-  }
-};
-
-function calculateGoalScorer(
-  betGoalScorer: string,
-  outcomeGoalScorer: GoalScorer
-) {
-  if (outcomeGoalScorer && outcomeGoalScorer.player === betGoalScorer) {
-    return outcomeGoalScorer.goals * 10;
-  }
-
-  return 0;
-}
 
 export function calculateThirdPlaceMatchPoints(
   bet: MatchResult,
@@ -428,7 +293,7 @@ function predictedScoreAndTeamsCorrectly(
   );
 }
 
-function calculateGroupStageScorePoints(
+export function calculateGroupStageScorePoints(
   bet: MatchResult,
   outcome: MatchResult
 ) {
@@ -515,4 +380,30 @@ export function isGroupFinished(groupResult: GroupResult): boolean {
 
 export function allGroupMatchesSet(betSlip: MatchResult[]): boolean {
   return betSlip.filter((match) => match.matchId <= 36).length >= 36;
+}
+
+export const getTeamsInMatches = (
+  betMatchResults: MatchResult[],
+  fromId: number,
+  toId: number
+): string[] => {
+  const teams = betMatchResults.reduce<string[]>((acc, curr) => {
+    if (curr.matchId >= fromId && curr.matchId <= toId) {
+      return [...acc, curr.team1._id, curr.team2._id];
+    }
+    return acc;
+  }, []);
+
+  return teams;
+};
+
+export function calculateGoalScorer(
+  betGoalScorer: string,
+  outcomeGoalScorer: GoalScorer
+) {
+  if (outcomeGoalScorer && outcomeGoalScorer.player === betGoalScorer) {
+    return outcomeGoalScorer.goals * 10;
+  }
+
+  return 0;
 }
