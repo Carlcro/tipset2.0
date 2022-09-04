@@ -1,5 +1,5 @@
-import { Team } from "../../team";
-import { TeamResult } from "../../teamResult";
+import { Team } from "../../types/team";
+import { TeamResult } from "../../types/teamResult";
 
 export const getKnockoutPhase = () => {
   let knockoutPhase = new Map();

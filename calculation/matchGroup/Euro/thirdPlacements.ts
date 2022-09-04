@@ -1,9 +1,9 @@
-
-import { MatchGroup } from "../../matchGroup";
-import { MatchResult } from "../../matchResult";
 import { GroupResult } from "../../results/groupResult";
-import { Team } from "../../team";
-import { TeamResult } from "../../teamResult";
+import { MatchGroup } from "../../types/matchGroup";
+import { MatchResult } from "../../types/matchResult";
+import { Team } from "../../types/team";
+import { TeamResult } from "../../types/teamResult";
+
 import { calculateTeamRanking } from "./calculations";
 import {
   getKnockoutPhaseGroups,

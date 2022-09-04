@@ -1,7 +1,7 @@
 import { groupBy } from "ramda";
-import { MatchResult } from "../../matchResult";
-import { Team } from "../../team";
-import { TeamResult } from "../../teamResult";
+import { MatchResult } from "../../types/matchResult";
+import { Team } from "../../types/team";
+import { TeamResult } from "../../types/teamResult";
 import { calculateTeamResults } from "../common";
 
 export function calculateInnerTeamRanking(
