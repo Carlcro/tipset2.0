@@ -25,7 +25,7 @@ const UserTournamentPage = () => {
   }
 
   return (
-    <div className="flex space-x-8 px-5">
+    <div className="flex flex-col-reverse md:flex-row md:space-x-8 px-5 items-center md:items-start">
       <DynamicUserTournamentPanel />
       <HighScoreTable highscoreData={data} />
     </div>

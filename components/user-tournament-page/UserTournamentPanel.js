@@ -28,7 +28,7 @@ const UserTournamentPanel = () => {
         isOpen={dialogIsOpen}
         setIsOpen={setIsDialogOpen}
       ></DeleteUserTournamentDialog>
-      <div className="flex flex-col w-[400px]">
+      <div className="flex flex-col max-w-[400px] mt-5 md:mt-0">
         <div className="space-y-2">
           <div className="shadow-lg p-3 rounded-sm bg-white">
             <div>

@@ -3,13 +3,13 @@ import Link from "next/link";
 const HighScoreTable = ({ highscoreData }) => {
   return (
     <div className="flex justify-center">
-      <div className="bg-white rounded-sm p-3 w-[500px]">
+      <div className="bg-white rounded-sm p-3 max-w-[500px]">
         <h2 className="font-semibold">Topplistan</h2>
-        <table className="table-fixed w-full">
+        <table className="table-fixed w-full mx-1">
           <thead>
             <tr className="table-fixed">
               <th className="w-1/8">Rank</th>
-              <th className="w-3/4 text-left">Namn</th>
+              <th className="w-3/4 text-center md:text-left">Namn</th>
               <th className="w-1/8">Poäng</th>
             </tr>
           </thead>
@@ -24,7 +24,7 @@ const HighScoreTable = ({ highscoreData }) => {
                 key={score.id}
               >
                 <td className="text-center">{index + 1}</td>
-                <td className="text-left">
+                <td className="text-center md:text-left">
                   <Link href={`/placed-bets/${score.id}`}>
                     <a>{score.fullName}</a>
                   </Link>
