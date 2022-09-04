@@ -18,35 +18,6 @@ const MyLink = forwardRef((props, ref) => {
 
 MyLink.displayName = "MyLink";
 
-function MyDropdown({ user }) {
-  return (
-    <Menu>
-      <Menu.Button className="inline-flex justify-center w-full rounded border border-gray-300 shadow-lg px-4 py-2 bg-white text-sm font-medium text-gray-700">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-6 w-6"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M4 6h16M4 12h16M4 18h16"
-          />
-        </svg>
-      </Menu.Button>
-      <Menu.Items className={"flex items-center px-4 py-2 text-sm"}>
-        {routesLoggedIn(user).map((item) => (
-          <Menu.Item key={item.name}>
-            <MyLink href={item.route}>{item.name}</MyLink>
-          </Menu.Item>
-        ))}
-      </Menu.Items>
-    </Menu>
-  );
-}
 function BurgerMenu({ user }) {
   return (
     <Menu as="div" className="relative sm:hidden">
@@ -66,32 +37,21 @@ function BurgerMenu({ user }) {
           />
         </svg>
       </Menu.Button>
-      <Menu.Items className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none flex flex-col">
+      <Menu.Items className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none">
         {routesLoggedIn(user).map((item) => (
           <Menu.Item key={item.name}>
-            {({ active }) => (
-              <Link
+            {({ active, hover }) => (
+              <MyLink
                 className={`${
                   active && "bg-blue-500"
                 } flex items-center px-4 py-2 text-sm`}
                 href={item.route}
               >
-                <a>{item.name}</a>
-              </Link>
+                {item.name}
+              </MyLink>
             )}
           </Menu.Item>
         ))}
-        <Menu.Item>
-          {({ active }) => (
-            <button
-              className={`${
-                active && "bg-blue-500"
-              } flex items-center px-4 py-2 text-sm w-full`}
-            >
-              Logga ut
-            </button>
-          )}
-        </Menu.Item>
       </Menu.Items>
     </Menu>
   );
@@ -129,7 +89,8 @@ const Navbar = () => {
       role="navigation"
       aria-label="main navigation"
     >
-      <div className="flex sm:justify-between w-full">
+      <BurgerMenu></BurgerMenu>
+      <div className="hidden sm:flex sm:justify-between w-full">
         <div className="space-x-4">
           <Link href="/">
             <a>Hem</a>
