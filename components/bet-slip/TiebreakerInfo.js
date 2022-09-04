@@ -2,7 +2,7 @@ import React from "react";
 
 function TiebreakerInfo() {
   return (
-    <div className="bg-white shadow-lg rounded px-10 py-2 m-2 w-full">
+    <div className="bg-white shadow-lg rounded px-10 py-2 m-2">
       <h1 className="font-bold text-lg mb-2 -ml-5 ">
         Tiebreakers i gruppspelet
       </h1>

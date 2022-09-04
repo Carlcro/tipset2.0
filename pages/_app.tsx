@@ -21,10 +21,8 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
       <SessionProvider session={session}>
         <QueryClientProvider client={queryClient}>
           <Suspense fallback={<div>Loading...</div>}>
-            <div className="bg-gradient-to-br from-teal-300 bg-emerald-300 min-h-screen h-full">
-              <Navbar />
-              <Component {...pageProps} />
-            </div>
+            <Navbar />
+            <Component {...pageProps} />
           </Suspense>
           <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>
