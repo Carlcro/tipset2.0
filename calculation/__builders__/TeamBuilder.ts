@@ -1,4 +1,5 @@
-import { Team } from "./../team";
+import { Team } from "../types/team";
+
 class TeamBuilder {
   private _id: string;
   private name: string;

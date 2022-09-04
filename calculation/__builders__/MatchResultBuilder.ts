@@ -1,5 +1,5 @@
-import { MatchResult } from "./../matchResult";
-import { Team } from "./../team";
+import { MatchResult } from "../types/matchResult";
+import { Team } from "../types/team";
 import TeamBuilder from "./TeamBuilder";
 
 class MatchResultBuilder {

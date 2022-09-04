@@ -1,5 +1,5 @@
 import { GroupResult } from "../results/groupResult";
-import { TeamResult } from "./../teamResult";
+import { TeamResult } from "../types/teamResult";
 import TeamResultBuilder from "./TeamResultBuilder";
 
 export default class GroupResultBuilder {

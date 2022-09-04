@@ -1,5 +1,5 @@
-import { TeamResult } from "./../teamResult";
-import { Team } from "./../team";
+import { Team } from "../types/team";
+import { TeamResult } from "../types/teamResult";
 import TeamBuilder from "./TeamBuilder";
 
 export default class TeamResultBuilder {

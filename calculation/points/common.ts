@@ -1,7 +1,7 @@
 import { GroupResult } from "../results/groupResult";
-import { TeamResult } from "../teamResult";
 import { GoalScorer } from "../types/goalScorer";
-import { MatchResult } from "./../matchResult";
+import { MatchResult } from "../types/matchResult";
+import { TeamResult } from "../types/teamResult";
 
 export const calculateGroupOf16AdvancePoints = (
   betMatchResults: MatchResult[],

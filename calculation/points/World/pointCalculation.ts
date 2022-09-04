@@ -1,5 +1,4 @@
 import { GoalScorer } from "../../types/goalScorer";
-import { MatchResult } from "./../../matchResult";
 import { GroupResult } from "../../results/groupResult";
 import {
   calculateAdvanceToGroupOf16Points,
@@ -17,6 +16,7 @@ import {
   isGroupFinished,
 } from "../common";
 import { calculateTeamRanking } from "../../matchGroup/World/calculations";
+import { MatchResult } from "../../types/matchResult";
 
 export function calculatePoints(
   betGroupResults: GroupResult[],

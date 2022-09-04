@@ -1,5 +1,4 @@
 import { GroupResult } from "./groupResult";
-
 import { calculateTeamResults } from "../matchGroup/common";
 import { MatchResult } from "../types/matchResult";
 import { RawMatchResult } from "../types/rawMatchResult";

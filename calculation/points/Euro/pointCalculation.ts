@@ -1,5 +1,4 @@
 import { GoalScorer } from "../../types/goalScorer";
-import { MatchResult } from "./../../matchResult";
 import { GroupResult } from "../../results/groupResult";
 import {
   allGroupMatchesSet,
@@ -19,6 +18,7 @@ import {
 } from "../common";
 import { calculateTeamRanking } from "../../matchGroup/Euro/calculations";
 import { getBestOfThirds } from "../../matchGroup/Euro/thirdPlacements";
+import { MatchResult } from "../../types/matchResult";
 
 export function calculatePoints(
   betGroupResults: GroupResult[],
