@@ -1,6 +1,6 @@
-import { TeamResult } from "./../teamResult";
-import { Team } from "./../team";
-import { MatchResult } from "./../matchResult";
+import { MatchResult } from "../types/matchResult";
+import { Team } from "../types/team";
+import { TeamResult } from "../types/teamResult";
 
 export function calculateTeamResults(
   results: MatchResult[],

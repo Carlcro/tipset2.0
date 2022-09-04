@@ -1,7 +1,7 @@
 import { groupBy } from "ramda";
-import { MatchResult } from "../../matchResult";
-import { Team } from "../../team";
-import { TeamResult } from "../../teamResult";
+import { MatchResult } from "../../types/matchResult";
+import { Team } from "../../types/team";
+import { TeamResult } from "../../types/teamResult";
 import { calculateTeamResults } from "../common";
 
 export function calculateInnerTeamRanking(
@@ -22,21 +22,11 @@ export function calculateInnerTeamRanking(
       );
 
       if (matchResult) {
-        const sortedTiebreaker = SortTiebreaker(
-          [matchResult],
-          tiedTeams,
-          matchResults,
-          results
-        );
+        const sortedTiebreaker = SortTiebreaker([matchResult], tiedTeams);
 
         sortedTeams.push(...sortedTiebreaker.map((result) => result.team));
       } else {
-        const sortedTiebreaker = SortTiebreaker(
-          [],
-          tiedTeams,
-          matchResults,
-          results
-        );
+        const sortedTiebreaker = SortTiebreaker([], tiedTeams);
         sortedTeams.push(...sortedTiebreaker.map((result) => result.team));
       }
     } else if (tiedTeams.length === 3) {
@@ -51,21 +41,11 @@ export function calculateInnerTeamRanking(
         matchResults
       );
 
-      const sortedTiebreaker = SortTiebreaker(
-        matchResult,
-        tiedTeams,
-        matchResults,
-        results
-      );
+      const sortedTiebreaker = SortTiebreaker(matchResult, tiedTeams);
 
       sortedTeams.push(...sortedTiebreaker.map((result) => result.team));
     } else {
-      const sortedTiebreaker = SortTiebreaker(
-        matchResults,
-        tiedTeams,
-        matchResults,
-        results
-      );
+      const sortedTiebreaker = SortTiebreaker(matchResults, tiedTeams);
 
       sortedTeams.push(...sortedTiebreaker.map((result) => result.team));
     }
@@ -74,105 +54,20 @@ export function calculateInnerTeamRanking(
   return sortedTeams;
 }
 
-function SortTiebreaker(
-  matchResult: MatchResult[],
-  tiedTeams: Team[],
-  matchResults: MatchResult[],
-  results: TeamResult[]
-) {
+function SortTiebreaker(matchResult: MatchResult[], tiedTeams: Team[]) {
   const teamsInQuestion = calculateTeamResults(matchResult, tiedTeams);
 
-  const sameShit = groupTeamsWithSameShit(teamsInQuestion);
+  const sortedTeams = teamsInQuestion.sort((a, b) => {
+    if (a.points !== b.points) {
+      return a.points - b.points;
+    } else if (a.diff !== b.diff) {
+      return a.diff - b.diff;
+    } else {
+      return a.goals - b.goals;
+    }
+  });
 
-  if (sameShit.length === 2) {
-    teamsInQuestion.sort((a, b) => {
-      if (a.diff !== b.diff) {
-        return a.diff - b.diff;
-      } else {
-        if (a.goals !== b.goals) {
-          return a.goals - b.goals;
-        } else {
-          const matchResult = getMatchResultTwoTeams(
-            a.team._id,
-            b.team._id,
-            matchResults
-          );
-
-          if (matchResult) {
-            const aScore =
-              matchResult.team1._id === a.team._id
-                ? matchResult.team1Score
-                : matchResult.team2Score;
-
-            const bScore =
-              matchResult.team1._id === b.team._id
-                ? matchResult.team1Score
-                : matchResult.team2Score;
-
-            if (aScore !== bScore) {
-              return aScore - bScore;
-            } else {
-              const aTot = results.find((x) => x.team._id === a.team._id);
-              const bTot = results.find((x) => x.team._id === b.team._id);
-
-              if (aTot && bTot) {
-                if (aTot.diff !== bTot.diff) {
-                  return aTot.diff - bTot.diff;
-                } else {
-                  if (aTot.goals !== bTot.goals) {
-                    return aTot.goals - bTot.goals;
-                  } else {
-                    if (aTot.won !== bTot.won) {
-                      return aTot.won - bTot.won;
-                    } else {
-                      return 1;
-                    }
-                  }
-                }
-              } else {
-                return 1;
-              }
-            }
-          } else {
-            return 1;
-          }
-        }
-      }
-    });
-  } else {
-    teamsInQuestion.sort((a, b) => {
-      if (a.diff !== b.diff) {
-        return a.diff - b.diff;
-      } else {
-        if (a.goals !== b.goals) {
-          return a.goals - b.goals;
-        } else {
-          const aTot = results.find((x) => x.team._id === a.team._id);
-          const bTot = results.find((x) => x.team._id === b.team._id);
-
-          if (aTot && bTot) {
-            if (aTot.diff !== bTot.diff) {
-              return aTot.diff - bTot.diff;
-            } else {
-              if (aTot.goals !== bTot.goals) {
-                return aTot.goals - bTot.goals;
-              } else {
-                if (aTot.won !== bTot.won) {
-                  return aTot.won - bTot.won;
-                } else {
-                  return 1;
-                }
-              }
-            }
-          } else {
-            return 1;
-          }
-        }
-      }
-    });
-  }
-
-  return teamsInQuestion;
+  return sortedTeams;
 }
 
 function getMatchResultTwoTeams(
@@ -205,12 +100,6 @@ function getMatchResultForThreeTeams(
 }
 
 export function groupTiedTeams(results: TeamResult[]): Team[][] {
-  return Object.entries(groupBy((x) => `${x.points}`, results)).map((x) =>
-    x[1].map((y) => y.team)
-  );
-}
-
-export function groupTeamsWithSameShit(results: TeamResult[]): Team[][] {
   return Object.entries(
     groupBy((x) => `${x.points}:${x.diff}:${x.goals}`, results)
   ).map((x) => x[1].map((y) => y.team));

@@ -4,7 +4,7 @@ import {
   calculateGroupOf8,
   calculateSemiFinals,
   calculateTeamRanking,
-} from "../calculation/matchGroup/Euro/calculations";
+} from "../calculation/matchGroup/World/calculations";
 import {
   getBestOfThirds,
   calculateTopFourThirdPlaces,
@@ -14,7 +14,7 @@ import {
   calculateGroupOf8Results,
   calculateGroupResults,
   calculateSemiFinalsResults,
-} from "./results/Euro/results";
+} from "./results/World/results";
 import { calculatePoints } from "./points/Euro/pointCalculation";
 
 export {

@@ -6,10 +6,12 @@ function run {
   #cd "$(dirname "$0")"
   #createPlayers
  
-  local CHAMPIONSHIP=$(createChampionship)
+  #local CHAMPIONSHIP=$(createChampionship)
 
 
-  ##createUserTournaments $CHAMPIONSHIP
+  #createUserTournaments $CHAMPIONSHIP
+
+  createMatchInfo "6314540c64324ae1716108fc" 
   #cd -
 }
 
@@ -94,20 +96,20 @@ function createChampionship {
 
   MATCH_ID=1
 
-  createMatchGroup "629787c85fbd89bdea56c7be" $((MATCH_ID + (0*6))) "A" "Qatar" "Ecuador" "Senegal" "Nederländerna"
-  createMatchGroup "629787c85fbd89bdea56c7be" $((MATCH_ID + (1*6))) "B" "England" "Iran" "USA" "Wales"
-  createMatchGroup "629787c85fbd89bdea56c7be" $((MATCH_ID + (2*6))) "C" "Argentina" "Saudiarabien" "Mexiko" "Poland"
-  createMatchGroup "629787c85fbd89bdea56c7be" $((MATCH_ID + (3*6))) "D" "Frankrike" "Australien" "Danmark" "Tunisen"
-  createMatchGroup "629787c85fbd89bdea56c7be" $((MATCH_ID + (4*6))) "E" "Spanien" "Costa Rica" "Tyskland" "Japan"
-  createMatchGroup "629787c85fbd89bdea56c7be" $((MATCH_ID + (5*6))) "F" "Belgien" "Kanada" "Morocko" "Kroatien"
-  createMatchGroup "629787c85fbd89bdea56c7be" $((MATCH_ID + (6*6))) "F" "Brasilien" "Serbien" "Schweiz" "Kamerun"
-  createMatchGroup "629787c85fbd89bdea56c7be" $((MATCH_ID + (7*6))) "H" "Portugal" "Ghana" "Uruguay" "Sydkorea"
+  createMatchGroup "6314540c64324ae1716108fc" $((MATCH_ID + (0*6))) "A" "Qatar" "Ecuador" "Senegal" "Nederländerna"
+  createMatchGroup "6314540c64324ae1716108fc" $((MATCH_ID + (1*6))) "B" "England" "Iran" "USA" "Wales"
+  createMatchGroup "6314540c64324ae1716108fc" $((MATCH_ID + (2*6))) "C" "Argentina" "Saudiarabien" "Mexiko" "Poland"
+  createMatchGroup "6314540c64324ae1716108fc" $((MATCH_ID + (3*6))) "D" "Frankrike" "Australien" "Danmark" "Tunisen"
+  createMatchGroup "6314540c64324ae1716108fc" $((MATCH_ID + (4*6))) "E" "Spanien" "CostaRica" "Tyskland" "Japan"
+  createMatchGroup "6314540c64324ae1716108fc" $((MATCH_ID + (5*6))) "F" "Belgien" "Kanada" "Morocko" "Kroatien"
+  createMatchGroup "6314540c64324ae1716108fc" $((MATCH_ID + (6*6))) "G" "Brasilien" "Serbien" "Schweiz" "Kamerun"
+  createMatchGroup "6314540c64324ae1716108fc" $((MATCH_ID + (7*6))) "H" "Portugal" "Ghana" "Uruguay" "Sydkorea"
 
 
 
-  createMatchInfo "629787c85fbd89bdea56c7be" 
+  createMatchInfo "6314540c64324ae1716108fc" 
 
-  echo "629787c85fbd89bdea56c7be"
+  echo "6314540c64324ae1716108fc"
 }
 
 run

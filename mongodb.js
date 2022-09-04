@@ -1,7 +1,7 @@
 import { MongoClient } from "mongodb";
 
-const uri =
-  "mongodb+srv://carcro:8Pisn4PnWdqVnzVb@cluster0.y9hpyyt.mongodb.net/?";
+const uri = process.env.MONGODB_URI;
+
 const options = {
   useUnifiedTopology: true,
   useNewUrlParser: true,

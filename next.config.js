@@ -13,8 +13,4 @@ function interceptStdout(text) {
 intercept(interceptStdout);
 module.exports = {
   reactStrictMode: true,
-  env: {
-    mongodburl:
-      "mongodb+srv://carcro:8Pisn4PnWdqVnzVb@cluster0.y9hpyyt.mongodb.net/?",
-  },
 };

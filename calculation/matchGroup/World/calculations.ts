@@ -1,58 +1,55 @@
-import { MatchResult } from "../../matchResult";
-import { TeamResult } from "../../teamResult";
-import { Team } from "../../team";
-import { RankedGroup } from "../../rankedGroup";
-import { Match } from "../../match";
+import { Match } from "../../types/match";
+import { MatchResult } from "../../types/matchResult";
+import { RankedGroup } from "../../types/rankedGroup";
+import { Team } from "../../types/team";
+import { TeamResult } from "../../types/teamResult";
 import { calculateInnerTeamRanking } from "./innerTeamRanking";
 
-export function calculateGroupOf16(
-  rankedGroups: RankedGroup[],
-  bestOfThirds: Team[]
-): Match[] {
-  if (rankedGroups.reduce((acc, x) => acc + x.teams.length, 0) < 24) {
+export function calculateGroupOf16(rankedGroups: RankedGroup[]): Match[] {
+  if (rankedGroups.reduce((acc, x) => acc + x.teams.length, 0) < 32) {
     return [];
   }
 
   return [
     {
-      matchId: 40,
-      team1: rankedGroups[1].teams[0],
-      team2: bestOfThirds[0],
+      matchId: 49,
+      team1: rankedGroups[0].teams[0],
+      team2: rankedGroups[1].teams[1],
     },
     {
-      matchId: 38,
-      team1: rankedGroups[0].teams[0],
+      matchId: 50,
+      team1: rankedGroups[2].teams[0],
+      team2: rankedGroups[3].teams[1],
+    },
+    {
+      matchId: 51,
+      team1: rankedGroups[1].teams[0],
+      team2: rankedGroups[0].teams[1],
+    },
+    {
+      matchId: 52,
+      team1: rankedGroups[3].teams[0],
       team2: rankedGroups[2].teams[1],
     },
     {
-      matchId: 42,
-      team1: rankedGroups[5].teams[0],
-      team2: bestOfThirds[3],
-    },
-    {
-      matchId: 41,
-      team1: rankedGroups[3].teams[1],
-      team2: rankedGroups[4].teams[1],
-    },
-    {
-      matchId: 44,
+      matchId: 53,
       team1: rankedGroups[4].teams[0],
-      team2: bestOfThirds[2],
-    },
-    {
-      matchId: 43,
-      team1: rankedGroups[3].teams[0],
       team2: rankedGroups[5].teams[1],
     },
     {
-      matchId: 39,
-      team1: rankedGroups[2].teams[0],
-      team2: bestOfThirds[1],
+      matchId: 54,
+      team1: rankedGroups[6].teams[0],
+      team2: rankedGroups[7].teams[1],
     },
     {
-      matchId: 37,
-      team1: rankedGroups[0].teams[1],
-      team2: rankedGroups[1].teams[1],
+      matchId: 55,
+      team1: rankedGroups[5].teams[0],
+      team2: rankedGroups[4].teams[1],
+    },
+    {
+      matchId: 56,
+      team1: rankedGroups[7].teams[0],
+      team2: rankedGroups[6].teams[1],
     },
   ];
 }
@@ -64,24 +61,24 @@ export function calculateGroupOf8(teams: Team[]): Match[] {
 
   return [
     {
-      matchId: 45,
-      team1: teams[2],
-      team2: teams[3],
-    },
-    {
-      matchId: 46,
+      matchId: 57,
       team1: teams[0],
       team2: teams[1],
     },
     {
-      matchId: 47,
-      team1: teams[6],
-      team2: teams[7],
-    },
-    {
-      matchId: 48,
+      matchId: 58,
       team1: teams[4],
       team2: teams[5],
+    },
+    {
+      matchId: 59,
+      team1: teams[2],
+      team2: teams[3],
+    },
+    {
+      matchId: 60,
+      team1: teams[6],
+      team2: teams[7],
     },
   ];
 }
@@ -93,14 +90,14 @@ export function calculateSemiFinals(teams: Team[]): Match[] {
 
   return [
     {
-      matchId: 49,
+      matchId: 61,
       team1: teams[1],
       team2: teams[0],
     },
     {
-      matchId: 50,
-      team1: teams[3],
-      team2: teams[2],
+      matchId: 62,
+      team1: teams[2],
+      team2: teams[3],
     },
   ];
 }
@@ -112,7 +109,7 @@ export function calculateFinal(teams: Team[]): Match[] {
 
   return [
     {
-      matchId: 51,
+      matchId: 63,
       team1: teams[0],
       team2: teams[1],
     },
@@ -130,6 +127,10 @@ export function calculateTeamRanking(
   results.sort((a, b) => {
     if (a.points !== b.points) {
       return b.points - a.points;
+    } else if (a.diff !== b.diff) {
+      return b.diff - a.diff;
+    } else if (a.goals !== b.goals) {
+      return b.goals - a.goals;
     } else {
       if (innerRanking.findIndex((x) => x._id === a.team._id) < 0) {
         return 1;
@@ -143,4 +144,3 @@ export function calculateTeamRanking(
 
   return results;
 }
-

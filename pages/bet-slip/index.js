@@ -55,7 +55,7 @@ const BetSlipContainer = () => {
   });
 
   const isValidBet = () => {
-    if (betslip.length !== 51) {
+    if (betslip.length !== 63) {
       setError("Alla matcher måste vara ifyllda");
       return false;
     }

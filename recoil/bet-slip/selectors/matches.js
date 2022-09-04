@@ -25,18 +25,17 @@ export const getGroupOf16 = selector({
     const betSlip = get(betSlipState);
 
     const allGroupMatchesSet =
-      betSlip.filter((match) => match.matchId <= 36).length >= 36;
+      betSlip.filter((match) => match.matchId <= 48).length >= 48;
 
     const teamRankings = groupResults
       .map((gr) => calculateTeamRanking(gr.results, betSlip))
       .map((results) => ({ teams: results.map((result) => result.team) }));
-    const bestOfThirds = getBestOfThirds(groupResults, betSlip);
+    /*     const bestOfThirds = getBestOfThirds(groupResults, betSlip);
+     */
 
     return {
       name: "Åttondelsfinaler",
-      matches: allGroupMatchesSet
-        ? calculateGroupOf16(teamRankings, bestOfThirds)
-        : [],
+      matches: allGroupMatchesSet ? calculateGroupOf16(teamRankings) : [],
       finalsStage: true,
     };
   },

@@ -1,11 +1,12 @@
-import { Team } from "./../team";
 import { GroupResult } from "./groupResult";
-import { MatchGroupScores } from "./../matchGroupScores";
-import { MatchGroup } from "./../matchGroup";
-import { MatchResult } from "./../matchResult";
-import { RawMatchResult } from "./../rawMatchResult";
-import { Match } from "../match";
+
 import { calculateTeamResults } from "../matchGroup/common";
+import { MatchResult } from "../types/matchResult";
+import { RawMatchResult } from "../types/rawMatchResult";
+import { MatchGroup } from "../types/matchGroup";
+import { Match } from "../types/match";
+import { MatchGroupScores } from "../types/matchGroupScores";
+import { Team } from "../types/team";
 
 export function getScores(
   matchResults: RawMatchResult[],

@@ -1,51 +1,71 @@
-{"date":"6-11-2021","time":"21:00","arena":"Stadio Olimpico","city":"Rom","team1":"Turkiet","team2":"Italien","matchGroupId":"A","matchId":1}
-{"date":"6-12-2021","time":"15:00","arena":"Bakı Olimpiya Stadionu","city":"Baku","team1":"Wales","team2":"Schweiz","matchGroupId":"A","matchId":6}
-{"date":"6-16-2021","time":"18:00","arena":"Bakı Olimpiya Stadionu","city":"Baku","team1":"Turkiet","team2":"Wales","matchGroupId":"A","matchId":2}
-{"date":"6-16-2021","time":"21:00","arena":"Stadio Olimpico","city":"Rom","team1":"Italien","team2":"Schweiz","matchGroupId":"A","matchId":5}
-{"date":"6-20-2021","time":"18:00","arena":"Stadio Olimpico","city":"Rom","team1":"Italien","team2":"Wales","matchGroupId":"A","matchId":4}
-{"date":"6-20-2021","time":"18:00","arena":"Bakı Olimpiya Stadionu","city":"Baku","team1":"Schweiz","team2":"Turkiet","matchGroupId":"A","matchId":3}
-{"date":"6-12-2021","time":"18:00","arena":"Parken","city":"Köpenhamn","team1":"Danmark","team2":"Finland","matchGroupId":"B","matchId":7}
-{"date":"6-12-2021","time":"21:00","arena":"Saint Petersburg Stadium","city":"St. Petersburg","team1":"Belgien","team2":"Ryssland","matchGroupId":"B","matchId":12}
-{"date":"6-16-2021","time":"15:00","arena":"Saint Petersburg Stadium","city":"St. Petersburg","team1":"Finland","team2":"Ryssland","matchGroupId":"B","matchId":11}
-{"date":"6-17-2021","time":"18:00","arena":"Parken","city":"Köpenhamn","team1":"Danmark","team2":"Belgien","matchGroupId":"B","matchId":8}
-{"date":"6-21-2021","time":"21:00","arena":"Saint Petersburg Stadium","city":"St. Petersburg","team1":"Finland","team2":"Belgien","matchGroupId":"B","matchId":10}
-{"date":"6-21-2021","time":"21:00","arena":"Parken","city":"Köpenhamn","team1":"Ryssland","team2":"Danmark","matchGroupId":"B","matchId":9}
-{"date":"6-13-2021","time":"18:00","arena":"Arena Națională","city":"Bukarest","team1":"Österrike","team2":"Nordmakedonien","matchGroupId":"C","matchId":18}
-{"date":"6-13-2021","time":"21:00","arena":"Johan Cruijff Arena","city":"Amsterdam","team1":"Nederländerna","team2":"Ukraina","matchGroupId":"C","matchId":13}
-{"date":"6-17-2021","time":"15:00","arena":"Arena Națională","city":"Bukarest","team1":"Ukraina","team2":"Nordmakedonien","matchGroupId":"C","matchId":17}
-{"date":"6-17-2021","time":"21:00","arena":"Johan Cruijff Arena","city":"Amsterdam","team1":"Nederländerna","team2":"Österrike","matchGroupId":"C","matchId":14}
-{"date":"6-21-2021","time":"18:00","arena":"Arena Națională","city":"Bukarest","team1":"Ukraina","team2":"Österrike","matchGroupId":"C","matchId":16}
-{"date":"6-21-2021","time":"18:00","arena":"Johan Cruijff Arena","city":"Amsterdam","team1":"Nordmakedonien","team2":"Nederländerna","matchGroupId":"C","matchId":15}
-{"date":"6-13-2021","time":"15:00","arena":"Wembley Stadium","city":"London","team1":"England","team2":"Kroatien","matchGroupId":"D","matchId":19}
-{"date":"6-14-2021","time":"15:00","arena":"Hampden Park","city":"Glasgow","team1":"Skottland","team2":"Tjeckien","matchGroupId":"D","matchId":24}
-{"date":"6-18-2021","time":"18:00","arena":"Hampden Park","city":"Glasgow","team1":"Kroatien","team2":"Tjeckien","matchGroupId":"D","matchId":23}
-{"date":"6-18-2021","time":"21:00","arena":"Wembley Stadium","city":"London","team1":"England","team2":"Skottland","matchGroupId":"D","matchId":20}
-{"date":"6-22-2021","time":"21:00","arena":"Wembley Stadium","city":"London","team1":"Tjeckien","team2":"England","matchGroupId":"D","matchId":21}
-{"date":"6-22-2021","time":"21:00","arena":"Hampden Park","city":"Glasgow","team1":"Kroatien","team2":"Skottland","matchGroupId":"D","matchId":22}
-{"date":"6-14-2021","time":"18:00","arena":"Saint Petersburg Stadium","city":"St. Petersburg","team1":"Polen","team2":"Slovakien","matchGroupId":"E","matchId":30}
-{"date":"6-14-2021","time":"21:00","arena":"Estadio La Cartuja","city":"Sevilla","team1":"Spanien","team2":"Sverige","matchGroupId":"E","matchId":25}
-{"date":"6-18-2021","time":"15:00","arena":"Saint Petersburg Stadium","city":"St. Petersburg","team1":"Sverige","team2":"Slovakien","matchGroupId":"E","matchId":29}
-{"date":"6-19-2021","time":"21:00","arena":"Estadio La Cartuja","city":"Sevilla","team1":"Spanien","team2":"Polen","matchGroupId":"E","matchId":26}
-{"date":"6-23-2021","time":"18:00","arena":"Saint Petersburg Stadium","city":"St. Petersburg","team1":"Sverige","team2":"Polen","matchGroupId":"E","matchId":28}
-{"date":"6-23-2021","time":"18:00","arena":"Estadio La Cartuja","city":"Sevilla","team1":"Slovakien","team2":"Spanien","matchGroupId":"E","matchId":27}
-{"date":"6-15-2021","time":"18:00","arena":"Puskás Aréna","city":"Budapest","team1":"Ungern","team2":"Portugal","matchGroupId":"F","matchId":31}
-{"date":"6-15-2021","time":"21:00","arena":"Fussball Arena München","city":"München","team1":"Frankrike","team2":"Tyskland","matchGroupId":"F","matchId":36}
-{"date":"6-19-2021","time":"15:00","arena":"Puskás Aréna","city":"Budapest","team1":"Ungern","team2":"Frankrike","matchGroupId":"F","matchId":32}
-{"date":"6-19-2021","time":"18:00","arena":"Fussball Arena München","city":"München","team1":"Portugal","team2":"Tyskland","matchGroupId":"F","matchId":35}
-{"date":"6-23-2021","time":"21:00","arena":"Fussball Arena München","city":"München","team1":"Tyskland","team2":"Ungern","matchGroupId":"F","matchId":33}
-{"date":"6-23-2021","time":"21:00","arena":"Puskás Aréna","city":"Budapest","team1":"Portugal","team2":"Frankrike","matchGroupId":"F","matchId":34}
-{"date":"6-26-2021","time":"18:00","arena":"Johan Cruijff Arena","city":"Amsterdam","team1":"A2","team2":"B2","matchId":37}
-{"date":"6-26-2021","time":"21:00","arena":"Wembley Stadium","city":"London","team1":"A1","team2":"C2","matchId":38}
-{"date":"6-27-2021","time":"18:00","arena":"Puskás Aréna","city":"Budapest","team1":"C1","team2":"D/E/F3","matchId":39}
-{"date":"6-27-2021","time":"21:00","arena":"Estadio La Cartuja","city":"Sevilla","team1":"B1","team2":"A/D/E/F3","matchId":40}
-{"date":"6-28-2021","time":"18:00","arena":"Parken","city":"Köpenhamn","team1":"D2","team2":"E2","matchId":41}
-{"date":"6-28-2021","time":"21:00","arena":"Arena Națională","city":"Bukarest","team1":"F1","team2":"A/B/C3","matchId":42}
-{"date":"6-29-2021","time":"18:00","arena":"Wembley Stadium","city":"London","team1":"D1","team2":"F2","matchId":43}
-{"date":"6-29-2021","time":"21:00","arena":"Hampden Park","city":"Glasgow","team1":"E1","team2":"A/B/C/D3","matchId":44}
-{"date":"7-2-2021","time":"18:00","arena":"Saint Petersburg Stadium","city":"St. Petersburg","team1":"W41","team2":"W42","matchId":45}
-{"date":"7-2-2021","time":"21:00","arena":"Fussball Arena München","city":"München","team1":"W39","team2":"W37","matchId":46}
-{"date":"7-3-2021","time":"18:00","arena":"Bakı Olimpiya Stadionu","city":"Baku","team1":"W40","team2":"W38","matchId":47}
-{"date":"7-3-2021","time":"21:00","arena":"Stadio Olimpico","city":"Rom","team1":"W43","team2":"W44","matchId":48}
-{"date":"7-6-2021","time":"21:00","arena":"Wembley Stadium","city":"London","team1":"W46","team2":"W45","matchId":49}
-{"date":"7-7-2021","time":"21:00","arena":"Wembley Stadium","city":"London","team1":"W48","team2":"W47","matchId":50}
-{"date":"7-11-2021","time":"21:00","arena":"Wembley Stadium","city":"London","team1":"W49","team2":"W50","matchId":51}
+{"date":"11-20-2022","time":"19:00","arena":"Al Bayt Stadium","city":"Al Khor","team1":"Qatar","team2":"Ecuador","matchGroupId":"A","matchId":1}
+{"date":"6-12-2022","time":"15:00","arena":"Bakı Olimpiya Stadionu","city":"Baku","team1":"Wales","team2":"Schweiz","matchGroupId":"A","matchId":6}
+{"date":"11-21-2022","time":"19:00","arena":"Al Thumama Stadium","city":"Doha","team1":"Senegal","team2":"Nederländerna","matchGroupId":"A","matchId":2}
+{"date":"6-16-2022","time":"21:00","arena":"Stadio Olimpico","city":"Rom","team1":"Italien","team2":"Schweiz","matchGroupId":"A","matchId":5}
+{"date":"6-20-2022","time":"18:00","arena":"Stadio Olimpico","city":"Rom","team1":"Italien","team2":"Wales","matchGroupId":"A","matchId":4}
+{"date":"6-20-2022","time":"18:00","arena":"Bakı Olimpiya Stadionu","city":"Baku","team1":"Schweiz","team2":"Turkiet","matchGroupId":"A","matchId":3}
+
+{"date":"6-12-2022","time":"18:00","arena":"Parken","city":"Köpenhamn","team1":"Danmark","team2":"Finland","matchGroupId":"B","matchId":7}
+{"date":"6-12-2022","time":"21:00","arena":"Saint Petersburg Stadium","city":"St. Petersburg","team1":"Belgien","team2":"Ryssland","matchGroupId":"B","matchId":12}
+{"date":"6-16-2022","time":"15:00","arena":"Saint Petersburg Stadium","city":"St. Petersburg","team1":"Finland","team2":"Ryssland","matchGroupId":"B","matchId":11}
+{"date":"6-17-2022","time":"18:00","arena":"Parken","city":"Köpenhamn","team1":"Danmark","team2":"Belgien","matchGroupId":"B","matchId":8}
+{"date":"6-21-2022","time":"21:00","arena":"Saint Petersburg Stadium","city":"St. Petersburg","team1":"Finland","team2":"Belgien","matchGroupId":"B","matchId":10}
+{"date":"6-21-2022","time":"21:00","arena":"Parken","city":"Köpenhamn","team1":"Ryssland","team2":"Danmark","matchGroupId":"B","matchId":9}
+
+{"date":"6-13-2022","time":"18:00","arena":"Arena Națională","city":"Bukarest","team1":"Österrike","team2":"Nordmakedonien","matchGroupId":"C","matchId":18}
+{"date":"6-13-2022","time":"21:00","arena":"Johan Cruijff Arena","city":"Amsterdam","team1":"Nederländerna","team2":"Ukraina","matchGroupId":"C","matchId":13}
+{"date":"6-17-2022","time":"15:00","arena":"Arena Națională","city":"Bukarest","team1":"Ukraina","team2":"Nordmakedonien","matchGroupId":"C","matchId":17}
+{"date":"6-17-2022","time":"21:00","arena":"Johan Cruijff Arena","city":"Amsterdam","team1":"Nederländerna","team2":"Österrike","matchGroupId":"C","matchId":14}
+{"date":"6-21-2022","time":"18:00","arena":"Arena Națională","city":"Bukarest","team1":"Ukraina","team2":"Österrike","matchGroupId":"C","matchId":16}
+{"date":"6-21-2022","time":"18:00","arena":"Johan Cruijff Arena","city":"Amsterdam","team1":"Nordmakedonien","team2":"Nederländerna","matchGroupId":"C","matchId":15}
+
+{"date":"6-13-2022","time":"15:00","arena":"Wembley Stadium","city":"London","team1":"England","team2":"Kroatien","matchGroupId":"D","matchId":19}
+{"date":"6-14-2022","time":"15:00","arena":"Hampden Park","city":"Glasgow","team1":"Skottland","team2":"Tjeckien","matchGroupId":"D","matchId":24}
+{"date":"6-18-2022","time":"18:00","arena":"Hampden Park","city":"Glasgow","team1":"Kroatien","team2":"Tjeckien","matchGroupId":"D","matchId":23}
+{"date":"6-18-2022","time":"21:00","arena":"Wembley Stadium","city":"London","team1":"England","team2":"Skottland","matchGroupId":"D","matchId":20}
+{"date":"6-22-2022","time":"21:00","arena":"Wembley Stadium","city":"London","team1":"Tjeckien","team2":"England","matchGroupId":"D","matchId":21}
+{"date":"6-22-2022","time":"21:00","arena":"Hampden Park","city":"Glasgow","team1":"Kroatien","team2":"Skottland","matchGroupId":"D","matchId":22}
+
+{"date":"6-14-2022","time":"18:00","arena":"Saint Petersburg Stadium","city":"St. Petersburg","team1":"Polen","team2":"Slovakien","matchGroupId":"E","matchId":30}
+{"date":"6-14-2022","time":"21:00","arena":"Estadio La Cartuja","city":"Sevilla","team1":"Spanien","team2":"Sverige","matchGroupId":"E","matchId":25}
+{"date":"6-18-2022","time":"15:00","arena":"Saint Petersburg Stadium","city":"St. Petersburg","team1":"Sverige","team2":"Slovakien","matchGroupId":"E","matchId":29}
+{"date":"6-19-2022","time":"21:00","arena":"Estadio La Cartuja","city":"Sevilla","team1":"Spanien","team2":"Polen","matchGroupId":"E","matchId":26}
+{"date":"6-23-2022","time":"18:00","arena":"Saint Petersburg Stadium","city":"St. Petersburg","team1":"Sverige","team2":"Polen","matchGroupId":"E","matchId":28}
+{"date":"6-23-2022","time":"18:00","arena":"Estadio La Cartuja","city":"Sevilla","team1":"Slovakien","team2":"Spanien","matchGroupId":"E","matchId":27}
+
+{"date":"6-15-2022","time":"18:00","arena":"Puskás Aréna","city":"Budapest","team1":"Ungern","team2":"Portugal","matchGroupId":"F","matchId":31}
+{"date":"6-15-2022","time":"21:00","arena":"Fussball Arena München","city":"München","team1":"Frankrike","team2":"Tyskland","matchGroupId":"F","matchId":36}
+{"date":"6-19-2022","time":"15:00","arena":"Puskás Aréna","city":"Budapest","team1":"Ungern","team2":"Frankrike","matchGroupId":"F","matchId":32}
+{"date":"6-19-2022","time":"18:00","arena":"Fussball Arena München","city":"München","team1":"Portugal","team2":"Tyskland","matchGroupId":"F","matchId":35}
+{"date":"6-23-2022","time":"21:00","arena":"Fussball Arena München","city":"München","team1":"Tyskland","team2":"Ungern","matchGroupId":"F","matchId":33}
+{"date":"6-23-2022","time":"21:00","arena":"Puskás Aréna","city":"Budapest","team1":"Portugal","team2":"Frankrike","matchGroupId":"F","matchId":34}
+
+{"date":"6-23-2022","time":"21:00","arena":"Puskás Aréna","city":"Budapest","team1":"Schweiz","team2":"Kamerun","matchGroupId":"G","matchId":37}
+{"date":"6-23-2022","time":"21:00","arena":"Puskás Aréna","city":"Budapest","team1":"Brasilien","team2":"Serbien","matchGroupId":"G","matchId":38}
+{"date":"6-23-2022","time":"21:00","arena":"Puskás Aréna","city":"Budapest","team1":"Kamerun","team2":"Serbien","matchGroupId":"G","matchId":39}
+{"date":"6-23-2022","time":"21:00","arena":"Puskás Aréna","city":"Budapest","team1":"Brasilien","team2":"Schweiz","matchGroupId":"G","matchId":40}
+{"date":"6-23-2022","time":"21:00","arena":"Puskás Aréna","city":"Budapest","team1":"Serbien","team2":"Schweiz","matchGroupId":"G","matchId":41}
+{"date":"6-23-2022","time":"21:00","arena":"Puskás Aréna","city":"Budapest","team1":"Kamerun","team2":"Brasilien","matchGroupId":"G","matchId":42}
+
+{"date":"6-23-2022","time":"21:00","arena":"Puskás Aréna","city":"Budapest","team1":"Uruguay","team2":"Sydkorea","matchGroupId":"H","matchId":43}
+{"date":"6-23-2022","time":"21:00","arena":"Puskás Aréna","city":"Budapest","team1":"Portugal","team2":"Ghana","matchGroupId":"H","matchId":44}
+{"date":"6-23-2022","time":"21:00","arena":"Puskás Aréna","city":"Budapest","team1":"Sydkorea","team2":"Ghana","matchGroupId":"H","matchId":45}
+{"date":"6-23-2022","time":"21:00","arena":"Puskás Aréna","city":"Budapest","team1":"Portugal","team2":"Uruguay","matchGroupId":"H","matchId":46}
+{"date":"6-23-2022","time":"21:00","arena":"Puskás Aréna","city":"Budapest","team1":"Ghana","team2":"Uruguay","matchGroupId":"H","matchId":47}
+{"date":"6-23-2022","time":"21:00","arena":"Puskás Aréna","city":"Budapest","team1":"Sydkorea","team2":"Ghana","matchGroupId":"H","matchId":48}
+
+{"date":"6-26-2022","time":"18:00","arena":"Johan Cruijff Arena","city":"Amsterdam","team1":"A2","team2":"B2","matchId":49}
+{"date":"6-26-2022","time":"21:00","arena":"Wembley Stadium","city":"London","team1":"A1","team2":"C2","matchId":50}
+{"date":"6-27-2022","time":"18:00","arena":"Puskás Aréna","city":"Budapest","team1":"C1","team2":"D/E/F3","matchId":51}
+{"date":"6-27-2022","time":"21:00","arena":"Estadio La Cartuja","city":"Sevilla","team1":"B1","team2":"A/D/E/F3","matchId":52}
+{"date":"6-28-2022","time":"18:00","arena":"Parken","city":"Köpenhamn","team1":"D2","team2":"E2","matchId":53}
+{"date":"6-28-2022","time":"21:00","arena":"Arena Națională","city":"Bukarest","team1":"F1","team2":"A/B/C3","matchId":54}
+{"date":"6-29-2022","time":"18:00","arena":"Wembley Stadium","city":"London","team1":"D1","team2":"F2","matchId":55}
+{"date":"6-29-2022","time":"21:00","arena":"Hampden Park","city":"Glasgow","team1":"E1","team2":"A/B/C/D3","matchId":56}
+{"date":"7-2-2022","time":"18:00","arena":"Saint Petersburg Stadium","city":"St. Petersburg","team1":"W41","team2":"W42","matchId":57}
+{"date":"7-2-2022","time":"21:00","arena":"Fussball Arena München","city":"München","team1":"W39","team2":"W37","matchId":58}
+{"date":"7-3-2022","time":"18:00","arena":"Bakı Olimpiya Stadionu","city":"Baku","team1":"W40","team2":"W38","matchId":59}
+{"date":"7-3-2022","time":"21:00","arena":"Stadio Olimpico","city":"Rom","team1":"W43","team2":"W44","matchId":60}
+{"date":"7-6-2022","time":"21:00","arena":"Wembley Stadium","city":"London","team1":"W46","team2":"W45","matchId":61}
+{"date":"7-7-2022","time":"21:00","arena":"Wembley Stadium","city":"London","team1":"W48","team2":"W47","matchId":62}
+{"date":"7-11-2022","time":"21:00","arena":"Wembley Stadium","city":"London","team1":"W49","team2":"W50","matchId":63}
