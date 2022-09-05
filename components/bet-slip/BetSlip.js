@@ -55,7 +55,7 @@ const BetSlip = ({ mode, bettingAllowed, handleSave, error }) => {
       {mode !== "placedBet" && (
         <div className="mx-auto w-[300px] md:w-[500px] rounded-sm px-3 py-4 shadow-lg bg-white flex flex-col space-y-3 ">
           <h1 className="text-center text-xl">
-            Lägg tips för Europamästerskap i fotboll 2021
+            Lägg tips för Världsmästerskapet i fotboll 2022
           </h1>
           {
             <div className="flex justify-center flex-col space-y-2">
