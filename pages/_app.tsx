@@ -7,6 +7,9 @@ import { ReactQueryDevtools } from "react-query/devtools";
 import Navbar from "../components/Navbar";
 import { Suspense } from "react";
 import { SessionProvider } from "next-auth/react";
+import Spinner from "../components/Spinner";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   const queryClient = new QueryClient();
@@ -20,7 +23,14 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
     <RecoilRoot>
       <SessionProvider session={session}>
         <QueryClientProvider client={queryClient}>
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense
+            fallback={
+              <div className="w-screen h-screen grid place-items-center">
+                <Spinner width={60} height={60} />
+              </div>
+            }
+          >
+            <ToastContainer />
             <Navbar />
             <Component {...pageProps} />
           </Suspense>

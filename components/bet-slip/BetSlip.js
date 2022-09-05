@@ -101,11 +101,6 @@ const BetSlip = ({ mode, bettingAllowed, handleSave, error }) => {
                   Det är inte längre tillåtet att uppdatera ditt tips.
                 </div>
               )}
-              {error && (
-                <div className="rounded-lg my-3 py-1 px-2 ml-3 text-red-500 font-bold">
-                  {error}
-                </div>
-              )}
             </div>
           )}
         </div>

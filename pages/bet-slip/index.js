@@ -19,7 +19,18 @@ const BetSlipContainer = () => {
   const setFromBetslip = useSetRecoilState(setFromBetslipState);
   const goalscorer = useRecoilValue(goalscorerState);
   const betslip = useRecoilValue(betSlipState);
-  const [error, setError] = useState(false);
+
+  const errorToast = (message) => {
+    toast.error(message, {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  };
 
   useQuery(
     "betslip",
@@ -56,12 +67,12 @@ const BetSlipContainer = () => {
 
   const isValidBet = () => {
     if (betslip.length !== 63) {
-      setError("Alla matcher måste vara ifyllda");
+      errorToast("Alla matcher måste vara ifyllda");
       return false;
     }
 
     if (betslip.some((bet) => bet.team1Score === "" || bet.team2Score === "")) {
-      setError("Alla matcher måste vara ifyllda");
+      errorToast("Alla matcher måste vara ifyllda");
       return false;
     }
 
@@ -69,12 +80,12 @@ const BetSlipContainer = () => {
       betslip[50].team1Score === betslip[50].team2Score &&
       !betslip[50].penaltyWinner
     ) {
-      setError("Alla matcher måste vara ifyllda");
+      errorToast("Alla matcher måste vara ifyllda");
       return false;
     }
 
     if (!goalscorer) {
-      setError("Skyttekung saknas");
+      errorToast("Skyttekung saknas");
       return false;
     }
     return true;
@@ -97,6 +108,15 @@ const BetSlipContainer = () => {
         }),
         goalscorer: goalscorer !== undefined ? goalscorer._id : undefined,
       });
+      toast.success("Spel sparat!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     }
   };
 
@@ -105,7 +125,6 @@ const BetSlipContainer = () => {
       bettingAllowed={true}
       handleSave={submitBet}
       mode={"betslip"}
-      error={error}
     />
   );
 };

@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
 import HighScoreTable from "../../components/user-tournament-page/HighScoreTable";
 import { getHighscore } from "../../services/userTournamentService";
+import Spinner from "../../components/Spinner";
 
 const DynamicUserTournamentPanel = dynamic(
   () => import("../../components/user-tournament-page/UserTournamentPanel"),
@@ -16,12 +17,16 @@ const DynamicUserTournamentPanel = dynamic(
 const UserTournamentPage = () => {
   const router = useRouter();
   const { id } = router.query;
-  const { data, isLoading } = useQuery(["highscoreData", id], () =>
-    getHighscore(id)
+  const { data = [], isLoading } = useQuery(
+    ["highscoreData", id],
+    () => getHighscore(id),
+    {
+      enabled: Boolean(id),
+    }
   );
 
   if (isLoading) {
-    return <div>isLoading</div>;
+    return <Spinner />;
   }
 
   return (
