@@ -4,6 +4,7 @@ import Championship from "../../../models/championship";
 import BetSlip from "../../../models/bet-slip";
 import { calculateGroupResults, calculatePoints } from "../../../calculation";
 import connectDB from "../../../middleware/mongodb";
+import { getMatchPoint } from "../../../calculation/points/World/pointCalculation";
 
 function handler(req, res) {
   if (req.method === "POST") {
@@ -91,6 +92,19 @@ const saveAnswerSheet = async (req, res) => {
       betSlip.bets,
       championship.matchGroups
     );
+
+    betSlip.bets.forEach(async (bet) => {
+      const outcomeResult = answerSheet.results.find(
+        (x) => x.matchId === bet.matchId
+      );
+
+      const matchPoint = getMatchPoint(outcomeResult, bet);
+
+      console.log("MP", matchPoint);
+      bet.points = matchPoint;
+
+      await bet.save();
+    });
 
     const points = calculatePoints(
       betSlipGroupResult,

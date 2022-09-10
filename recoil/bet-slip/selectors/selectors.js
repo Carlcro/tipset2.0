@@ -55,6 +55,7 @@ export const setFromBetslipState = selector({
         team2Score: match.team2Score,
         team1: match.team1,
         team2: match.team2,
+        points: match.points,
       };
       if (match.penaltyWinner) {
         newBet.penaltyWinner = match.penaltyWinner;

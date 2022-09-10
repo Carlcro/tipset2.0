@@ -14,11 +14,6 @@ import "react-toastify/dist/ReactToastify.css";
 function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   const queryClient = new QueryClient();
 
-  queryClient.prefetchQuery("user", async () => {
-    const data = await getUser();
-    return data;
-  });
-
   return (
     <RecoilRoot>
       <SessionProvider session={session}>

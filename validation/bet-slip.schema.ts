@@ -1,6 +1,7 @@
 import * as Joi from "@hapi/joi";
 //@ts-ignore
 import ObjectId from "joi-objectid";
+import { join } from "path";
 
 export const betSlipIdSchema = Joi.object({
   betSlipId: ObjectId(Joi)().required(),
@@ -15,6 +16,7 @@ export const betSlipSchema = Joi.object({
       team1: ObjectId(Joi)().required(),
       team2: ObjectId(Joi)().required(),
       penaltyWinner: ObjectId(Joi)(),
+      points: Joi.number(),
     }).required()
   ),
   goalscorer: ObjectId(Joi)().required(),

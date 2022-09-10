@@ -67,7 +67,7 @@ const createBetSlip = async (req, res) => {
     .populate({
       path: "bets",
       model: "Bet",
-      populate: [{ path: "team1 team2 penaltyWinner" }],
+      populate: [{ path: "team1 team2 penaltyWinner points" }],
     })
     .populate({ path: "goalscorer", model: "Player" });
 

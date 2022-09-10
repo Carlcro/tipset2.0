@@ -40,7 +40,6 @@ const PlacedBets = () => {
         <h1 className="text-lg">{name}</h1>
       </div>
       <DynamicBetslip bettingAllowed={true} mode={"placedBet"}></DynamicBetslip>
-      ;
     </div>
   );
 };

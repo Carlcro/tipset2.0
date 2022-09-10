@@ -75,7 +75,7 @@ const BetSlip = ({ mode, bettingAllowed, handleSave, error }) => {
           }
         </div>
       )}
-      <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr] mx-5 lg:mx-20">
+      <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr] mx-1 lg:mx-20">
         <div className="mx-auto">
           {championship.matchGroups.map((group) => show(group))}
           {show(groupOf16)}

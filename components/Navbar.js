@@ -85,7 +85,7 @@ const Navbar = () => {
 
   return (
     <nav
-      className="transparent border-b border-black p-3 mb-4 flex justify-end sm:justify-start"
+      className="border-b border-black p-3 mb-4 flex justify-end sm:justify-start"
       role="navigation"
       aria-label="main navigation"
     >
