@@ -1,5 +1,7 @@
 import connectDB from "../../../middleware/mongodb";
 import User from "../../../models/user";
+import { unstable_getServerSession } from "next-auth/next";
+import { authOptions } from "../auth/[...nextauth]";
 
 function handler(req, res) {
   if (req.method === "POST") {
@@ -12,7 +14,6 @@ function handler(req, res) {
 }
 
 export default connectDB(handler);
-
 
 const createUser = async (req, res) => {
   const user = new User({
@@ -53,11 +54,14 @@ const updateUserName = async (req, res) => {
 };
 
 const getUser = async (req, res) => {
-  let user = await User.findOne({ userId: "123" });
+  const session = await unstable_getServerSession(req, res, authOptions);
+
+  let user = await User.findOne({ email: session?.user.email });
 
   if (!user) {
     return res.status(404).send("The user with the given ID was not found.");
   } else {
+    console.log("heh", user);
     res.status(200).send(user);
   }
 };

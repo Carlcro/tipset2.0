@@ -2,7 +2,7 @@ import { Schema, model, models } from "mongoose";
 import BetSlip from "./bet-slip";
 
 var UserSchema = new Schema({
-  userId: String,
+  password: String,
   fullName: String,
   firstName: String,
   lastName: String,

@@ -1,14 +1,13 @@
 import http from "./httpService";
 
 interface IUser {
-  userId: String;
   firstName: String;
   lastName: String;
   email: String;
 }
 
 export function getUser() {
-  return mockUserResponse();
+  return http.get("/api/users");
 }
 
 export function createUser(user: IUser) {
@@ -25,9 +24,3 @@ export function updateUserName({
   return http.put("/api/users", { firstName, lastName });
 }
 
-const mockUser = {
-  firstName: "Carl",
-  lastName: "Cronsioe",
-};
-
-const mockUserResponse = () => Promise.resolve(mockUser);

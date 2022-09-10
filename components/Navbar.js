@@ -4,6 +4,9 @@ import { forwardRef } from "react";
 import { Menu } from "@headlessui/react";
 import Link from "next/link";
 import LoginButton from "./login-button";
+import { useQuery } from "react-query";
+import { useSession } from "next-auth/react";
+import { getUser } from "../services/userService";
 
 const MyLink = forwardRef((props, ref) => {
   let { href, children, ...rest } = props;
@@ -69,19 +72,16 @@ const routesLoggedIn = (user) => [
 ];
 
 const Navbar = () => {
-  const { isAuthenticated, authUser } = {
-    isAuthenticated: true,
-    authUser: { id: 123 },
-  };
+  const { data: session, status } = useSession();
 
-  /* const { data: user } = useQuery(
+  const { data: user } = useQuery(
     "user",
     async () => {
       const { data } = await getUser();
       return data;
     },
-    { staleTime: Infinity, enabled: authUser }
-  ); */
+    { staleTime: Infinity, enabled: status === "authenticated" }
+  );
 
   return (
     <nav
@@ -110,6 +110,7 @@ const Navbar = () => {
           <Link href="/answer-sheet">
             <a>Answer Sheet</a>
           </Link>
+          <LoginButton></LoginButton>
         </div>
       </div>
     </nav>

@@ -13,6 +13,7 @@
     "@types/ramda": "^0.28.15",
     "axios": "^0.24.0",
     "babel-plugin-superjson-next": "^0.4.3",
+    "bcryptjs": "^2.4.3",
     "date-fns": "^2.27.0",
     "intercept-stdout": "^0.1.2",
     "joi": "^17.6.0",
