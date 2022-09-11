@@ -4,7 +4,7 @@ import { getPointsFromAdvancement } from "../../recoil/bet-slip/selectors/select
 import Match from "../Match";
 
 function MatchGroup(group, matchInfos, mode) {
-  const points = useRecoilValue(getPointsFromAdvancement(group.name));
+  const points = 0; //useRecoilValue(getPointsFromAdvancement(group.name));
 
   const matchIds = group.matches.map((m) => m.matchId);
 
