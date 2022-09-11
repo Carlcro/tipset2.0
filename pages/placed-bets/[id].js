@@ -22,18 +22,17 @@ const PlacedBets = () => {
   const router = useRouter();
   const { id } = router.query;
 
-  useQuery(["placedBets", id], async () => {
-    const { data } = await getPlacedBet(id);
-    if (data) {
-      setFromBetslip({
-        goalscorer: data.betSlip.goalscorer
-          ? data.betSlip.goalscorer
-          : undefined,
-        bets: [...data.betSlip.bets],
-      });
-      setName(data.name);
-    }
-  });
+  useQuery(
+    ["placedBets", id],
+    async () => {
+      const { data } = await getPlacedBet(id);
+      if (data) {
+        setFromBetslip(data.betSlip);
+        setName(data.name);
+      }
+    },
+    { enabled: Boolean(id) }
+  );
   return (
     <div className="pb-10">
       <div className="bg-white rounded-sm mx-auto px-3 py-5 w-64 flex justify-center">

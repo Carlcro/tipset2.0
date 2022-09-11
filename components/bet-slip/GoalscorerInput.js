@@ -1,7 +1,14 @@
 import React from "react";
+import { useRecoilValue } from "recoil";
+import {
+  goalscorerState,
+  pointsFromGoalscorerState,
+} from "../../recoil/bet-slip/atoms";
 import Auto from "./Auto";
 
 function GoalscorerInput({ goalscorer, handleSetGoalscorer, mode }) {
+  const points = useRecoilValue(pointsFromGoalscorerState);
+
   return (
     <div className="rounded-sm px-2 py-2 bg-white">
       <h2 className="font-semibold mb-1">Skyttekung</h2>
@@ -12,7 +19,10 @@ function GoalscorerInput({ goalscorer, handleSetGoalscorer, mode }) {
           setGoalscorer={handleSetGoalscorer}
         />
       ) : (
-        <span>{goalscorer?.name}</span>
+        <div className="flex justify-between">
+          <span>{goalscorer?.name}</span>
+          <span>{`Poäng: ${points}`}</span>
+        </div>
       )}
     </div>
   );

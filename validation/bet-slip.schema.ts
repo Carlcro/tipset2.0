@@ -17,6 +17,19 @@ export const betSlipSchema = Joi.object({
       team2: ObjectId(Joi)().required(),
       penaltyWinner: ObjectId(Joi)(),
       points: Joi.number(),
+      pointsFromAdvancement: Joi.array().items(
+        Joi.object({
+          final: Joi.string(),
+          points: Joi.number(),
+        })
+      ),
+      pointsFromGoalscorer: Joi.number(),
+      pointsFromGroup: Joi.array().items(
+        Joi.object({
+          group: Joi.string(),
+          points: Joi.number(),
+        })
+      ),
     }).required()
   ),
   goalscorer: ObjectId(Joi)().required(),

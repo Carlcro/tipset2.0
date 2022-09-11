@@ -1,4 +1,10 @@
-import { betSlipState, goalscorerState } from "../../../recoil/bet-slip/atoms";
+import {
+  betSlipState,
+  goalscorerState,
+  pointsFromAdvancementState,
+  pointsFromGoalscorerState,
+  pointsFromGroupState,
+} from "../../../recoil/bet-slip/atoms";
 import { selector, selectorFamily } from "recoil";
 import {
   calculateGroupResults,
@@ -63,11 +69,44 @@ export const setFromBetslipState = selector({
 
       betSlip.push(newBet);
     });
+    set(pointsFromGroupState, newValue.pointsFromGroup);
+    set(pointsFromAdvancementState, newValue.pointsFromAdvancement);
+    set(pointsFromGoalscorerState, newValue.pointsFromGoalscorer);
     set(betSlipState, betSlip);
     set(goalscorerState, newValue.goalscorer);
   },
-
   get: () => {},
+});
+
+export const getPointsFromAdvancement = selectorFamily({
+  key: "getPointsFromAdvancement",
+  get:
+    (final) =>
+    ({ get }) => {
+      const pointsFromAdvancement = get(pointsFromAdvancementState)?.find(
+        (x) => x.final === final
+      );
+      if (pointsFromAdvancement) {
+        return pointsFromAdvancement.points;
+      }
+      return null;
+    },
+});
+
+export const getPointsFromGroup = selectorFamily({
+  key: "getPointsFromGroup",
+  get:
+    (groupName) =>
+    ({ get }) => {
+      const groupPoints = get(pointsFromGroupState)?.find(
+        (x) => x.group === groupName
+      );
+      if (groupPoints) {
+        return groupPoints.points;
+      } else {
+        return null;
+      }
+    },
 });
 
 export const getMatchState = selectorFamily({

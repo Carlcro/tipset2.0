@@ -2,9 +2,15 @@ import AnswerSheet from "../../../models/answer-sheet";
 import Result from "../../../models/result";
 import Championship from "../../../models/championship";
 import BetSlip from "../../../models/bet-slip";
-import { calculateGroupResults, calculatePoints } from "../../../calculation";
 import connectDB from "../../../middleware/mongodb";
-import { getMatchPoint } from "../../../calculation/points/World/pointCalculation";
+import {
+  calculateGroupResults,
+  calculatePoints,
+  calculatePointsFromGroup,
+  getMatchPoint,
+  calculateCorrectAdvanceTeam,
+} from "../../../calculation";
+import { calculateGoalScorer } from "../../../calculation/points/common";
 
 function handler(req, res) {
   if (req.method === "POST") {
@@ -87,11 +93,13 @@ const saveAnswerSheet = async (req, res) => {
     championship.matchGroups
   );
 
-  allBetSlips.forEach((betSlip) => {
+  allBetSlips.forEach(async (betSlip) => {
     const betSlipGroupResult = calculateGroupResults(
       betSlip.bets,
       championship.matchGroups
     );
+
+    let totalPointsFromMatches = 0;
 
     betSlip.bets.forEach(async (bet) => {
       const outcomeResult = answerSheet.results.find(
@@ -100,25 +108,57 @@ const saveAnswerSheet = async (req, res) => {
 
       const matchPoint = getMatchPoint(outcomeResult, bet);
 
-      console.log("MP", matchPoint);
+      totalPointsFromMatches += matchPoint;
+
       bet.points = matchPoint;
 
       await bet.save();
     });
+    const pointsFromGroup = betSlipGroupResult.map((groupResult, i) => {
+      return {
+        group: groupResult.name,
+        points: calculatePointsFromGroup(
+          groupResult,
+          answerSheetGroupResult[i],
+          betSlip.bets,
+          answerSheet.results
+        ),
+      };
+    });
 
-    const points = calculatePoints(
-      betSlipGroupResult,
+    betSlip.pointsFromGroup = pointsFromGroup;
+
+    const pointsFromAdvancement = calculateCorrectAdvanceTeam(
       betSlip.bets,
+      answerSheet.results
+    );
+
+    betSlip.pointsFromAdvancement = pointsFromAdvancement;
+
+    const goalScorerPoints = calculateGoalScorer(
       betSlip.goalscorer,
-      betSlip.adjustedPoints,
-      answerSheetGroupResult,
-      answerSheet.results,
       answerSheet.goalscorer
     );
 
-    betSlip.points = points;
+    betSlip.pointsFromGoalscorer = goalScorerPoints;
 
-    betSlip.save();
+    const totalPointsFromGroup = pointsFromGroup.reduce(
+      (acc, x) => acc + x.points,
+      0
+    );
+
+    const totalPointsFromAdvancement = pointsFromAdvancement.reduce(
+      (acc, x) => acc + x.points,
+      0
+    );
+
+    betSlip.points =
+      totalPointsFromMatches +
+      totalPointsFromGroup +
+      totalPointsFromAdvancement +
+      goalScorerPoints;
+
+    await betSlip.save();
   });
 
   res.status(201).end();

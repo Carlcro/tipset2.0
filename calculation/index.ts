@@ -15,7 +15,12 @@ import {
   calculateGroupResults,
   calculateSemiFinalsResults,
 } from "./results/World/results";
-import { calculatePoints } from "./points/Euro/pointCalculation";
+import {
+  calculatePoints,
+  calculatePointsFromGroup,
+  getMatchPoint,
+  calculateCorrectAdvanceTeam,
+} from "./points/World/pointCalculation";
 
 export {
   calculateGroupOf16,
@@ -30,4 +35,7 @@ export {
   calculateGroupResults,
   calculateSemiFinalsResults,
   calculatePoints,
+  calculatePointsFromGroup,
+  getMatchPoint,
+  calculateCorrectAdvanceTeam,
 };
