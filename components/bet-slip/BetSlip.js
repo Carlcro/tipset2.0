@@ -7,6 +7,7 @@ import { useRecoilValue, useSetRecoilState, useRecoilState } from "recoil";
 import TiebreakerInfo from "./TiebreakerInfo";
 import { goalscorerState } from "../../recoil/bet-slip/atoms";
 import {
+  getPointsFromAdvancement,
   resetAllBets,
   setAllMatchesState,
 } from "../../recoil/bet-slip/selectors/selectors";
@@ -40,12 +41,6 @@ const BetSlip = ({ mode, bettingAllowed, handleSave, error }) => {
     resetAllMatches(matches);
   };
 
-  const show = (stage) => {
-    return stage.matches.length > 0
-      ? MatchGroup(stage, championship.matchInfos, mode)
-      : undefined;
-  };
-
   const handleSetGoalscorer = (goalscorer) => {
     setGoalscorer(goalscorer);
   };
@@ -77,11 +72,34 @@ const BetSlip = ({ mode, bettingAllowed, handleSave, error }) => {
       )}
       <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr] mx-1 lg:mx-20">
         <div className="mx-auto">
-          {championship.matchGroups.map((group) => show(group))}
-          {show(groupOf16)}
-          {show(groupOf8)}
-          {show(semiFinals)}
-          {show(final)}
+          {championship.matchGroups.map((group) => (
+            <MatchGroup
+              group={group}
+              key={group.name}
+              matchInfos={championship.matchInfos}
+              mode={mode}
+            />
+          ))}
+          <MatchGroup
+            group={groupOf16}
+            matchInfos={championship.matchInfos}
+            mode={mode}
+          />
+          <MatchGroup
+            group={groupOf8}
+            matchInfos={championship.matchInfos}
+            mode={mode}
+          />
+          <MatchGroup
+            group={semiFinals}
+            matchInfos={championship.matchInfos}
+            mode={mode}
+          />
+          <MatchGroup
+            group={final}
+            matchInfos={championship.matchInfos}
+            mode={mode}
+          />
           <GoalscorerInput
             goalscorer={goalscorer}
             handleSetGoalscorer={handleSetGoalscorer}

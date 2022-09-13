@@ -3,14 +3,20 @@ import { useRecoilValue } from "recoil";
 import { getPointsFromAdvancement } from "../../recoil/bet-slip/selectors/selectors";
 import Match from "../Match";
 
-function MatchGroup(group, matchInfos, mode) {
-  const points = 0; //useRecoilValue(getPointsFromAdvancement(group.name));
+function MatchGroup({ group, matchInfos, mode }) {
+  // För många "?"" i den här filen. Kan snyggas till
 
-  const matchIds = group.matches.map((m) => m.matchId);
+  const points = useRecoilValue(getPointsFromAdvancement(group.name));
 
-  const matchInfosForGroup = matchInfos
-    .filter((mi) => matchIds.includes(mi.matchId))
-    .sort((a, b) => b.time - a.time);
+  const matchIds = group?.matches?.map((m) => m.matchId);
+
+  const matchInfosForGroup =
+    matchIds &&
+    matchInfos
+      ?.filter((mi) => matchIds.includes(mi.matchId))
+      .sort((a, b) => b.time - a.time);
+
+  if (!group?.matches?.length) return null;
 
   return (
     <div
@@ -21,13 +27,6 @@ function MatchGroup(group, matchInfos, mode) {
         <h2 className="font-semibold text-xl pl-2 pb-1">{`${
           group.finalsStage ? "" : "Grupp"
         } ${group.name}`}</h2>
-        {points !== null ? (
-          <div className="flex justify-between">
-            {`Poäng rätt lag vidare: ${points}`}
-          </div>
-        ) : (
-          <div />
-        )}
       </div>
       {matchInfosForGroup.map((matchInfo) => {
         const match = group.matches.find(
@@ -43,6 +42,11 @@ function MatchGroup(group, matchInfos, mode) {
           />
         );
       })}
+      {points !== null && mode === "placedBet" && (
+        <div className="flex border-t justify-end border-black pt-1 mx-4 ">
+          {`Poäng rätt lag vidare: ${points}`}
+        </div>
+      )}
     </div>
   );
 }
