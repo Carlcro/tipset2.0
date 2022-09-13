@@ -13,10 +13,6 @@ import "react-toastify/dist/ReactToastify.css";
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   const queryClient = new QueryClient();
-<<<<<<< HEAD
-  
-=======
->>>>>>> master
 
   return (
     <RecoilRoot>
