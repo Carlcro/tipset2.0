@@ -1,3 +1,4 @@
+import { ObjectId } from "mongodb";
 import { GroupResult } from "../results/groupResult";
 import { GoalScorer } from "../types/goalScorer";
 import { MatchResult } from "../types/matchResult";
@@ -403,7 +404,7 @@ export const getTeamsInMatches = (
 };
 
 export function calculateGoalScorer(
-  betGoalScorer: string,
+  betGoalScorer: ObjectId,
   outcomeGoalScorer: GoalScorer
 ) {
   if (outcomeGoalScorer && outcomeGoalScorer.player.equals(betGoalScorer)) {
