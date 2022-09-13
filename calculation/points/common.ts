@@ -406,7 +406,7 @@ export function calculateGoalScorer(
   betGoalScorer: string,
   outcomeGoalScorer: GoalScorer
 ) {
-  if (outcomeGoalScorer && outcomeGoalScorer.player === betGoalScorer) {
+  if (outcomeGoalScorer && outcomeGoalScorer.player.equals(betGoalScorer)) {
     return outcomeGoalScorer.goals * 10;
   }
 
