@@ -11,6 +11,7 @@ export default function GroupBoard() {
       {groupResults.map((groupResult) => (
         <Group
           key={groupResult.name}
+          points={groupResult.points}
           groupName={groupResult.name}
           groupResult={groupResult.results}
         />

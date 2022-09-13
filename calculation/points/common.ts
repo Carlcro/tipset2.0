@@ -1,3 +1,4 @@
+import { ObjectId } from "mongodb";
 import { GroupResult } from "../results/groupResult";
 import { GoalScorer } from "../types/goalScorer";
 import { MatchResult } from "../types/matchResult";
@@ -215,22 +216,24 @@ function calculateAdvancePoints(
   let betWinningTeam;
 
   if (bet.team1Score > bet.team2Score) {
-    betWinningTeam = bet.team1._id;
+    betWinningTeam = bet.team1._id.toString();
   } else if (bet.team1Score < bet.team2Score) {
-    betWinningTeam = bet.team2._id;
+    betWinningTeam = bet.team2._id.toString();
   } else {
-    betWinningTeam = bet.penaltyWinner ? bet.penaltyWinner._id : bet.team1._id;
+    betWinningTeam = bet.penaltyWinner
+      ? bet.penaltyWinner._id.toString()
+      : bet.team1._id.toString();
   }
 
   if (outcome.team1Score > outcome.team2Score) {
-    if (outcome.team1._id === betWinningTeam) {
+    if (outcome.team1._id.toString() === betWinningTeam) {
       return points;
     }
   } else if (outcome.team1Score < outcome.team2Score) {
-    if (outcome.team2._id === betWinningTeam) {
+    if (outcome.team2._id.toString() === betWinningTeam) {
       return points;
     }
-  } else if (betWinningTeam === outcome.penaltyWinner?._id) {
+  } else if (betWinningTeam === outcome.penaltyWinner?._id.toString()) {
     return points;
   }
 
@@ -250,8 +253,8 @@ function calculateStageSymbolPoints(
   points: number
 ) {
   if (
-    bet.team1._id === outcome.team1._id &&
-    bet.team2._id === outcome.team2._id &&
+    bet.team1._id.toString() === outcome.team1._id.toString() &&
+    bet.team2._id.toString() === outcome.team2._id.toString() &&
     (predictedTeam1Winner(bet, outcome) ||
       predictedTeam2Winner(bet, outcome) ||
       predictedDraw(bet, outcome))
@@ -288,8 +291,8 @@ function predictedScoreAndTeamsCorrectly(
   return (
     Number(bet.team1Score) === Number(outcome.team1Score) &&
     Number(bet.team2Score) === Number(outcome.team2Score) &&
-    bet.team1._id === outcome.team1._id &&
-    bet.team2._id === outcome.team2._id
+    bet.team1._id.toString() === outcome.team1._id.toString() &&
+    bet.team2._id.toString() === outcome.team2._id.toString()
   );
 }
 
@@ -350,7 +353,10 @@ export function calculatePositionPoints(
   let points = 0;
 
   for (let i = 0; i < outcomeTeamResult.length; i++) {
-    if (betTeamResult[i].team._id === outcomeTeamResult[i].team._id) {
+    if (
+      betTeamResult[i].team._id.toString() ===
+      outcomeTeamResult[i].team._id.toString()
+    ) {
       points += 5;
     }
   }
@@ -361,14 +367,14 @@ export function calculateAdvanceToGroupOf16Points(
   betTeamResult: TeamResult[],
   outcomeTeamResult: TeamResult[]
 ): number {
-  const first = outcomeTeamResult[0].team._id;
-  const second = outcomeTeamResult[1].team._id;
+  const first = outcomeTeamResult[0].team._id.toString();
+  const second = outcomeTeamResult[1].team._id.toString();
 
   let points = 0;
-  if ([first, second].includes(betTeamResult[0].team._id)) {
+  if ([first, second].includes(betTeamResult[0].team._id.toString())) {
     points += 10;
   }
-  if ([first, second].includes(betTeamResult[1].team._id)) {
+  if ([first, second].includes(betTeamResult[1].team._id.toString())) {
     points += 10;
   }
   return points;
@@ -389,7 +395,7 @@ export const getTeamsInMatches = (
 ): string[] => {
   const teams = betMatchResults.reduce<string[]>((acc, curr) => {
     if (curr.matchId >= fromId && curr.matchId <= toId) {
-      return [...acc, curr.team1._id, curr.team2._id];
+      return [...acc, curr.team1._id.toString(), curr.team2._id.toString()];
     }
     return acc;
   }, []);
@@ -398,10 +404,10 @@ export const getTeamsInMatches = (
 };
 
 export function calculateGoalScorer(
-  betGoalScorer: string,
+  betGoalScorer: ObjectId,
   outcomeGoalScorer: GoalScorer
 ) {
-  if (outcomeGoalScorer && outcomeGoalScorer.player === betGoalScorer) {
+  if (outcomeGoalScorer && outcomeGoalScorer.player.equals(betGoalScorer)) {
     return outcomeGoalScorer.goals * 10;
   }
 

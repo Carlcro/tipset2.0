@@ -13,7 +13,10 @@ import "react-toastify/dist/ReactToastify.css";
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   const queryClient = new QueryClient();
+<<<<<<< HEAD
   
+=======
+>>>>>>> master
 
   return (
     <RecoilRoot>
@@ -21,7 +24,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
         <QueryClientProvider client={queryClient}>
           <Suspense
             fallback={
-              <div className="w-screen h-screen grid place-items-center">
+              <div className="h-screen grid place-items-center">
                 <Spinner width={60} height={60} />
               </div>
             }

@@ -27,10 +27,14 @@ export const getSortedGroupResults = selector({
 
     const betSlip = get(betSlipState);
 
-    const teamRankings = groupResults.map((gr) => ({
-      name: gr.name,
-      results: calculateTeamRanking(gr.results, betSlip),
-    }));
+    const teamRankings = groupResults.map((gr) => {
+      const groupPoints = betSlip?.pointsFromGroup?.find(x.group === gr.name);
+      return {
+        name: gr.name,
+        results: calculateTeamRanking(gr.results, betSlip),
+        points: groupPoints?.points,
+      };
+    });
 
     return teamRankings;
   },

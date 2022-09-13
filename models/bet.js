@@ -17,6 +17,7 @@ var BetSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: Team,
   },
+  points: Number,
 });
 
 export default models.Bet || model("Bet", BetSchema);

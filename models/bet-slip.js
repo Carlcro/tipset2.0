@@ -22,13 +22,17 @@ var BetSlipSchema = new Schema({
       ref: Bet,
     },
   ],
+  pointsFromGroup: [
+    {
+      group: String,
+      points: Number,
+    },
+  ],
+  pointsFromAdvancement: [{ final: String, points: Number }],
+  pointsFromGoalscorer: Number,
   goalscorer: {
     type: Schema.Types.ObjectId,
     ref: Player,
-  },
-  adjustedPoints: {
-    type: Number,
-    default: null,
   },
   points: Number,
 });

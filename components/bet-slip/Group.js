@@ -1,6 +1,10 @@
 import React from "react";
+import { useRecoilValue } from "recoil";
+import { getPointsFromGroup } from "../../recoil/bet-slip/selectors/selectors";
 
 export default function Group({ groupResult, groupName }) {
+  const points = useRecoilValue(getPointsFromGroup(groupName));
+
   return (
     <div className="shadow-lg rounded-sm m-2 px-4 py-2 bg-white">
       <table className="table-fixed">
@@ -33,6 +37,14 @@ export default function Group({ groupResult, groupName }) {
           ))}
         </tbody>
       </table>
+      {points !== null ? (
+        <div className="border-t border-black mx-2 flex justify-between">
+          <span>Poäng från grupp</span>
+          <span>{points}</span>
+        </div>
+      ) : (
+        <div />
+      )}
     </div>
   );
 }

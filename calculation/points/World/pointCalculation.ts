@@ -52,7 +52,7 @@ export function calculatePoints(
   const correctAdvancedTeam = calculateCorrectAdvanceTeam(
     betMatchResults,
     outcomeMatchResults
-  );
+  ).reduce((acc, x) => acc + x.points, 0);
 
   const goalScorerPoints = calculateGoalScorer(
     betGoalScorer,
@@ -72,44 +72,65 @@ export const getMatchPoint = (
   outcomeResult: MatchResult,
   matchResult: MatchResult
 ) => {
-  if (outcomeResult.matchId <= 36) {
+  if (outcomeResult.matchId <= 48) {
     return calculateGroupStageScorePoints(matchResult, outcomeResult);
-  } else if (outcomeResult.matchId <= 44) {
+  } else if (outcomeResult.matchId <= 56) {
     return calculateGroupOf16MatchPoints(matchResult, outcomeResult);
-  } else if (outcomeResult.matchId <= 48) {
+  } else if (outcomeResult.matchId <= 60) {
     return calculateGroupOf8MatchPoints(matchResult, outcomeResult);
-  } else if (outcomeResult.matchId <= 50) {
+  } else if (outcomeResult.matchId <= 62) {
     return calculateSemiFinalMatchPoints(matchResult, outcomeResult);
   } else {
     return calculateFinalMatchPoints(matchResult, outcomeResult);
   }
 };
 
-const calculateCorrectAdvanceTeam = (
+interface AdvancementPoints {
+  final: String;
+  points: number;
+}
+
+export const calculateCorrectAdvanceTeam = (
   betMatchResults: MatchResult[],
   outcomeMatchResults: MatchResult[]
-): number => {
-  return (
-    calculateGroupOf16AdvancePoints(
-      betMatchResults,
-      outcomeMatchResults,
-      45,
-      48
-    ) +
-    calculateGroupOf8AdvancePoints(
-      betMatchResults,
-      outcomeMatchResults,
-      49,
-      50
-    ) +
-    calculateSemiFinalAdvancePoints(
-      betMatchResults,
-      outcomeMatchResults,
-      51,
-      51
-    ) +
-    calculateFinalAdvancePoints(betMatchResults, outcomeMatchResults, 51)
-  );
+): AdvancementPoints[] => {
+  return [
+    {
+      final: "Åttondelsfinaler",
+      points: calculateGroupOf16AdvancePoints(
+        betMatchResults,
+        outcomeMatchResults,
+        57,
+        60
+      ),
+    },
+    {
+      final: "Kvartsfinaler",
+      points: calculateGroupOf8AdvancePoints(
+        betMatchResults,
+        outcomeMatchResults,
+        61,
+        62
+      ),
+    },
+    {
+      final: "Semifinaler",
+      points: calculateSemiFinalAdvancePoints(
+        betMatchResults,
+        outcomeMatchResults,
+        63,
+        63
+      ),
+    },
+    {
+      final: "Final",
+      points: calculateFinalAdvancePoints(
+        betMatchResults,
+        outcomeMatchResults,
+        51
+      ),
+    },
+  ];
 };
 
 export const calculatePointsFromGroup = (
