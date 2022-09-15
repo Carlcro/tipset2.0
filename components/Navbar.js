@@ -110,8 +110,8 @@ const Navbar = () => {
           <Link href="/answer-sheet">
             <a>Answer Sheet</a>
           </Link>
-          <LoginButton></LoginButton>
         </div>
+        <LoginButton></LoginButton>
       </div>
     </nav>
   );
