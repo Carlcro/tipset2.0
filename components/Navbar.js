@@ -96,7 +96,6 @@ const Navbar = () => {
     ["user"],
     async () => {
       const { data } = await getUser();
-      console.log(data);
       return data;
     },
     { enabled: status === "authenticated" }

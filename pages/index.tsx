@@ -3,9 +3,11 @@ import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Spinner from "../components/Spinner";
+import { toast } from "react-toastify";
 
 const Home: NextPage = () => {
   const [email, setEmail] = useState("");
+  const [emailSent, setEmailSent] = useState(false);
   const router = useRouter();
 
   const { status } = useSession();
@@ -30,26 +32,42 @@ const Home: NextPage = () => {
             <h2 className="mt-2">Välkommen till Bröderna Duhlins VM-tips</h2>
           </div>
 
-          <div className="px-5 py-7">
-            <label className="font-semibold text-sm text-gray-600 pb-1 block">
-              E-mail
-            </label>
-            <input
-              placeholder="Skriv din email"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
-            />
+          {emailSent ? (
+            <div className="py-6 px-5 flex flex-col items-center space-y-3">
+              <span> Email skickat!</span>
+              <span> Följ länken i mailen för att logga in.</span>
+            </div>
+          ) : (
+            <div className="px-5 py-7">
+              <label className="font-semibold text-sm text-gray-600 pb-1 block">
+                E-mail
+              </label>
+              <input
+                placeholder="Skriv din email"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
+              />
 
-            <button
-              type="button"
-              onClick={() => signIn("email", { email })}
-              className="transition duration-200 bg-blue-500 hover:bg-blue-600 focus:bg-blue-700 focus:shadow-sm focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 text-white w-full py-2.5 rounded-lg text-sm shadow-sm hover:shadow-md font-semibold text-center inline-block"
-            >
-              <span className="inline-block mr-2"> Skapa konto/Logga in</span>
-            </button>
-          </div>
+              <button
+                type="button"
+                onClick={async () => {
+                  try {
+                    await signIn("email", { email });
+                    setEmailSent(true);
+                  } catch (error) {
+                    toast.error(
+                      "Hoppsan, det blev något fel. Försök igen senare"
+                    );
+                  }
+                }}
+                className="transition duration-200 bg-blue-500 hover:bg-blue-600 focus:bg-blue-700 focus:shadow-sm focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 text-white w-full py-2.5 rounded-lg text-sm shadow-sm hover:shadow-md font-semibold text-center inline-block"
+              >
+                <span className="inline-block mr-2"> Skapa konto/Logga in</span>
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>
