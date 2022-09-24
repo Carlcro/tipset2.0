@@ -5,29 +5,27 @@ import { authOptions } from "../auth/[...nextauth]";
 
 function handler(req, res) {
   if (req.method === "POST") {
-    return createUser(req, res);
+    return updateUsername(req, res);
   } else if (req.method === "GET") {
     return getUser(req, res);
-  } else if (req.method === "PUT") {
-    updateUserName(req, res);
   }
 }
 
 export default connectDB(handler);
 
-const createUser = async (req, res) => {
-  const user = new User({
-    userId: "123",
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    fullName: `${req.body.firstName} ${req.body.lastName}`,
-    email: req.body.email,
-  });
+const updateUsername = async (req, res) => {
+  const session = await unstable_getServerSession(req, res, authOptions);
 
-  const savedUser = await user.save();
+  let user = await User.findOne({ email: session?.user.email });
+
+  user.firstName = req.body.firstName;
+  user.lastName = req.body.lastName;
+  user.fullName = `${req.body.firstName} ${req.body.lastName}`;
+
+  await user.save();
   //  await autoJoinUserTournament(savedUser);
 
-  res.status(201).send(savedUser);
+  res.status(200).send(user);
 };
 
 /* const autoJoinUserTournament = async (user) => {
@@ -42,17 +40,6 @@ const createUser = async (req, res) => {
   }
 }; */
 
-const updateUserName = async (req, res) => {
-  let user = await User.findOne({ userId: "123" });
-  user.firstName = req.body.firstName;
-  user.lastName = req.body.lastName;
-  user.fullName = `${req.body.firstName} ${req.body.lastName}`;
-
-  await user.save();
-
-  res.status(200).send(user);
-};
-
 const getUser = async (req, res) => {
   const session = await unstable_getServerSession(req, res, authOptions);
 
@@ -61,7 +48,6 @@ const getUser = async (req, res) => {
   if (!user) {
     return res.status(404).send("The user with the given ID was not found.");
   } else {
-    console.log("heh", user);
     res.status(200).send(user);
   }
 };

@@ -1,12 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { forwardRef } from "react";
 
 import { Menu } from "@headlessui/react";
 import Link from "next/link";
 import LoginButton from "./login-button";
 import { useQuery } from "react-query";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { getUser } from "../services/userService";
+import { useRouter } from "next/router";
 
 const MyLink = forwardRef((props, ref) => {
   let { href, children, ...rest } = props;
@@ -41,20 +42,35 @@ function BurgerMenu({ user }) {
         </svg>
       </Menu.Button>
       <Menu.Items className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none">
-        {routesLoggedIn(user).map((item) => (
-          <Menu.Item key={item.name}>
+        {user ? (
+          routesLoggedIn(user).map((item) => (
+            <Menu.Item key={item.name}>
+              {({ active, hover }) => (
+                <MyLink
+                  className={`${
+                    active && "bg-blue-500"
+                  } flex items-center px-4 py-2 text-sm`}
+                  href={item.route}
+                >
+                  {item.name}
+                </MyLink>
+              )}
+            </Menu.Item>
+          ))
+        ) : (
+          <Menu.Item>
             {({ active, hover }) => (
               <MyLink
                 className={`${
                   active && "bg-blue-500"
                 } flex items-center px-4 py-2 text-sm`}
-                href={item.route}
+                href={"/"}
               >
-                {item.name}
+                Hem
               </MyLink>
             )}
           </Menu.Item>
-        ))}
+        )}
       </Menu.Items>
     </Menu>
   );
@@ -69,49 +85,99 @@ const routesLoggedIn = (user) => [
   },
   { name: "Poängsystem", route: "/point-system" },
   { name: "Mästerskapet", route: "/championship" },
+  { name: "Byt namn", route: "/user" },
 ];
 
 const Navbar = () => {
-  const { data: session, status } = useSession();
+  const { status, data } = useSession();
+  const router = useRouter();
 
   const { data: user } = useQuery(
-    "user",
+    ["user"],
     async () => {
       const { data } = await getUser();
+      console.log(data);
       return data;
     },
-    { staleTime: Infinity, enabled: status === "authenticated" }
+    { enabled: status === "authenticated" }
   );
+
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.push("/");
+    }
+
+    if (status === "authenticated" && user && !user.firstName) {
+      router.push("/user");
+    }
+  }, [user, router, status]);
+
+  if (status === "loading") {
+    return null;
+  }
 
   return (
     <nav
-      className="border-b border-black p-3 mb-4 flex justify-end sm:justify-start"
+      className=" p-3 mb-4 flex justify-between sm:justify-start"
       role="navigation"
       aria-label="main navigation"
     >
-      <BurgerMenu></BurgerMenu>
+      {user && (
+        <>
+          <div className="flex-1 mr-5 space-x-3  sm:hidden">
+            <button
+              className="bg-red-400 border-black border-1 text-sm px-2 py-2 text-white"
+              onClick={() => signOut({ callbackUrl: "/" })}
+            >
+              Logga ut
+            </button>
+            <span>{data.user.email}</span>
+          </div>
+
+          <BurgerMenu user={user} />
+        </>
+      )}
+
       <div className="hidden sm:flex sm:justify-between w-full">
-        <div className="space-x-4">
-          <Link href="/">
-            <a>Hem</a>
-          </Link>
-          <>
-            <Link href="/user-tournament">Grupper</Link>
-            <Link href="/bet-slip">
-              <a>{"Gör ditt tips"}</a>
+        {user ? (
+          <div className="flex gap-4 flex-1">
+            <Link href="/">
+              <a>Hem</a>
             </Link>
-          </>
-          <Link href="/championship">
-            <a>Mästerskap</a>
-          </Link>
-          <Link href="/point-system">
-            <a>Poängsystem</a>
-          </Link>
-          <Link href="/answer-sheet">
-            <a>Answer Sheet</a>
-          </Link>
-        </div>
-        <LoginButton></LoginButton>
+            <>
+              <Link href="/user-tournament">Grupper</Link>
+              <Link href="/bet-slip">
+                <a>{"Gör ditt tips"}</a>
+              </Link>
+            </>
+            <Link href="/championship">
+              <a>Mästerskap</a>
+            </Link>
+            <Link href="/point-system">
+              <a>Poängsystem</a>
+            </Link>
+            <Link href="/answer-sheet">
+              <a>Answer Sheet</a>
+            </Link>
+            <Link href="/user">
+              <a>Byt namn</a>
+            </Link>
+
+            <div className="text-right flex-1 mr-5 space-x-3">
+              <Link href="/user">
+                <a>{data.user.email}</a>
+              </Link>
+              <button
+                className="bg-red-400 border-black border-1 text-sm px-2 py-2 text-white"
+                onClick={() => signOut({ callbackUrl: "/" })}
+              >
+                Logga ut
+              </button>
+            </div>
+          </div>
+        ) : (
+          <div></div>
+        )}
       </div>
     </nav>
   );

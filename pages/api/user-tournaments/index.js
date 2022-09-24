@@ -2,6 +2,8 @@ import UserTournament from "../../../models/user-tournament";
 import User from "../../../models/user";
 import Championship from "../../../models/championship";
 import connectDB from "../../../middleware/mongodb";
+import { unstable_getServerSession } from "next-auth";
+import { authOptions } from "../auth/[...nextauth]";
 
 function handler(req, res) {
   if (req.method === "POST") {
@@ -14,7 +16,8 @@ function handler(req, res) {
 export default connectDB(handler);
 
 const createUserTournament = async (req, res) => {
-  const user = await User.findOne({ userId: "123" });
+  const session = await unstable_getServerSession(req, res, authOptions);
+  const user = await User.findOne({ email: session?.user.email });
 
   const currentChampionship = await Championship.findOne();
   const userTournament = new UserTournament({
@@ -28,8 +31,9 @@ const createUserTournament = async (req, res) => {
   res.send(newUserTournament);
 };
 
-const getUserTournaments = async (_, res) => {
-  const user = await User.findOne({ userId: "123" });
+const getUserTournaments = async (req, res) => {
+  const session = await unstable_getServerSession(req, res, authOptions);
+  const user = await User.findOne({ email: session?.user.email });
 
   const userTournaments = await UserTournament.find({
     members: { $in: user._id },

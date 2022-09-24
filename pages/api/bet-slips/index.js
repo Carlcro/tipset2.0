@@ -93,7 +93,7 @@ const getBetSlip = async (req, res) => {
   }
 
   if (!user.betSlip) {
-    return null;
+    return res.status(404).send("Betslip not found");
   }
 
   const betSlip = await BetSlip.findById(user.betSlip)

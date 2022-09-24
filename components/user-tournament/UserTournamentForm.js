@@ -7,7 +7,7 @@ const UserTournamentForm = () => {
   const [userTournamentName, setUserTournamentName] = useState("");
   const queryClient = useQueryClient();
 
-  const mutation = useMutation(createUserTournament, {
+  const { mutate } = useMutation(createUserTournament, {
     onSuccess: ({ data }) => {
       queryClient.setQueryData(["userTournaments"], (old) => [...old, data]);
     },
@@ -15,7 +15,7 @@ const UserTournamentForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    mutation.mutate(userTournamentName);
+    mutate(userTournamentName);
     setUserTournamentName("");
   };
   return (

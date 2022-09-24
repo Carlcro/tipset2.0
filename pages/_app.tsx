@@ -1,6 +1,7 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import { RecoilRoot } from "recoil";
+import Layout from "../components/Layout";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { getUser } from "../services/userService";
 import { ReactQueryDevtools } from "react-query/devtools";
@@ -26,8 +27,9 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
             }
           >
             <ToastContainer />
-            <Navbar />
-            <Component {...pageProps} />
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
           </Suspense>
           <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>

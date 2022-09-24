@@ -2,13 +2,14 @@ import React, { useEffect, useState } from "react";
 import { queryCache, useMutation, useQuery } from "react-query";
 import { createBetSlip, getBetSlip } from "../../services/betSlipService";
 import { toast } from "react-toastify";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { setFromBetslipState } from "../../recoil/bet-slip/selectors/selectors";
 import { betSlipState, goalscorerState } from "../../recoil/bet-slip/atoms";
 import { useSession } from "next-auth/react";
 
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
+import Spinner from "../../components/Spinner";
 
 const DynamicBetslip = dynamic(
   () => import("../../components/bet-slip/BetSlip"),
@@ -19,11 +20,10 @@ const DynamicBetslip = dynamic(
 
 const BetSlipContainer = () => {
   const setFromBetslip = useSetRecoilState(setFromBetslipState);
-  const goalscorer = useRecoilValue(goalscorerState);
-  const betslip = useRecoilValue(betSlipState);
+  const [goalscorer, setGoalscorer] = useRecoilState(goalscorerState);
+  const [betslip, setBetslip] = useRecoilState(betSlipState);
 
   const { status } = useSession();
-  const router = useRouter();
 
   const errorToast = (message) => {
     toast.error(message, {
@@ -37,35 +37,22 @@ const BetSlipContainer = () => {
     });
   };
 
-  useQuery(
-    "betslip",
+  const { isLoading } = useQuery(
+    ["betslip"],
     async () => {
       const { data } = await getBetSlip();
-      if (data) {
-        setFromBetslip(data);
-      }
+      setFromBetslip(data);
     },
     {
-      staleTime: Infinity,
-      cacheTime: Infinity,
+      retry: false,
+      onError: () => {
+        setBetslip([]);
+        setGoalscorer(null);
+      },
     }
   );
 
-  useEffect(() => {
-    if (status === "unauthenticated") {
-      router.push("/auth/signIn");
-    }
-  }, [status, router]);
-
   const mutation = useMutation(createBetSlip, {
-    onSuccess: ({ data }) => {
-      queryCache.setQueryData("user", (old) => ({
-        ...old,
-        betslip: data._id,
-      }));
-      queryCache.setQueryData("betslip", data);
-      setFromBetslip(data);
-    },
     onError: (error) => {
       toast.error(error.message);
     },
@@ -126,8 +113,8 @@ const BetSlipContainer = () => {
     }
   };
 
-  if (status === "loading") {
-    return <p>Loading...</p>;
+  if (status === "loading" || isLoading) {
+    return <Spinner />;
   }
 
   return (
