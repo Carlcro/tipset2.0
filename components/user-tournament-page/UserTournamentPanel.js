@@ -48,7 +48,7 @@ const UserTournamentPanel = () => {
           </div>
 
           <div className="shadow-md p-3 rounded-sm bg-white flex flex-col">
-            {/*       <span className="text-sm">
+            <span className="text-sm">
               {window && window.location.href + "/join"}
             </span>
             <button
@@ -60,7 +60,7 @@ const UserTournamentPanel = () => {
               }}
             >
               Klicka här för att kopiera
-            </button> */}
+            </button>
           </div>
           <div>
             <button

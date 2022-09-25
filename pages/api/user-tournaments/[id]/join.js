@@ -28,5 +28,5 @@ const joinByLink = async (req, res) => {
     await userTournament.save();
   }
 
-  return res.status(201).send(user);
+  return res.status(201);
 };
