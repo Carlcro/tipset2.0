@@ -8,6 +8,7 @@ import {
 import { betSlipState, goalscorerState } from "../../recoil/bet-slip/atoms";
 import { setFromBetslipState } from "../../recoil/bet-slip/selectors/selectors";
 import dynamic from "next/dynamic";
+import { toast } from "react-toastify";
 
 const DynamicBetslip = dynamic(
   () => import("../../components/bet-slip/BetSlip"),

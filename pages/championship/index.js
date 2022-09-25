@@ -13,16 +13,13 @@ const DynamicBetslip = dynamic(
 const Championship = () => {
   const setFromBetslip = useSetRecoilState(setFromBetslipState);
 
-  useQuery("answerSheet", async () => {
+  useQuery(["answerSheet"], async () => {
     const { data } = await getAnswerSheet();
     if (data) {
       setFromBetslip({
-        goalscorer: data.goalscorer ? data.goalscorer?.player : undefined,
+        goalscorer: data.goalscorer?.player,
         bets: [...data.results],
       });
-      if (data.goalscorer) {
-        setGoals(data.goalscorer.goals);
-      }
     }
   });
 

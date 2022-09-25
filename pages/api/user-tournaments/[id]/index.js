@@ -1,6 +1,8 @@
 import UserTournament from "../../../../models/user-tournament";
 import User from "../../../../models/user";
 import connectDB from "../../../../middleware/mongodb";
+import { unstable_getServerSession } from "next-auth";
+import { authOptions } from "../../auth/[...nextauth]";
 
 function handler(req, res) {
   if (req.method === "POST") {
@@ -15,7 +17,8 @@ export default connectDB(handler);
 const leaveUserTournament = async (req, res) => {
   const { id } = req.query;
 
-  const user = await User.findOne({ userId: "123" });
+  const session = await unstable_getServerSession(req, res, authOptions);
+  const user = await User.findOne({ email: session?.user.email });
   const userTournament = await UserTournament.findById(id);
 
   if (userTournament.owner.toString() === user._id.toString()) {
@@ -37,7 +40,8 @@ const leaveUserTournament = async (req, res) => {
 const getUserTournament = async (req, res) => {
   const { id } = req.query;
 
-  const user = await User.findOne({ userId: "123" });
+  const session = await unstable_getServerSession(req, res, authOptions);
+  const user = await User.findOne({ email: session?.user.email });
 
   const userTournament = await UserTournament.findById(id).populate({
     path: "members",

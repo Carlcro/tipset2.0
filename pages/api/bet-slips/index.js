@@ -4,6 +4,8 @@ import Championship from "../../../models/championship";
 import BetSlip from "../../../models/bet-slip";
 import Bet from "../../../models/bet";
 import connectDB from "../../../middleware/mongodb";
+import { unstable_getServerSession } from "next-auth";
+import { authOptions } from "../auth/[...nextauth]";
 
 function handler(req, res) {
   if (req.method === "POST") {
@@ -27,7 +29,13 @@ const createBetSlip = async (req, res) => {
     return res.sendStatus(405);
   } */
 
-  const user = await User.findOne({ userId: "123" });
+  const session = await unstable_getServerSession(req, res, authOptions);
+  const user = await User.findOne({ email: session?.user.email });
+
+  if (!user) {
+    return res.status(404).send("The user not found.");
+  }
+
   const championship = await Championship.findOne();
 
   if (user.betSlip) {
@@ -37,7 +45,7 @@ const createBetSlip = async (req, res) => {
   }
 
   const betSlip = new BetSlip({
-    user: "126",
+    user: user._id,
     championship: championship._id,
     goalscorer: req.body.goalscorer,
   });
@@ -77,7 +85,16 @@ const createBetSlip = async (req, res) => {
 };
 
 const getBetSlip = async (req, res) => {
-  const user = await User.findOne({ userId: "123" });
+  const session = await unstable_getServerSession(req, res, authOptions);
+  let user = await User.findOne({ email: session?.user.email });
+
+  if (!user) {
+    return res.status(404).send("The user not found.");
+  }
+
+  if (!user.betSlip) {
+    return res.status(404).send("Betslip not found");
+  }
 
   const betSlip = await BetSlip.findById(user.betSlip)
     .populate({

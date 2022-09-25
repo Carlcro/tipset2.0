@@ -17,11 +17,12 @@ import {
 } from "../common";
 import { calculateTeamRanking } from "../../matchGroup/World/calculations";
 import { MatchResult } from "../../types/matchResult";
+import { ObjectId } from "mongodb";
 
 export function calculatePoints(
   betGroupResults: GroupResult[],
   betMatchResults: MatchResult[],
-  betGoalScorer: string,
+  betGoalScorer: ObjectId,
   adjustedPoints: number,
   outcomeGroupsResults: GroupResult[],
   outcomeMatchResults: MatchResult[],

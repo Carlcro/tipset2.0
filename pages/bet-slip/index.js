@@ -1,12 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { queryCache, useMutation, useQuery } from "react-query";
 import { createBetSlip, getBetSlip } from "../../services/betSlipService";
 import { toast } from "react-toastify";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { setFromBetslipState } from "../../recoil/bet-slip/selectors/selectors";
 import { betSlipState, goalscorerState } from "../../recoil/bet-slip/atoms";
+import { useSession } from "next-auth/react";
 
 import dynamic from "next/dynamic";
+import { useRouter } from "next/router";
+import Spinner from "../../components/Spinner";
 
 const DynamicBetslip = dynamic(
   () => import("../../components/bet-slip/BetSlip"),
@@ -17,8 +20,10 @@ const DynamicBetslip = dynamic(
 
 const BetSlipContainer = () => {
   const setFromBetslip = useSetRecoilState(setFromBetslipState);
-  const goalscorer = useRecoilValue(goalscorerState);
-  const betslip = useRecoilValue(betSlipState);
+  const [goalscorer, setGoalscorer] = useRecoilState(goalscorerState);
+  const [betslip, setBetslip] = useRecoilState(betSlipState);
+
+  const { status } = useSession();
 
   const errorToast = (message) => {
     toast.error(message, {
@@ -32,34 +37,22 @@ const BetSlipContainer = () => {
     });
   };
 
-  useQuery(
-    "betslip",
+  const { isLoading } = useQuery(
+    ["betslip"],
     async () => {
       const { data } = await getBetSlip();
-      if (data) {
-        setFromBetslip(data);
-      }
+      setFromBetslip(data);
     },
     {
-      staleTime: Infinity,
-      cacheTime: Infinity,
+      retry: false,
+      onError: () => {
+        setBetslip([]);
+        setGoalscorer(null);
+      },
     }
   );
 
   const mutation = useMutation(createBetSlip, {
-    onSuccess: ({ data }) => {
-      queryCache.setQueryData("user", (old) => ({
-        ...old,
-        betslip: data._id,
-      }));
-      queryCache.setQueryData("betslip", data);
-      setFromBetslip(data);
-
-      toast.success(
-        "Ditt tips är sparat! Du kan fortsätta göra ändringar fram till 20:00 Torsdagen den 10/6",
-        { autoClose: 10000 }
-      );
-    },
     onError: (error) => {
       toast.error(error.message);
     },
@@ -77,8 +70,8 @@ const BetSlipContainer = () => {
     }
 
     if (
-      betslip[50].team1Score === betslip[50].team2Score &&
-      !betslip[50].penaltyWinner
+      betslip[62].team1Score === betslip[62].team2Score &&
+      !betslip[62].penaltyWinner
     ) {
       errorToast("Alla matcher måste vara ifyllda");
       return false;
@@ -119,6 +112,10 @@ const BetSlipContainer = () => {
       });
     }
   };
+
+  if (status === "loading" || isLoading) {
+    return <Spinner />;
+  }
 
   return (
     <DynamicBetslip

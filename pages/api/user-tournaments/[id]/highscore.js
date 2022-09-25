@@ -22,7 +22,7 @@ const getHighScore = async (req, res) => {
     .map((x) => ({
       id: x._id.toString(),
       fullName: x.fullName,
-      points: x.betSlip.points,
+      points: x?.betSlip?.points || "-",
     }));
 
   res.send(highscoreData);

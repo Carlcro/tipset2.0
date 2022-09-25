@@ -1,4 +1,5 @@
 import { GoalScorer } from "../../types/goalScorer";
+import { ObjectId } from "mongodb";
 import { GroupResult } from "../../results/groupResult";
 import {
   allGroupMatchesSet,
@@ -23,7 +24,7 @@ import { MatchResult } from "../../types/matchResult";
 export function calculatePoints(
   betGroupResults: GroupResult[],
   betMatchResults: MatchResult[],
-  betGoalScorer: string,
+  betGoalScorer: ObjectId,
   adjustedPoints: number,
   outcomeGroupsResults: GroupResult[],
   outcomeMatchResults: MatchResult[],

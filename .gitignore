@@ -9,7 +9,6 @@
 /coverage
 
 # next.js
-/.next/
 /out/
 
 # production
@@ -36,6 +35,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 
-*.next*
+*.next/*
 
 *.VSCodeCounter
+
+.env
