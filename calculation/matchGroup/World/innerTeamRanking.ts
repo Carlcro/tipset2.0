@@ -62,8 +62,10 @@ function SortTiebreaker(matchResult: MatchResult[], tiedTeams: Team[]) {
       return a.points - b.points;
     } else if (a.diff !== b.diff) {
       return a.diff - b.diff;
-    } else {
+    } else if (a.goals - b.goals) {
       return a.goals - b.goals;
+    } else {
+      return b.team.name.localeCompare(a.team.name);
     }
   });
 

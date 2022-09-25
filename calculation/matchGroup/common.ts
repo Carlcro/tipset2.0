@@ -6,14 +6,15 @@ export function calculateTeamResults(
   results: MatchResult[],
   teams: Team[]
 ): TeamResult[] {
-  const teamPoints = calculateTeamPoints(results, teams);
-  const goalDifference = calculateGoalDifference(results, teams);
-  const goals = calculateGoals(results, teams);
-  const conceded = calculateConceded(results, teams);
-  const gamesPlayed = calculateGamesPlayed(results, teams);
-  const gamesWon = calculateGamesWon(results, teams);
-  const gamesLost = calculateGamesLost(results, teams);
-  const gamesDraw = calculateGamesDraw(results, teams);
+  const groupStageResults = results.filter((x) => x.matchId <= 48);
+  const teamPoints = calculateTeamPoints(groupStageResults, teams);
+  const goalDifference = calculateGoalDifference(groupStageResults, teams);
+  const goals = calculateGoals(groupStageResults, teams);
+  const conceded = calculateConceded(groupStageResults, teams);
+  const gamesPlayed = calculateGamesPlayed(groupStageResults, teams);
+  const gamesWon = calculateGamesWon(groupStageResults, teams);
+  const gamesLost = calculateGamesLost(groupStageResults, teams);
+  const gamesDraw = calculateGamesDraw(groupStageResults, teams);
 
   const teamResults: TeamResult[] = [];
   teams.forEach((team) => {
