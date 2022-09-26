@@ -10,12 +10,11 @@ export default function Join() {
 
   useEffect(() => {
     const join = async () => {
-      console.log("ID!!", router.query);
       try {
         await joinUserTournament(id);
         router.push(`/user-tournament-page/${id}`);
       } catch (error) {
-        toast.error("Nått fel händer");
+        toast.error("Nått fel hände");
       }
     };
     if (id) {
