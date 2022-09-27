@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { queryCache, useMutation, useQuery } from "react-query";
+import React from "react";
+import { useMutation, useQuery } from "react-query";
 import { createBetSlip, getBetSlip } from "../../services/betSlipService";
 import { toast } from "react-toastify";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
@@ -8,8 +8,6 @@ import { betSlipState, goalscorerState } from "../../recoil/bet-slip/atoms";
 import { useSession } from "next-auth/react";
 
 import dynamic from "next/dynamic";
-import { useRouter } from "next/router";
-import Spinner from "../../components/Spinner";
 
 const DynamicBetslip = dynamic(
   () => import("../../components/bet-slip/BetSlip"),
@@ -115,7 +113,7 @@ const BetSlipContainer = () => {
   };
 
   if (status === "loading" || isLoading) {
-    return <Spinner />;
+    return null;
   }
 
   return (
