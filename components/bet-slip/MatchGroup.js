@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import React from "react";
 import { useRecoilValue } from "recoil";
 import { getPointsFromAdvancement } from "../../recoil/bet-slip/selectors/selectors";
@@ -19,7 +20,10 @@ function MatchGroup({ group, matchInfos, mode }) {
   if (!group?.matches?.length) return null;
 
   return (
-    <div
+    <motion.div
+      initial={{ opacity: 0, y: -30 }}
+      viewport={{ once: true }}
+      whileInView={{ opacity: 1, y: 0 }}
       className="shadow-md my-2 rounded-sm p-2 lg:w-full bg-white"
       key={group.name}
     >
@@ -47,7 +51,7 @@ function MatchGroup({ group, matchInfos, mode }) {
           {`Poäng rätt lag vidare: ${points}`}
         </div>
       )}
-    </div>
+    </motion.div>
   );
 }
 
