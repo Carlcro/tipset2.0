@@ -3,9 +3,7 @@ import BetSlip from "../../../models/bet-slip";
 import User from "../../../models/user";
 
 async function handler(req, res) {
-  if (req.method === "POST") {
-    console.log("hej");
-  } else if (req.method === "GET") {
+  if (req.method === "GET") {
     return getPlacedBet(req, res);
   }
 }

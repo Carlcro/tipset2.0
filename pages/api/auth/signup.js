@@ -22,7 +22,6 @@ async function handler(req, res) {
     }
 
     const hashedPassword = await hash(password, 12);
-    console.log(typeof hashedPassword);
 
     //Hash password
     const user = new User({

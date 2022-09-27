@@ -162,10 +162,7 @@ const Navbar = () => {
               <a>Byt namn</a>
             </Link>
 
-            <div className="text-right flex-1 mr-5 space-x-3">
-              <Link href="/user">
-                <a>{data.user.email}</a>
-              </Link>
+            <div className="text-right flex-1 mr-5">
               <button
                 className="bg-red-400 border-black border-1 text-sm px-2 py-2 text-white"
                 onClick={() => signOut({ callbackUrl: "/" })}

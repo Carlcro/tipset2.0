@@ -35,8 +35,6 @@ function handler(req, res) {
   const { championshipId } = req.query;
   if (req.method === "POST") {
     return createMatchGroup(req, res, championshipId);
-  } else if (req.method === "GET") {
-    console.log("hej");
   }
 }
 
