@@ -14,7 +14,7 @@ const UserTournamentsList = () => {
     <div className="rounded-sm shadow-lg p-3 bg-white">
       <div className="text-black font-semibold">Dina grupper</div>
       {isLoading ? (
-        <Spinner />
+        <div />
       ) : (
         <ul>
           {data.map((tournament) => (

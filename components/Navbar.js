@@ -138,7 +138,7 @@ const Navbar = () => {
       )}
 
       <div className="hidden sm:flex sm:justify-between w-full">
-        {user ? (
+        {status === "authenticated" ? (
           <div className="flex gap-4 flex-1">
             <Link href="/">
               <a>Hem</a>
