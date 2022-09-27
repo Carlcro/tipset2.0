@@ -8,9 +8,12 @@ function interceptStdout(text) {
   }
   return text;
 }
-
-// Intercept in dev and prod
 intercept(interceptStdout);
-module.exports = {
+
+const withPWA = require("next-pwa")({
+  dest: "public",
+});
+
+module.exports = withPWA({
   reactStrictMode: true,
-};
+});
