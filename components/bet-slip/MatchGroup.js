@@ -21,9 +21,9 @@ function MatchGroup({ group, matchInfos, mode }) {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: -30 }}
-      viewport={{ once: true }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0, y: -10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4 }}
       className="shadow-md my-2 rounded-sm p-2 lg:w-full bg-white"
       key={group.name}
     >

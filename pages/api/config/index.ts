@@ -27,7 +27,16 @@ const createConfig = async (req: NextApiRequest, res: NextApiResponse) => {
   res.send(newConfig);
 };
 
+const getConfig = async (req: NextApiRequest, res: NextApiResponse) => {
+  const config = await Config.findOne();
+  return res.send(config);
+};
+
 function handler(req: NextApiRequest, res: NextApiResponse) {
+  if (req.method == "GET") {
+    return getConfig(req, res);
+  }
+
   if (req.headers["password"] !== process.env.API_SECRET_KEY) {
     return res.send(401);
   }

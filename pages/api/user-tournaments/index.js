@@ -37,7 +37,7 @@ const getUserTournaments = async (req, res) => {
 
   const userTournaments = await UserTournament.find({
     members: { $in: user._id },
-  }).populate("members", ["name", "email"]);
+  });
 
   res.send(userTournaments);
 };

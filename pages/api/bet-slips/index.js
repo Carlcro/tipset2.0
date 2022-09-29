@@ -6,6 +6,7 @@ import Bet from "../../../models/bet";
 import connectDB from "../../../middleware/mongodb";
 import { unstable_getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]";
+import Config from "../../../models/config";
 
 function handler(req, res) {
   if (req.method === "POST") {
@@ -18,16 +19,15 @@ function handler(req, res) {
 export default connectDB(handler);
 
 const createBetSlip = async (req, res) => {
+  const config = await Config.findOne();
+  if (!config.bettingAllowed) {
+    return res.status(403).send("Det går inte längre att lägga ett tips");
+  }
+
   const { error } = betSlipSchema.validate(req.body);
 
   if (error)
-    return res.status(500).send(error.details.map((e) => e.message).join("\n"));
-
-  /*   const bettingAllowed = await getConfigurationData();
-
-  if (!bettingAllowed) {
-    return res.sendStatus(405);
-  } */
+    return res.status(400).send(error.details.map((e) => e.message).join("\n"));
 
   const session = await unstable_getServerSession(req, res, authOptions);
   const user = await User.findOne({ email: session?.user.email });

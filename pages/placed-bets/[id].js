@@ -2,9 +2,9 @@ import { useQuery } from "react-query";
 import { useSetRecoilState } from "recoil";
 import { setFromBetslipState } from "../../recoil/bet-slip/selectors/selectors";
 import { getPlacedBet } from "../../services/placedBetService";
-import BetSlip from "../../components/bet-slip/BetSlip";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { motion } from "framer-motion";
 
 import dynamic from "next/dynamic";
 
@@ -17,12 +17,12 @@ const DynamicBetslip = dynamic(
 
 const PlacedBets = () => {
   const setFromBetslip = useSetRecoilState(setFromBetslipState);
+  const [placedBet, setPlacedBet] = useState(true);
   const [name, setName] = useState("");
-
   const router = useRouter();
   const { id } = router.query;
 
-  useQuery(
+  const { isLoading } = useQuery(
     ["placedBets", id],
     async () => {
       const { data } = await getPlacedBet(id);
@@ -31,14 +31,48 @@ const PlacedBets = () => {
         setName(data.name);
       }
     },
-    { enabled: Boolean(id) }
+    {
+      enabled: Boolean(id),
+      staleTime: Infinity,
+      retry: false,
+      onError: () => {
+        setPlacedBet(false);
+      },
+    }
   );
+
+  if (isLoading) {
+    return null;
+  }
+
+  if (!placedBet) {
+    return (
+      <div className=" grid place-content-center">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.3 }}
+          className="bg-white rounded-sm shadow-sm p-6 mt-10 flex flex-col justify-center space-y-5"
+        >
+          <h2>Användaren har inte lagt något tips</h2>
+          <button
+            className="text-blue-700 font-bold"
+            onClick={() => router.back()}
+          >
+            Gå tillbaka
+          </button>
+        </motion.div>
+      </div>
+    );
+  }
+
   return (
     <div className="pb-10">
       <div className="bg-white rounded-sm mx-auto px-3 py-5 w-64 flex justify-center">
         <h1 className="text-lg">{name}</h1>
       </div>
       <DynamicBetslip bettingAllowed={true} mode={"placedBet"}></DynamicBetslip>
+      )
     </div>
   );
 };

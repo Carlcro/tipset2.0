@@ -8,9 +8,9 @@ export default function Group({ groupResult, groupName }) {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: -30 }}
-      viewport={{ once: true }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0, y: -10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4 }}
       className="shadow-lg rounded-sm m-2 px-4 py-2 bg-white"
     >
       <table className="table-fixed">
@@ -21,8 +21,8 @@ export default function Group({ groupResult, groupName }) {
             <th>V</th>
             <th>F</th>
             <th>O</th>
-            <th className="hidden md:inline">GM</th>
-            <th className="hidden md:inline">IM</th>
+            <th className="hidden md:table-cell">GM</th>
+            <th className="hidden md:table-cell">IM</th>
             <th>Diff</th>
             <th>P</th>
           </tr>
@@ -35,8 +35,8 @@ export default function Group({ groupResult, groupName }) {
               <td className="px-2">{gr.won}</td>
               <td className="px-2">{gr.lost}</td>
               <td className="px-2">{gr.draw}</td>
-              <td className="px-2 hidden md:inline">{gr.goals}</td>
-              <td className="px-2 hidden md:inline">{gr.conceded}</td>
+              <td className="px-2 hidden md:table-cell">{gr.goals}</td>
+              <td className="px-2 hidden md:table-cell">{gr.conceded}</td>
               <td className="px-2">{gr.diff}</td>
               <td className="px-2">{gr.points}</td>
             </tr>

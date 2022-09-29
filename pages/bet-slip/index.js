@@ -6,8 +6,8 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { setFromBetslipState } from "../../recoil/bet-slip/selectors/selectors";
 import { betSlipState, goalscorerState } from "../../recoil/bet-slip/atoms";
 import { useSession } from "next-auth/react";
-
 import dynamic from "next/dynamic";
+import { getConfig } from "../../services/configService";
 
 const DynamicBetslip = dynamic(
   () => import("../../components/bet-slip/BetSlip"),
@@ -34,6 +34,8 @@ const BetSlipContainer = () => {
       progress: undefined,
     });
   };
+
+  const { data } = useQuery(["config"], getConfig);
 
   const { isLoading } = useQuery(
     ["betslip"],
@@ -116,9 +118,13 @@ const BetSlipContainer = () => {
     return null;
   }
 
+  if (!data) {
+    return null;
+  }
+
   return (
     <DynamicBetslip
-      bettingAllowed={true}
+      bettingAllowed={data.bettingAllowed}
       handleSave={submitBet}
       mode={"betslip"}
     />

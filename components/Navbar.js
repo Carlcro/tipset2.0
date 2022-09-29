@@ -123,14 +123,13 @@ const Navbar = () => {
     >
       {user && (
         <>
-          <div className="flex-1 mr-5 space-x-3  sm:hidden">
+          <div className="flex-1 mr-5 sm:hidden">
             <button
               className="bg-red-400 border-black border-1 text-sm px-2 py-2 text-white"
               onClick={() => signOut({ callbackUrl: "/" })}
             >
               Logga ut
             </button>
-            <span>{data.user.email}</span>
           </div>
 
           <BurgerMenu user={user} />
