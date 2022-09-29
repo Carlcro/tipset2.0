@@ -5,7 +5,7 @@ import { addMember } from "../../services/userTournamentService";
 import AddMemberInput from "./AddMemberInput";
 import DeleteUserTournamentDialog from "./DeleteUserTournamentDialog";
 
-const UserTournamentPanel = () => {
+const UserTournamentPanel = ({ isOwner }) => {
   const queryClient = useQueryClient();
   const [dialogIsOpen, setIsDialogOpen] = useState(false);
 
@@ -27,6 +27,7 @@ const UserTournamentPanel = () => {
       <DeleteUserTournamentDialog
         isOpen={dialogIsOpen}
         setIsOpen={setIsDialogOpen}
+        isOwner={isOwner}
       ></DeleteUserTournamentDialog>
       <div className="flex flex-col max-w-[400px] mt-5 md:mt-0">
         <div className="space-y-2">
@@ -48,15 +49,11 @@ const UserTournamentPanel = () => {
           </div>
 
           <div className="shadow-md p-3 rounded-sm bg-white flex flex-col">
-            <span className="text-sm">
-              {window && window.location.href + "/join"}
-            </span>
+            <span className="text-sm">{window.location.href + "/join"}</span>
             <button
               className="cursor-pointer font-bold text-left active:text-gray-500"
               onClick={() => {
-                navigator.clipboard.writeText(
-                  window && window.location.href + "/join"
-                );
+                navigator.clipboard.writeText(window.location.href + "/join");
               }}
             >
               Klicka här för att kopiera
@@ -67,7 +64,7 @@ const UserTournamentPanel = () => {
               className="bg-red-500 text-white hover:bg-red-700 py-1 px-2 rounded-sm border border-black  "
               onClick={() => setIsDialogOpen(true)}
             >
-              {`${true ? "Radera grupp" : "Lämna grupp"}`}
+              {`${isOwner ? "Radera grupp" : "Lämna grupp"}`}
             </button>
           </div>
         </div>

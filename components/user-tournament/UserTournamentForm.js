@@ -21,7 +21,7 @@ const UserTournamentForm = () => {
   return (
     <div className="shadow-lg rounded-sm p-3 bg-white">
       <div>
-        <div className="font-semibold mb-1">Namnge din grupp</div>
+        <div className="font-bold mb-1">Namnge din grupp</div>
         <form className="flex flex-col" onSubmit={handleSubmit}>
           <input
             onChange={({ target }) => setUserTournamentName(target.value)}

@@ -5,7 +5,7 @@ import { unstable_getServerSession } from "next-auth";
 import { authOptions } from "../../auth/[...nextauth]";
 
 function handler(req, res) {
-  if (req.method === "POST") {
+  if (req.method === "DELETE") {
     return leaveUserTournament(req, res);
   } else if (req.method === "GET") {
     return getUserTournament(req, res);
@@ -21,14 +21,13 @@ const leaveUserTournament = async (req, res) => {
   const user = await User.findOne({ email: session?.user.email });
   const userTournament = await UserTournament.findById(id);
 
-  if (userTournament.owner.toString() === user._id.toString()) {
+  if (userTournament.owner.equals(user._id)) {
     return res.status(405).send("Du kan inte lämna en grupp du styr.");
   }
 
   const newMemberList = userTournament.members.filter(
-    (x) => x._id.toString() !== user._id.toString()
+    (x) => !x._id.equals(user._id)
   );
-
   userTournament.members = newMemberList;
   await userTournament.save();
 

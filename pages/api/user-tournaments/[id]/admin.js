@@ -19,7 +19,7 @@ const deleteUserTournament = async (req, res) => {
 
   const userTournament = await UserTournament.findById(id);
 
-  if (userTournament.owner.toString() === user._id.toString()) {
+  if (userTournament.owner.equals(user._id)) {
     await userTournament.delete();
     return res.status(200).send(`Grupp ${userTournament.name} är raderad`);
   }

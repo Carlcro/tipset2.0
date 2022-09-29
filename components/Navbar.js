@@ -139,9 +139,6 @@ const Navbar = () => {
       <div className="hidden sm:flex sm:justify-between w-full">
         {status === "authenticated" ? (
           <div className="flex gap-4 flex-1">
-            <Link href="/">
-              <a>Hem</a>
-            </Link>
             <>
               <Link href="/user-tournament">Grupper</Link>
               <Link href="/bet-slip">

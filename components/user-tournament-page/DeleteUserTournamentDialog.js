@@ -5,6 +5,7 @@ import {
   leaveUserTournament,
 } from "../../services/userTournamentService";
 import { useRouter } from "next/router";
+import { toast } from "react-toastify";
 
 export default function DeleteUserTournamentDialog({
   isOpen,
@@ -14,8 +15,12 @@ export default function DeleteUserTournamentDialog({
   const router = useRouter();
   const { id } = router.query;
   const exitUserTournament = async () => {
-    await leaveUserTournament(id);
-    router.push("/");
+    try {
+      await leaveUserTournament(id);
+      router.push("/");
+    } catch (error) {
+      toast.error(error.response?.data);
+    }
   };
 
   const removeUserTournament = async () => {
@@ -44,17 +49,17 @@ export default function DeleteUserTournamentDialog({
           <div className="bg-white z-10 border border-black p-5 shadow-lg rounded max-w-sm mx-auto">
             <Dialog.Description>
               {`Är du säker på att du vill ${
-                true ? "radera gruppen?" : "lämna gruppen?"
+                isOwner ? "radera gruppen?" : "lämna gruppen?"
               }`}
             </Dialog.Description>
             <div className="flex justify-between mt-3">
               <button
                 className="bg-red-500 text-white px-2 py-1 rounded"
                 onClick={() =>
-                  true ? removeUserTournament() : exitUserTournament()
+                  isOwner ? removeUserTournament() : exitUserTournament()
                 }
               >
-                {`${true ? "Radera" : "Lämna"}`}
+                {`${isOwner ? "Radera" : "Lämna"}`}
               </button>
               <button
                 className="px-2 py-1 border rounded"
