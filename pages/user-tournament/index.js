@@ -4,9 +4,9 @@ import UserTournamentsList from "../../components/user-tournament/UserTournament
 import { unstable_getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]";
 import User from "../../models/user";
-import UserTournament from "../../models/user-tournament";
+import mongoose from "mongoose";
 import { useQuery } from "react-query";
-import { getAllUserTournaments } from "../../services/userTournamentService";
+import UserTournament from "../../models/user-tournament";
 
 const UserTournamentContainer = ({ tournaments }) => {
   const { data } = useQuery(
@@ -31,6 +31,10 @@ const UserTournamentContainer = ({ tournaments }) => {
 };
 
 export async function getServerSideProps(context) {
+  if (!mongoose.connections[0].readyState) {
+    await mongoose.connect(process.env.MONGODB_URI);
+  }
+  // Use new db connection
   const session = await unstable_getServerSession(
     context.req,
     context.res,
@@ -47,7 +51,6 @@ export async function getServerSideProps(context) {
     name: x.name,
   }));
 
-  // Pass data to the page via props
   return { props: { tournaments } };
 }
 

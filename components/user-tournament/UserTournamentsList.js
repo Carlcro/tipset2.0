@@ -5,7 +5,7 @@ const UserTournamentsList = ({ tournaments }) => {
     <div className="rounded-sm shadow-lg p-3 bg-white">
       <div className="text-black font-bold">Dina grupper</div>
       <ul>
-        {tournaments.map((tournament) => (
+        {tournaments?.map((tournament) => (
           <li key={tournament._id}>
             <Link
               className="text-black"
