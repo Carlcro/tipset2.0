@@ -46,8 +46,6 @@ export async function getServerSideProps(context) {
     members: { $in: user._id },
   });
 
-  console.log("userTournamentsLOL", userTournaments);
-
   const tournaments = userTournaments.map((x) => ({
     _id: x._id.toString(),
     name: x.name,
