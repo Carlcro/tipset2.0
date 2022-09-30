@@ -5,29 +5,29 @@ import { unstable_getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]";
 import User from "../../models/user";
 import mongoose from "mongoose";
+import { useQuery } from "react-query";
+import UserTournament from "../../models/user-tournament";
 
-const UserTournamentContainer = ({ fullName }) => {
-  /*   const { data } = useQuery(
+const UserTournamentContainer = ({ tournaments }) => {
+  const { data } = useQuery(
     "userTournaments",
     async () => {
       const { data } = await getAllUserTournaments();
       return data;
     },
     { initialData: tournaments }
-  ); */
+  );
 
-  return <div>{fullName}</div>;
-
-  /*   return (
+  return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 px-5">
       <div>
-        <UserTournamentsList tournaments={tournaments} />
+        <UserTournamentsList tournaments={data} />
       </div>
       <div>
         <UserTournamentForm />
       </div>
     </div>
-  ); */
+  );
 };
 
 export async function getServerSideProps(context) {
@@ -42,9 +42,7 @@ export async function getServerSideProps(context) {
   );
   const user = await User.findOne({ email: session?.user.email });
 
-  console.log("userLOL", user);
-
-  /* const userTournaments = await UserTournament.find({
+  const userTournaments = await UserTournament.find({
     members: { $in: user._id },
   });
 
@@ -54,8 +52,8 @@ export async function getServerSideProps(context) {
     _id: x._id.toString(),
     name: x.name,
   }));
- */
-  return { props: { fullName: user.fullName } };
+
+  return { props: { tournaments } };
 }
 
 export default UserTournamentContainer;
