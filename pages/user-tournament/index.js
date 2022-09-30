@@ -3,10 +3,6 @@ import UserTournamentForm from "../../components/user-tournament/UserTournamentF
 import UserTournamentsList from "../../components/user-tournament/UserTournamentsList";
 import { unstable_getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]";
-import User from "../../models/user";
-import UserTournament from "../../models/user-tournament";
-import { useQuery } from "react-query";
-import { getAllUserTournaments } from "../../services/userTournamentService";
 
 const UserTournamentContainer = ({ email }) => {
   /*   const { data } = useQuery(
