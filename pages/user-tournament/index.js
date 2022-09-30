@@ -8,7 +8,7 @@ import UserTournament from "../../models/user-tournament";
 import { useQuery } from "react-query";
 import { getAllUserTournaments } from "../../services/userTournamentService";
 
-const UserTournamentContainer = ({ session }) => {
+const UserTournamentContainer = ({ email }) => {
   /*   const { data } = useQuery(
     "userTournaments",
     async () => {
@@ -18,7 +18,7 @@ const UserTournamentContainer = ({ session }) => {
     { initialData: tournaments }
   ); */
 
-  return <div>{JSON.stringify(session)}</div>;
+  return <div>{email}</div>;
 
   /*   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 px-5">
@@ -53,7 +53,7 @@ export async function getServerSideProps(context) {
     name: x.name,
   }));
  */
-  return { props: { session } };
+  return { props: { email: session?.user.email } };
 }
 
 export default UserTournamentContainer;
