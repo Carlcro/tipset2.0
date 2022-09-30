@@ -3,8 +3,9 @@ import UserTournamentForm from "../../components/user-tournament/UserTournamentF
 import UserTournamentsList from "../../components/user-tournament/UserTournamentsList";
 import { unstable_getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]";
+import User from "../../models/user";
 
-const UserTournamentContainer = ({ email }) => {
+const UserTournamentContainer = ({ fullName }) => {
   /*   const { data } = useQuery(
     "userTournaments",
     async () => {
@@ -14,7 +15,7 @@ const UserTournamentContainer = ({ email }) => {
     { initialData: tournaments }
   ); */
 
-  return <div>{email}</div>;
+  return <div>{fullName}</div>;
 
   /*   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 px-5">
@@ -34,11 +35,11 @@ export async function getServerSideProps(context) {
     context.res,
     authOptions
   );
-  /*   const user = await User.findOne({ email: session?.user.email });
+  const user = await User.findOne({ email: session?.user.email });
 
   console.log("userLOL", user);
 
-  const userTournaments = await UserTournament.find({
+  /* const userTournaments = await UserTournament.find({
     members: { $in: user._id },
   });
 
@@ -49,7 +50,7 @@ export async function getServerSideProps(context) {
     name: x.name,
   }));
  */
-  return { props: { email: session?.user.email } };
+  return { props: { fullName: user.fullName } };
 }
 
 export default UserTournamentContainer;
