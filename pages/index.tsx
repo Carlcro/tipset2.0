@@ -78,6 +78,8 @@ const Home: NextPage = () => {
       </div>
     );
   }
+
+  return null;
 };
 
 export default Home;
