@@ -31,7 +31,6 @@ const UserTournamentContainer = ({ tournaments }) => {
 };
 
 export async function getServerSideProps(context) {
-  console.log("cont", context);
   const session = await unstable_getServerSession(
     context.req,
     context.res,
@@ -39,9 +38,13 @@ export async function getServerSideProps(context) {
   );
   const user = await User.findOne({ email: session?.user.email });
 
+  console.log("userLOL", user);
+
   const userTournaments = await UserTournament.find({
     members: { $in: user._id },
   });
+
+  console.log("userTournamentsLOL", userTournaments);
 
   const tournaments = userTournaments.map((x) => ({
     _id: x._id.toString(),
