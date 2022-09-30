@@ -9,19 +9,19 @@ import { useQuery } from "react-query";
 import { getAllUserTournaments } from "../../services/userTournamentService";
 
 const UserTournamentContainer = ({ tournaments }) => {
-  const { data } = useQuery(
+  /*   const { data } = useQuery(
     "userTournaments",
     async () => {
       const { data } = await getAllUserTournaments();
       return data;
     },
     { initialData: tournaments }
-  );
+  ); */
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 px-5">
       <div>
-        <UserTournamentsList tournaments={data} />
+        <UserTournamentsList tournaments={tournaments} />
       </div>
       <div>
         <UserTournamentForm />
@@ -31,6 +31,7 @@ const UserTournamentContainer = ({ tournaments }) => {
 };
 
 export async function getServerSideProps(context) {
+  console.log("cont", context);
   const session = await unstable_getServerSession(
     context.req,
     context.res,
@@ -47,7 +48,6 @@ export async function getServerSideProps(context) {
     name: x.name,
   }));
 
-  // Pass data to the page via props
   return { props: { tournaments } };
 }
 
