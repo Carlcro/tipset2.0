@@ -4,6 +4,7 @@ import UserTournamentsList from "../../components/user-tournament/UserTournament
 import { unstable_getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]";
 import User from "../../models/user";
+import mongoose from "mongoose";
 
 const UserTournamentContainer = ({ fullName }) => {
   /*   const { data } = useQuery(
@@ -30,6 +31,10 @@ const UserTournamentContainer = ({ fullName }) => {
 };
 
 export async function getServerSideProps(context) {
+  if (!mongoose.connections[0].readyState) {
+    await mongoose.connect(process.env.MONGODB_URI);
+  }
+  // Use new db connection
   const session = await unstable_getServerSession(
     context.req,
     context.res,
