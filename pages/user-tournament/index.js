@@ -1,15 +1,22 @@
 import React from "react";
 import UserTournamentForm from "../../components/user-tournament/UserTournamentForm";
 import UserTournamentsList from "../../components/user-tournament/UserTournamentsList";
-
+import { unstable_getServerSession } from "next-auth";
+import { authOptions } from "../api/auth/[...nextauth]";
+import User from "../../models/user";
+import UserTournament from "../../models/user-tournament";
 import { useQuery } from "react-query";
 import { getAllUserTournaments } from "../../services/userTournamentService";
 
-const UserTournamentContainer = () => {
-  const { data } = useQuery("userTournaments", async () => {
-    const { data } = await getAllUserTournaments();
-    return data;
-  });
+const UserTournamentContainer = ({ tournaments }) => {
+  const { data } = useQuery(
+    "userTournaments",
+    async () => {
+      const { data } = await getAllUserTournaments();
+      return data;
+    },
+    { initialData: tournaments }
+  );
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 px-5">
@@ -23,7 +30,7 @@ const UserTournamentContainer = () => {
   );
 };
 
-/* export async function getServerSideProps(context) {
+export async function getServerSideProps(context) {
   const session = await unstable_getServerSession(
     context.req,
     context.res,
@@ -42,6 +49,6 @@ const UserTournamentContainer = () => {
 
   // Pass data to the page via props
   return { props: { tournaments } };
-} */
+}
 
 export default UserTournamentContainer;
