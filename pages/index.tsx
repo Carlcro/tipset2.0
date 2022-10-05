@@ -4,6 +4,8 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Spinner from "../components/Spinner";
 import { toast } from "react-toastify";
+import { useQuery } from "react-query";
+import { getUser } from "../services/userService";
 
 const Home: NextPage = () => {
   const [email, setEmail] = useState("");
@@ -12,11 +14,24 @@ const Home: NextPage = () => {
 
   const { status } = useSession();
 
+  const { data: user } = useQuery(
+    ["user"],
+    async () => {
+      const { data } = await getUser();
+      return data;
+    },
+    { enabled: status === "authenticated" }
+  );
+
   useEffect(() => {
     if (status === "authenticated") {
-      router.push("/user-tournament");
+      if (user && !user.fullName) {
+        router.push("/user");
+      } else {
+        router.push("/user-tournament");
+      }
     }
-  }, [router, status]);
+  }, [router, status, user]);
 
   const handleSubmit = async () => {
     try {

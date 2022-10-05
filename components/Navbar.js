@@ -105,13 +105,13 @@ const Navbar = () => {
     if (status === "unauthenticated") {
       router.push("/");
     }
-
-    if (status === "authenticated" && user && !user.firstName) {
-      router.push("/user");
-    }
-  }, [user, router, status]);
+  }, [router, status]);
 
   if (status === "loading") {
+    return null;
+  }
+
+  if (!user?.fullName) {
     return null;
   }
 
