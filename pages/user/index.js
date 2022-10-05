@@ -8,7 +8,6 @@ import { useRouter } from "next/router";
 export default function UserContainer() {
   const router = useRouter();
   const { data: session, status } = useSession();
-  const queryClient = useQueryClient();
 
   const { mutate } = useMutation(createUser, {
     onSuccess: () => {
