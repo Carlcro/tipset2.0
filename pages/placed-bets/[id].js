@@ -33,7 +33,6 @@ const PlacedBets = () => {
     },
     {
       enabled: Boolean(id),
-      staleTime: Infinity,
       retry: false,
       onError: () => {
         setPlacedBet(false);

@@ -44,7 +44,6 @@ const BetSlipContainer = () => {
       setFromBetslip(data);
     },
     {
-      staleTime: Infinity,
       retry: false,
       onError: () => {
         setBetslip([]);

@@ -40,8 +40,10 @@ const createBetSlip = async (req, res) => {
 
   if (user.betSlip) {
     const betSlip = await BetSlip.findById(user.betSlip);
-    await Bet.deleteMany({ _id: { $in: betSlip.bets } });
-    await BetSlip.findByIdAndDelete(user.betSlip._id);
+    if (betSlip) {
+      await Bet.deleteMany({ _id: { $in: betSlip.bets } });
+      await BetSlip.findByIdAndDelete(user.betSlip._id);
+    }
   }
 
   const betSlip = new BetSlip({

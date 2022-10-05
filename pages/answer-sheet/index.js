@@ -46,8 +46,6 @@ const AnswerSheet = () => {
         setGoalscorer(null);
       },
       retry: false,
-      staleTime: Infinity,
-      cacheTime: Infinity,
     }
   );
 
