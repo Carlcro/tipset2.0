@@ -49,11 +49,22 @@ export async function getServerSideProps({ params, res, req }) {
 
   const highscoreData = userTournament.members
     .sort((a, b) => b.points - a.points)
-    .map((x) => ({
-      id: x._id.toString(),
-      fullName: x.fullName,
-      points: x?.betSlip?.points || "-",
-    }));
+    .map((x) => {
+      const points = x?.betSlip?.points;
+
+      let lastPoints;
+      if (points) {
+        lastPoints = points[points.length - 1];
+      } else {
+        lastPoints = "-";
+      }
+
+      return {
+        id: x._id.toString(),
+        fullName: x.fullName,
+        points: lastPoints.points,
+      };
+    });
 
   return {
     props: {

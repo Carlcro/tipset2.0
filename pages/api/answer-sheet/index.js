@@ -34,20 +34,14 @@ const saveAnswerSheet = async (req, res) => {
       path: "matches teams",
     },
   });
-  const existingAnswerSheet = await AnswerSheet.findOne({
-    championship: championship._id,
-  }).populate({
-    path: "results",
-    model: "Result",
-    populate: [{ path: "team1 team2 penaltyWinner" }],
-  });
 
-  const answerSheet =
-    existingAnswerSheet ||
-    new AnswerSheet({
-      championship: championship._id,
-      goalscorer: {},
-    });
+  await AnswerSheet.deleteMany();
+  await Result.deleteMany();
+
+  const answerSheet = new AnswerSheet({
+    championship: championship._id,
+    goalscorer: {},
+  });
 
   if (req.body.goalscorer) {
     answerSheet.goalscorer = {
@@ -58,8 +52,7 @@ const saveAnswerSheet = async (req, res) => {
     answerSheet.goalscorer = null;
   }
 
-  await Result.deleteMany();
-  await answerSheet.updateOne({ $set: { results: [] } });
+  const lastAnswerGame = req.body.answers[req.body.answers.length - 1];
 
   for (const resultDto of req.body.answers) {
     let result = new Result({
@@ -80,6 +73,14 @@ const saveAnswerSheet = async (req, res) => {
 
   await answerSheet.save();
 
+  const newAnswerSheet = await AnswerSheet.findOne({
+    championship: championship._id,
+  }).populate({
+    path: "results",
+    model: "Result",
+    populate: [{ path: "team1 team2 penaltyWinner" }],
+  });
+
   const allBetSlips = await BetSlip.find({
     championship: championship._id,
   }).populate({
@@ -89,7 +90,7 @@ const saveAnswerSheet = async (req, res) => {
   });
 
   const answerSheetGroupResult = calculateGroupResults(
-    answerSheet.results,
+    newAnswerSheet.results,
     championship.matchGroups
   );
 
@@ -101,18 +102,16 @@ const saveAnswerSheet = async (req, res) => {
 
     let totalPointsFromMatches = 0;
 
-    betSlip.bets.forEach(async (bet) => {
-      const outcomeResult = answerSheet.results.find(
-        (x) => x.matchId === bet.matchId
-      );
+    newAnswerSheet.results.forEach(async (result) => {
+      const betResult = betSlip.bets.find((x) => x.matchId === result.matchId);
 
-      const matchPoint = getMatchPoint(outcomeResult, bet);
+      const matchPoint = getMatchPoint(result, betResult);
 
       totalPointsFromMatches += matchPoint;
 
-      bet.points = matchPoint;
+      betResult.points = matchPoint;
 
-      await bet.save();
+      await betResult.save();
     });
     const pointsFromGroup = betSlipGroupResult.map((groupResult, i) => {
       return {
@@ -121,7 +120,7 @@ const saveAnswerSheet = async (req, res) => {
           groupResult,
           answerSheetGroupResult[i],
           betSlip.bets,
-          answerSheet.results
+          newAnswerSheet.results
         ),
       };
     });
@@ -130,14 +129,14 @@ const saveAnswerSheet = async (req, res) => {
 
     const pointsFromAdvancement = calculateCorrectAdvanceTeam(
       betSlip.bets,
-      answerSheet.results
+      newAnswerSheet.results
     );
 
     betSlip.pointsFromAdvancement = pointsFromAdvancement;
 
     const goalScorerPoints = calculateGoalScorer(
       betSlip.goalscorer,
-      answerSheet.goalscorer
+      newAnswerSheet.goalscorer
     );
 
     betSlip.pointsFromGoalscorer = goalScorerPoints;
@@ -152,11 +151,22 @@ const saveAnswerSheet = async (req, res) => {
       0
     );
 
-    betSlip.points =
+    const points =
       totalPointsFromMatches +
       totalPointsFromGroup +
       totalPointsFromAdvancement +
       goalScorerPoints;
+
+    let pointsArray = [];
+
+    pointsArray =
+      [...betSlip?.points].filter(
+        (x) => x.matchId !== lastAnswerGame.matchId
+      ) || [];
+
+    pointsArray.push({ matchId: lastAnswerGame.matchId, points });
+
+    betSlip.points = [...pointsArray];
 
     await betSlip.save();
   });

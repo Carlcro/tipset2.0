@@ -407,7 +407,7 @@ export function calculateGoalScorer(
   betGoalScorer: ObjectId,
   outcomeGoalScorer: GoalScorer
 ) {
-  if (outcomeGoalScorer && outcomeGoalScorer.player.equals(betGoalScorer)) {
+  if (outcomeGoalScorer?.player?.equals(betGoalScorer)) {
     return outcomeGoalScorer.goals * 10;
   }
 

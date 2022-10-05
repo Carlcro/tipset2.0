@@ -7,6 +7,7 @@ import User from "../../models/user";
 import mongoose from "mongoose";
 import { useQuery } from "react-query";
 import UserTournament from "../../models/user-tournament";
+import { getAllUserTournaments } from "../../services/userTournamentService";
 
 const UserTournamentContainer = ({ tournaments }) => {
   const { data } = useQuery(

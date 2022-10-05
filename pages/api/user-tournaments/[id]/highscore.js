@@ -17,13 +17,56 @@ const getHighScore = async (req, res) => {
     populate: [{ path: "betSlip" }],
   });
 
+  const secondToLastGameHighscoreData = userTournament.members
+    .sort((a, b) => b.points - a.points)
+    .map((x) => {
+      const points = x?.betSlip?.points;
+
+      let secondToLastPoint;
+      if (points && points.length >= 2) {
+        secondToLastPoint = points[points.length - 2];
+      } else {
+        secondToLastPoint = "-";
+      }
+      return {
+        id: x._id.toString(),
+        fullName: x.fullName,
+        points: secondToLastPoint,
+      };
+    });
+
   const highscoreData = userTournament.members
     .sort((a, b) => b.points - a.points)
-    .map((x) => ({
-      id: x._id.toString(),
-      fullName: x.fullName,
-      points: x?.betSlip?.points || "-",
-    }));
+    .map((x) => {
+      const points = x?.betSlip?.points;
 
-  res.send(highscoreData);
+      let lastPoints;
+      if (points) {
+        lastPoints = points[points.length - 1];
+      } else {
+        lastPoints = "-";
+      }
+      return {
+        id: x._id.toString(),
+        fullName: x.fullName,
+        points: lastPoints,
+      };
+    });
+
+  const data = highscoreData.map((x, index) => {
+    const indexLast = secondToLastGameHighscoreData.findIndex(
+      (y) => y.id === x.id
+    );
+
+    const difference = indexLast - index;
+
+    return {
+      id: x.id,
+      fullName: x.fullName,
+      points: x.points.points,
+      difference,
+    };
+  });
+
+  res.send(data);
 };
