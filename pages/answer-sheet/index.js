@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import {
   getAnswerSheet,
   saveAnswerSheet,
@@ -19,11 +19,11 @@ const DynamicBetslip = dynamic(
 
 const AnswerSheet = () => {
   const setFromBetslip = useSetRecoilState(setFromBetslipState);
-  const goalscorer = useRecoilValue(goalscorerState);
   const [password, setPassword] = useState("");
   const [goals, setGoals] = useState(0);
+  const [betslip, setBetslip] = useRecoilState(betSlipState);
+  const [goalscorer, setGoalscorer] = useRecoilState(goalscorerState);
 
-  const betslip = useRecoilValue(betSlipState);
   const queryClient = useQueryClient();
 
   useQuery(
@@ -41,6 +41,11 @@ const AnswerSheet = () => {
       }
     },
     {
+      onError: () => {
+        setBetslip([]);
+        setGoalscorer(null);
+      },
+      retry: false,
       staleTime: Infinity,
       cacheTime: Infinity,
     }

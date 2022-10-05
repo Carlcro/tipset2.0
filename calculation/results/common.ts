@@ -78,13 +78,36 @@ export function getGroupResults(): (group: MatchGroupScores) => GroupResult {
   };
 }
 
-export function calculateResults(
+export function calculateWinners(
   results: RawMatchResult[],
   fromId: number,
   toId: number
 ): Team[] {
   const scores = getScores(results, fromId, toId);
   return scores.map(getWinningTeam()).filter((t) => t !== undefined);
+}
+
+export function calculateLosers(
+  results: RawMatchResult[],
+  fromId: number,
+  toId: number
+): Team[] {
+  const scores = getScores(results, fromId, toId);
+  return scores.map(getLosingTeam()).filter((t) => t !== undefined);
+}
+
+function getLosingTeam(): (score: MatchResult) => Team {
+  return (score) => {
+    if (score.team1Score > score.team2Score) {
+      return score.team2;
+    } else if (score.team1Score < score.team2Score) {
+      return score.team1;
+    } else {
+      return score.penaltyWinner?._id === score.team1._id
+        ? score.team2
+        : score.team1;
+    }
+  };
 }
 
 function getWinningTeam(): (score: MatchResult) => Team {

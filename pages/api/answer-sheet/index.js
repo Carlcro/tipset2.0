@@ -106,13 +106,12 @@ const saveAnswerSheet = async (req, res) => {
         (x) => x.matchId === bet.matchId
       );
 
-      const matchPoint = getMatchPoint(outcomeResult, bet);
-
-      totalPointsFromMatches += matchPoint;
-
-      bet.points = matchPoint;
-
-      await bet.save();
+      if (outcomeResult) {
+        const matchPoint = getMatchPoint(outcomeResult, bet);
+        totalPointsFromMatches += matchPoint;
+        bet.points = matchPoint;
+        await bet.save();
+      }
     });
     const pointsFromGroup = betSlipGroupResult.map((groupResult, i) => {
       return {
@@ -182,6 +181,10 @@ const getAnswerSheet = async (_, res) => {
         model: "Player",
       },
     });
+
+  if (!answerSheet) {
+    res.status(404).send("No answer sheet found");
+  }
 
   res.send(answerSheet);
 };

@@ -5,6 +5,7 @@ import {
   calculateGroupResults,
   calculateSemiFinalsResults,
   calculateTeamRanking,
+  calculateSemiFinalsLosers,
 } from "../../../calculation";
 import { championshipState } from "../../../recoil/championship/selectors";
 import { betSlipState } from "../../../recoil/bet-slip/atoms";
@@ -64,5 +65,14 @@ export const getSemiFinalsResults = selector({
     const betSlip = get(betSlipState);
 
     return calculateSemiFinalsResults(betSlip);
+  },
+});
+
+export const getSemiFinalsLosers = selector({
+  key: "getSemiFinalsLosers",
+  get: ({ get }) => {
+    const betSlip = get(betSlipState);
+
+    return calculateSemiFinalsLosers(betSlip);
   },
 });

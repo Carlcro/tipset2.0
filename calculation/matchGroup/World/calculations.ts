@@ -102,7 +102,7 @@ export function calculateSemiFinals(teams: Team[]): Match[] {
   ];
 }
 
-export function calculateFinal(teams: Team[]): Match[] {
+export function calculateThirdPlaceMatch(teams: Team[]): Match[] {
   if (teams.length < 2) {
     return [];
   }
@@ -110,6 +110,20 @@ export function calculateFinal(teams: Team[]): Match[] {
   return [
     {
       matchId: 63,
+      team1: teams[0],
+      team2: teams[1],
+    },
+  ];
+}
+
+export function calculateFinal(teams: Team[]): Match[] {
+  if (teams.length < 2) {
+    return [];
+  }
+
+  return [
+    {
+      matchId: 64,
       team1: teams[0],
       team2: teams[1],
     },

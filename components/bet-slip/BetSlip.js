@@ -16,6 +16,7 @@ import {
   getGroupOf8,
   getSemifinals,
   getFinal,
+  getThirdPlaceFinal,
 } from "../../recoil/bet-slip/selectors/matches";
 import { championshipState } from "../../recoil/championship/selectors";
 
@@ -24,6 +25,7 @@ const BetSlip = ({ mode, bettingAllowed, handleSave, error }) => {
   const groupOf16 = useRecoilValue(getGroupOf16);
   const groupOf8 = useRecoilValue(getGroupOf8);
   const semiFinals = useRecoilValue(getSemifinals);
+  const thirdPlaceFinal = useRecoilValue(getThirdPlaceFinal);
   const final = useRecoilValue(getFinal);
   const [goalscorer, setGoalscorer] = useRecoilState(goalscorerState);
   const setAllMatches = useSetRecoilState(setAllMatchesState);
@@ -96,6 +98,11 @@ const BetSlip = ({ mode, bettingAllowed, handleSave, error }) => {
             mode={mode}
           />
           <MatchGroup
+            group={thirdPlaceFinal}
+            matchInfos={championship.matchInfos}
+            mode={mode}
+          />
+          <MatchGroup
             group={final}
             matchInfos={championship.matchInfos}
             mode={mode}
@@ -123,7 +130,7 @@ const BetSlip = ({ mode, bettingAllowed, handleSave, error }) => {
           )}
         </div>
         <div className="mx-auto max-w-[500px] lg:max-w-[450px] ">
-          <GroupBoard />
+          <GroupBoard mode={mode} />
           {mode === "betslip" && <TiebreakerInfo />}
         </div>
       </div>

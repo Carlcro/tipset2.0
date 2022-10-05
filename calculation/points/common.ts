@@ -115,6 +115,30 @@ export function calculateFinalMatchPoints(
   );
 }
 
+export function calculateThirdPlaceFinalMatchPoints(
+  bet: MatchResult,
+  outcome: MatchResult
+) {
+  return (
+    calculateThirdPlaceFinalCorrectScorePoints(bet, outcome) +
+    calculateThirdPlaceFinalSymbolPoints(bet, outcome)
+  );
+}
+
+export function calculateThirdPlaceFinalCorrectScorePoints(
+  bet: MatchResult,
+  outcome: MatchResult
+) {
+  return calculateStageMatchPoints(bet, outcome, 25);
+}
+
+export function calculateThirdPlaceFinalSymbolPoints(
+  bet: MatchResult,
+  outcome: MatchResult
+) {
+  return calculateStageSymbolPoints(bet, outcome, 25);
+}
+
 export function calculateFinalCorrectScorePoints(
   bet: MatchResult,
   outcome: MatchResult

@@ -14,6 +14,7 @@ import {
   calculateGroupOf8Results,
   calculateGroupResults,
   calculateSemiFinalsResults,
+  calculateSemiFinalsLosers,
 } from "./results/World/results";
 import {
   calculatePoints,
@@ -38,4 +39,5 @@ export {
   calculatePointsFromGroup,
   getMatchPoint,
   calculateCorrectAdvanceTeam,
+  calculateSemiFinalsLosers,
 };

@@ -60,7 +60,7 @@ const BetSlipContainer = () => {
   });
 
   const isValidBet = () => {
-    if (betslip.length !== 63) {
+    if (betslip.length !== 64) {
       errorToast("Alla matcher måste vara ifyllda");
       return false;
     }
@@ -73,6 +73,14 @@ const BetSlipContainer = () => {
     if (
       betslip[62].team1Score === betslip[62].team2Score &&
       !betslip[62].penaltyWinner
+    ) {
+      errorToast("Alla matcher måste vara ifyllda");
+      return false;
+    }
+
+    if (
+      betslip[63].team1Score === betslip[63].team2Score &&
+      !betslip[63].penaltyWinner
     ) {
       errorToast("Alla matcher måste vara ifyllda");
       return false;
