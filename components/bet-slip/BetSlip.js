@@ -72,8 +72,8 @@ const BetSlip = ({ mode, bettingAllowed, handleSave, error }) => {
           }
         </div>
       )}
-      <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr] mx-1 lg:mx-20">
-        <div className="mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr] mx-1 lg:flex lg:justify-center">
+        <div className="lg:justify-end">
           {championship.matchGroups.map((group) => (
             <MatchGroup
               group={group}
@@ -129,7 +129,7 @@ const BetSlip = ({ mode, bettingAllowed, handleSave, error }) => {
             </div>
           )}
         </div>
-        <div className="mx-auto max-w-[500px] lg:max-w-[450px] ">
+        <div className="max-w-[500px] lg:max-w-[450px] lg:justify-start ">
           <GroupBoard mode={mode} />
           {mode === "betslip" && <TiebreakerInfo />}
         </div>

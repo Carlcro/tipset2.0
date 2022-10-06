@@ -28,7 +28,7 @@ const UserTournamentPage = ({ highscoreData, isOwner }) => {
   );
 
   return (
-    <div className="flex flex-col-reverse md:flex-row md:space-x-8 px-5 items-center md:items-start">
+    <div className="flex flex-col-reverse md:flex-row md:space-x-8 px-5 items-center md:items-start md:justify-center">
       <DynamicUserTournamentPanel isOwner={isOwner} />
       <HighScoreTable highscoreData={data} />
     </div>
