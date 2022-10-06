@@ -2,6 +2,8 @@ import connectDB from "../../../middleware/mongodb";
 import User from "../../../models/user";
 import { unstable_getServerSession } from "next-auth/next";
 import { authOptions } from "../auth/[...nextauth]";
+import Config from "../../../models/config";
+import UserTournament from "../../../models/user-tournament";
 
 function handler(req, res) {
   if (req.method === "POST") {
@@ -23,22 +25,21 @@ const updateUsername = async (req, res) => {
   user.fullName = `${req.body.firstName} ${req.body.lastName}`;
 
   await user.save();
-  //  await autoJoinUserTournament(savedUser);
+  await autoJoinUserTournament(user);
 
   res.status(200).send(user);
 };
 
-/* const autoJoinUserTournament = async (user) => {
-  const configuration = await Configuration.findOne({});
+const autoJoinUserTournament = async (user) => {
+  const configuration = await Config.findOne();
   if (configuration) {
     const userTournamentId = configuration.autoJoinUserTournamentId;
-    const userTournament = await UserTournament.findById(userTournamentId);
-    if (userTournament) {
-      await userTournament.members.push(user._id);
-      userTournament.save();
-    }
+    const userTournament = await UserTournament.updateOne(
+      { _id: userTournamentId },
+      { $addToSet: { members: user._id } }
+    );
   }
-}; */
+};
 
 const getUser = async (req, res) => {
   const session = await unstable_getServerSession(req, res, authOptions);

@@ -8,8 +8,10 @@ import mongoose from "mongoose";
 import { useQuery } from "react-query";
 import UserTournament from "../../models/user-tournament";
 import { getAllUserTournaments } from "../../services/userTournamentService";
+import Config from "../../models/config";
+import HighScoreTable from "../../components/user-tournament-page/HighScoreTable";
 
-const UserTournamentContainer = ({ tournaments }) => {
+const UserTournamentContainer = ({ tournaments, highscoreData }) => {
   const { data } = useQuery(
     "userTournaments",
     async () => {
@@ -20,13 +22,12 @@ const UserTournamentContainer = ({ tournaments }) => {
   );
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 px-5">
-      <div>
+    <div className="flex flex-col-reverse md:flex-row md:space-x-8 px-5 items-center md:items-start md:justify-center">
+      <div className="space-y-5">
         <UserTournamentsList tournaments={data} />
-      </div>
-      <div>
         <UserTournamentForm />
       </div>
+      <HighScoreTable highscoreData={highscoreData} />
     </div>
   );
 };
@@ -52,7 +53,24 @@ export async function getServerSideProps(context) {
     name: x.name,
   }));
 
-  return { props: { tournaments } };
+  const config = await Config.findOne();
+
+  const userTournament = await UserTournament.findById(
+    config.autoJoinUserTournamentId
+  ).populate({
+    path: "members",
+    populate: [{ path: "betSlip" }],
+  });
+
+  const highscoreData = userTournament.members
+    .sort((a, b) => b.points - a.points)
+    .map((x) => ({
+      id: x._id.toString(),
+      fullName: x.fullName,
+      points: x?.betSlip?.points || "-",
+    }));
+
+  return { props: { tournaments, highscoreData } };
 }
 
 export default UserTournamentContainer;
