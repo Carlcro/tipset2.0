@@ -23,7 +23,7 @@ const UserTournamentContainer = ({ tournaments, highscoreData }) => {
 
   return (
     <div className="flex flex-col-reverse md:flex-row md:space-x-8 px-5 items-center md:items-start md:justify-center">
-      <div className="space-y-5">
+      <div className="space-y-5  w-full max-w-[400px] mt-5 md:mt-0">
         <UserTournamentsList tournaments={data} />
         <UserTournamentForm />
       </div>
