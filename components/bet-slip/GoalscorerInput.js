@@ -21,7 +21,7 @@ function GoalscorerInput({ goalscorer, handleSetGoalscorer, mode }) {
       ) : (
         <div className="flex justify-between">
           <span>{goalscorer?.name}</span>
-          <span>{`Poäng: ${points}`}</span>
+          {points !== undefined && <span>{`Poäng: ${points}`}</span>}
         </div>
       )}
     </div>
