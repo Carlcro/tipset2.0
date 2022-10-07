@@ -43,7 +43,11 @@ const Home: NextPage = () => {
   };
 
   if (status === "loading") {
-    return <Spinner />;
+    return (
+      <div className="h-screen grid place-items-center">
+        <Spinner width={60} height={60} />
+      </div>
+    );
   }
 
   if (status === "unauthenticated") {
