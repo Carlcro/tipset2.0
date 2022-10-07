@@ -7,6 +7,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 
 import dynamic from "next/dynamic";
+import Config from "../../models/config";
 
 const DynamicBetslip = dynamic(
   () => import("../../components/bet-slip/BetSlip"),
@@ -15,7 +16,7 @@ const DynamicBetslip = dynamic(
   }
 );
 
-const PlacedBets = () => {
+const PlacedBets = ({ bettingAllowed }) => {
   const setFromBetslip = useSetRecoilState(setFromBetslipState);
   const [placedBet, setPlacedBet] = useState(true);
   const [name, setName] = useState("");
@@ -32,7 +33,7 @@ const PlacedBets = () => {
       }
     },
     {
-      enabled: Boolean(id),
+      enabled: Boolean(id) && !bettingAllowed,
       retry: false,
       onError: () => {
         setPlacedBet(false);
@@ -42,6 +43,27 @@ const PlacedBets = () => {
 
   if (isLoading) {
     return null;
+  }
+
+  if (bettingAllowed) {
+    return (
+      <div className=" grid place-content-center">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.3 }}
+          className="bg-white rounded-sm shadow-sm p-6 mt-10 flex flex-col justify-center space-y-5"
+        >
+          <h2>Du kan se andras tips när VM har börjat</h2>
+          <button
+            className="text-blue-700 font-bold"
+            onClick={() => router.back()}
+          >
+            Gå tillbaka
+          </button>
+        </motion.div>
+      </div>
+    );
   }
 
   if (!placedBet) {
@@ -75,5 +97,11 @@ const PlacedBets = () => {
     </div>
   );
 };
+
+export async function getServerSideProps() {
+  const { bettingAllowed } = await Config.findOne();
+
+  return { props: { bettingAllowed } };
+}
 
 export default PlacedBets;
