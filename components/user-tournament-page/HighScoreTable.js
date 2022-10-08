@@ -1,8 +1,14 @@
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 const HighScoreTable = ({ highscoreData }) => {
   return (
-    <div className="bg-white rounded-sm p-3 w-full max-w-[400px]">
+    <motion.div
+      initial={{ opacity: 0, y: -10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4 }}
+      className="bg-white rounded-sm p-3 w-full max-w-[400px]"
+    >
       <h2 className="font-semibold text-xl text-center">Topplistan</h2>
       <table className="mx-1 w-full">
         <thead>
@@ -33,7 +39,7 @@ const HighScoreTable = ({ highscoreData }) => {
           ))}
         </tbody>
       </table>
-    </div>
+    </motion.div>
   );
 };
 

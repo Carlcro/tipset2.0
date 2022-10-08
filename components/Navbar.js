@@ -108,11 +108,11 @@ const Navbar = () => {
   }, [router, status]);
 
   if (status === "loading") {
-    return null;
+    return <div className="h-[60px]"></div>;
   }
 
   if (!user?.fullName) {
-    return null;
+    return <div className="h-[60px]"></div>;
   }
 
   return (
