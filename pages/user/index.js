@@ -27,7 +27,7 @@ export default function UserContainer() {
 
   return (
     <div className="mx-auto w-72 bg-white rounded-sm p-7 mt-20">
-      <h2>Vad heter du?</h2>
+      <h2>Byt namn</h2>
       <form
         className="flex flex-col gap-y-4"
         onSubmit={(e) => {
