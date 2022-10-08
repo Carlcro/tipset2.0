@@ -17,13 +17,15 @@ const getHighScore = async (req, res) => {
     populate: [{ path: "betSlip" }],
   });
 
-  const highscoreData = userTournament.members
-    .sort((a, b) => b.points - a.points)
-    .map((x) => ({
-      id: x._id.toString(),
-      fullName: x.fullName,
-      points: x?.betSlip?.points || "-",
-    }));
+  const highscoreData = userTournament.members.map((x) => ({
+    id: x._id.toString(),
+    fullName: x.fullName,
+    points: x?.betSlip?.points || null,
+  }));
 
-  res.send(highscoreData);
+  const sorted = highscoreData.sort((a, b) => {
+    return b.points - a.points;
+  });
+
+  res.send(sorted);
 };

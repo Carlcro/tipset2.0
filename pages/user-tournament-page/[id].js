@@ -47,18 +47,20 @@ export async function getServerSideProps({ params, res, req }) {
 
   const isOwner = user._id.equals(userTournament.owner);
 
-  const highscoreData = userTournament.members
-    .sort((a, b) => b.points - a.points)
-    .map((x) => ({
-      id: x._id.toString(),
-      fullName: x.fullName,
-      points: x?.betSlip?.points || "-",
-    }));
+  const highscoreData = userTournament.members.map((x) => ({
+    id: x._id.toString(),
+    fullName: x.fullName,
+    points: x?.betSlip?.points || null,
+  }));
+
+  const sorted = highscoreData.sort((a, b) => {
+    return b.points - a.points;
+  });
 
   return {
     props: {
       isOwner,
-      highscoreData,
+      highscoreData: sorted,
     },
   };
 }

@@ -28,7 +28,7 @@ const HighScoreTable = ({ highscoreData }) => {
                   <a>{score.fullName}</a>
                 </Link>
               </td>
-              <td className="text-center">{score.points}</td>
+              <td className="text-center">{score.points || "-"}</td>
             </tr>
           ))}
         </tbody>

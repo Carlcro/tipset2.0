@@ -62,15 +62,17 @@ export async function getServerSideProps(context) {
     populate: [{ path: "betSlip" }],
   });
 
-  const highscoreData = userTournament.members
-    .sort((a, b) => b.points - a.points)
-    .map((x) => ({
-      id: x._id.toString(),
-      fullName: x.fullName,
-      points: x?.betSlip?.points || "-",
-    }));
+  const highscoreData = userTournament.members.map((x) => ({
+    id: x._id.toString(),
+    fullName: x.fullName,
+    points: x?.betSlip?.points || null,
+  }));
 
-  return { props: { tournaments, highscoreData } };
+  const sorted = highscoreData.sort((a, b) => {
+    return b.points - a.points;
+  });
+
+  return { props: { tournaments, highscoreData: sorted } };
 }
 
 export default UserTournamentContainer;
