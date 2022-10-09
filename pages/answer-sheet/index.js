@@ -52,6 +52,7 @@ const AnswerSheet = () => {
   const mutation = useMutation(saveAnswerSheet, {
     onSuccess: () => {
       queryClient.invalidateQueries(["answerSheet"]);
+      toast.success("Sparat!");
     },
     onError: (error) => {
       toast.error(error.message);
