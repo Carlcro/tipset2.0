@@ -17,7 +17,7 @@ const DynamicUserTournamentPanel = dynamic(
   }
 );
 
-const UserTournamentPage = ({ highscoreData, isOwner }) => {
+const UserTournamentPage = ({ highscoreData, isOwner, name }) => {
   const router = useRouter();
   const { id } = router.query;
   const { data } = useQuery(
@@ -30,7 +30,7 @@ const UserTournamentPage = ({ highscoreData, isOwner }) => {
   return (
     <div className="flex flex-col-reverse md:flex-row md:space-x-8 px-5 items-center md:items-start md:justify-center">
       <DynamicUserTournamentPanel isOwner={isOwner} />
-      <HighScoreTable highscoreData={data} />
+      <HighScoreTable name={name} highscoreData={data} />
     </div>
   );
 };
@@ -61,6 +61,7 @@ export async function getServerSideProps({ params, res, req }) {
     props: {
       isOwner,
       highscoreData: sorted,
+      name: userTournament.name,
     },
   };
 }
