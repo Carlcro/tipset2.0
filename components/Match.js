@@ -7,6 +7,7 @@ import {
   setMatchState,
 } from "../recoil/bet-slip/selectors/selectors";
 import { useRecoilValue, useSetRecoilState } from "recoil";
+import { flags } from "../utils/flags";
 
 const Match = ({ match, matchInfo, finalsStage, mode }) => {
   const { team1, team2, matchId } = match;
@@ -102,6 +103,7 @@ const Match = ({ match, matchInfo, finalsStage, mode }) => {
         className={`text-sm md:text-base flex items-center truncate justify-end px-2 ${team1Style}`}
       >
         <span className="truncate">{team1.name}</span>
+        <span className="ml-2 text-xl">{flags[team1.name]}</span>
       </div>
       <div className={`flex justify-center ${finalsStage && "col-span-2"}`}>
         <div
@@ -156,6 +158,8 @@ const Match = ({ match, matchInfo, finalsStage, mode }) => {
       <div
         className={`text-sm md:text-base truncate flex items-center justify-start px-2 ${team2Style}`}
       >
+        <span className="mr-2 text-xl">{flags[team2.name]}</span>
+
         <span className="truncate">{team2.name}</span>
       </div>
       {mode === "placedBet" && (
