@@ -40,35 +40,32 @@ function BurgerMenu({ user }) {
         </svg>
       </Menu.Button>
       <Menu.Items className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none">
-        {user ? (
-          routesLoggedIn(user).map((item) => (
-            <Menu.Item key={item.name}>
-              {({ active, hover }) => (
-                <MyLink
-                  className={`${
-                    active && "bg-blue-500"
-                  } flex items-center px-4 py-2 text-sm`}
-                  href={item.route}
-                >
-                  {item.name}
-                </MyLink>
-              )}
-            </Menu.Item>
-          ))
-        ) : (
-          <Menu.Item>
+        {routesLoggedIn(user).map((item) => (
+          <Menu.Item key={item.name}>
             {({ active, hover }) => (
               <MyLink
                 className={`${
                   active && "bg-blue-500"
                 } flex items-center px-4 py-2 text-sm`}
-                href={"/"}
+                href={item.route}
               >
-                Hem
+                {item.name}
               </MyLink>
             )}
           </Menu.Item>
-        )}
+        ))}
+        <Menu.Item>
+          {({ active, hover }) => (
+            <div
+              className={`${
+                active && "bg-blue-500"
+              } flex items-center px-4 py-2 text-sm`}
+              onClick={() => signOut({ callbackUrl: "/" })}
+            >
+              Logout
+            </div>
+          )}
+        </Menu.Item>
       </Menu.Items>
     </Menu>
   );
@@ -87,7 +84,7 @@ const routesLoggedIn = (user) => [
 ];
 
 const Navbar = () => {
-  const { status, data } = useSession();
+  const { status } = useSession();
   const router = useRouter();
 
   const { data: user } = useQuery(
@@ -122,12 +119,6 @@ const Navbar = () => {
       {user && (
         <>
           <div className="flex-1 mr-5 md:hidden space-x-5">
-            <button
-              className="bg-red-400 border-black border-1 text-sm px-2 py-2 text-white"
-              onClick={() => signOut({ callbackUrl: "/" })}
-            >
-              Logga ut
-            </button>
             <Link href="/user">
               <a>{user.fullName}</a>
             </Link>
@@ -161,7 +152,7 @@ const Navbar = () => {
                 <a className="font-bold">{user.fullName}</a>
               </Link>
               <button
-                className="bg-red-400 border-black border-1 text-sm px-2 py-2 text-white"
+                className="bg-red-400  text-sm px-2 py-2 text-white"
                 onClick={() => signOut({ callbackUrl: "/" })}
               >
                 Logga ut
