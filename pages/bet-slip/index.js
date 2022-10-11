@@ -45,6 +45,7 @@ const BetSlipContainer = () => {
     },
     {
       retry: false,
+      refetchOnWindowFocus: false,
       onError: () => {
         setBetslip([]);
         setGoalscorer(null);
