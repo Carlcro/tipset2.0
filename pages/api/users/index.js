@@ -32,7 +32,7 @@ const updateUsername = async (req, res) => {
 
 const autoJoinUserTournament = async (user) => {
   const configuration = await Config.findOne();
-  if (configuration) {
+  if (configuration && configuration.bettingAllowed) {
     const userTournamentId = configuration.autoJoinUserTournamentId;
     const userTournament = await UserTournament.updateOne(
       { _id: userTournamentId },
