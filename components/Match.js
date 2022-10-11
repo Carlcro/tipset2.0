@@ -8,6 +8,9 @@ import {
 } from "../recoil/bet-slip/selectors/selectors";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { flags } from "../utils/flags";
+import { polyfillCountryFlagEmojis } from "country-flag-emoji-polyfill";
+
+polyfillCountryFlagEmojis();
 
 const Match = ({ match, matchInfo, finalsStage, mode }) => {
   const { team1, team2, matchId } = match;

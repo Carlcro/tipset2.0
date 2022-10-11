@@ -15,6 +15,7 @@
     "axios": "^0.24.0",
     "babel-plugin-superjson-next": "^0.4.3",
     "bcryptjs": "^2.4.3",
+    "country-flag-emoji-polyfill": "^0.1.4",
     "date-fns": "^2.27.0",
     "framer-motion": "^7.4.0",
     "intercept-stdout": "^0.1.2",
@@ -31,6 +32,7 @@
     "react-dom": "^18.2.0",
     "react-query": "^3.39.2",
     "react-toastify": "^9.0.8",
+    "react-world-flags": "^1.5.1",
     "recoil": "^0.7.3",
     "superjson": "^1.9.1"
   },
