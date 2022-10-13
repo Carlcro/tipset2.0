@@ -127,11 +127,19 @@ export const calculateCorrectAdvanceTeam = (
       ),
     },
     {
+      final: "Bronsmatch",
+      points: calculateFinalAdvancePoints(
+        betMatchResults,
+        outcomeMatchResults,
+        63
+      ),
+    },
+    {
       final: "Final",
       points: calculateFinalAdvancePoints(
         betMatchResults,
         outcomeMatchResults,
-        51
+        64
       ),
     },
   ];

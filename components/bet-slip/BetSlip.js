@@ -7,7 +7,6 @@ import { useRecoilValue, useSetRecoilState, useRecoilState } from "recoil";
 import TiebreakerInfo from "./TiebreakerInfo";
 import { goalscorerState } from "../../recoil/bet-slip/atoms";
 import {
-  getPointsFromAdvancement,
   resetAllBets,
   setAllMatchesState,
 } from "../../recoil/bet-slip/selectors/selectors";

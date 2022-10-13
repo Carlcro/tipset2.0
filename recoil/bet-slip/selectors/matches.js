@@ -87,7 +87,7 @@ export const getThirdPlaceFinal = selector({
     const semiFinalsLosers = get(getSemiFinalsLosers);
 
     return {
-      name: "Tredjeplatsfinal",
+      name: "Bronsmatch",
       matches: calculateThirdPlaceMatch(semiFinalsLosers),
       finalsStage: true,
     };
