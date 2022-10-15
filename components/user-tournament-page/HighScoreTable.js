@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
+import DiffIndicator from "../../components/DiffIndicator";
 
 const HighScoreTable = ({ highscoreData, name }) => {
   return (
@@ -18,6 +19,7 @@ const HighScoreTable = ({ highscoreData, name }) => {
             <th>Rank</th>
             <th className="text-center md:text-left">Namn</th>
             <th>Poäng</th>
+            <th>Diff</th>
           </tr>
         </thead>
         <tbody>
@@ -37,6 +39,38 @@ const HighScoreTable = ({ highscoreData, name }) => {
                 </Link>
               </td>
               <td className="text-center">{score.points || "-"}</td>
+              <td className="text-center">
+                {score.difference !== 0 && (
+                  <div className="justify-around my-2 absolute">
+                    <span
+                      className={
+                        score.difference < 0
+                          ? "relative left-4 top-[-23px] text-xs"
+                          : "relative left-4 top-[-17px] text-xs"
+                      }
+                    >
+                      {Math.abs(score.difference)}
+                    </span>
+                    <div
+                      className={
+                        score.difference < 0
+                          ? "relative left-[14px] top-[-34px]"
+                          : "relative left-[18.5px] top-[-48px]"
+                      }
+                    >
+                      <div
+                        className={
+                          score.difference < 0
+                            ? "rotate-180 fill-red-600"
+                            : "fill-green-600"
+                        }
+                      >
+                        <DiffIndicator hight={20} width={20} />
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </td>
             </tr>
           ))}
         </tbody>

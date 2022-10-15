@@ -34,7 +34,8 @@ var BetSlipSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: Player,
   },
-  points: Number,
+  points: Number, //{ type: [{ matchId: Number, points: Number }], default: [] },
+  pointsArray: { type: [{ gameNumber: Number, points: Number }], default: [] },
 });
 
 export default models.BetSlip || model("BetSlip", BetSlipSchema);

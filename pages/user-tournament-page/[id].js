@@ -47,20 +47,49 @@ export async function getServerSideProps({ params, res, req }) {
 
   const isOwner = user._id.equals(userTournament.owner);
 
-  const highscoreData = userTournament.members.map((x) => ({
-    id: x._id.toString(),
-    fullName: x.fullName,
-    points: x?.betSlip?.points || null,
-  }));
+  const getHighscore = (x, index) => {
+    const pointsArray = x?.betSlip?.pointsArray;
 
-  const sorted = highscoreData.sort((a, b) => {
-    return b.points - a.points;
+    let secondToLastPoint;
+    if (pointsArray && pointsArray.length >= index) {
+      secondToLastPoint = pointsArray[pointsArray.length - index];
+    } else {
+      secondToLastPoint = "-";
+    }
+    return {
+      id: x._id.toString(),
+      fullName: x.fullName,
+      points: secondToLastPoint.points || null,
+    };
+  };
+
+  const secondToLastGameHighscoreData = userTournament.members
+    .map((x) => getHighscore(x, 2))
+    .sort((a, b) => b.points - a.points);
+
+  const highscoreData = userTournament.members
+    .map((x) => getHighscore(x, 1))
+    .sort((a, b) => b.points - a.points);
+
+  const data = highscoreData.map((x, index) => {
+    const lastRank = secondToLastGameHighscoreData.findIndex(
+      (y) => y.id === x.id
+    );
+
+    const difference = lastRank - index;
+
+    return {
+      id: x.id,
+      fullName: x.fullName,
+      points: x.points,
+      difference,
+    };
   });
 
   return {
     props: {
       isOwner,
-      highscoreData: sorted,
+      highscoreData: data,
       name: userTournament.name,
     },
   };

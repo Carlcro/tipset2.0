@@ -120,7 +120,7 @@ const Navbar = () => {
         <>
           <div className="flex-1 mr-5 md:hidden space-x-5">
             <Link href="/user">
-              <a>{user.fullName}</a>
+              <a className="font-extrabold">{user.fullName}</a>
             </Link>
           </div>
 
@@ -149,7 +149,7 @@ const Navbar = () => {
 
             <div className="text-right flex-1 mr-5 space-x-7 flex items-center justify-end">
               <Link href="/user">
-                <a className="font-bold">{user.fullName}</a>
+                <a className="font-extrabold">{user.fullName}</a>
               </Link>
               <button
                 className="bg-red-400  text-sm px-2 py-2 text-white"

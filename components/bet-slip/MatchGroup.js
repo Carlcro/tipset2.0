@@ -47,7 +47,7 @@ function MatchGroup({ group, matchInfos, mode }) {
         );
       })}
       {points !== null && mode === "placedBet" && (
-        <div className="flex border-t justify-end border-black pt-1 mx-4 ">
+        <div className="flex border-t justify-end border-black pt-1 pr-1 ">
           {`Poäng rätt lag vidare: ${points}`}
         </div>
       )}

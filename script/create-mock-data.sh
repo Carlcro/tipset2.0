@@ -112,4 +112,5 @@ function createChampionship {
   echo "6314540c64324ae1716108fc"
 }
 
-run
+createMatchInfo "6314540c64324ae1716108fc" 
+
