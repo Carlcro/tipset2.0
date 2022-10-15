@@ -1,8 +1,14 @@
+import { motion } from "framer-motion";
 import Link from "next/link";
 
 const UserTournamentsList = ({ tournaments }) => {
   return (
-    <div className="rounded-sm shadow-lg p-3 bg-white">
+    <motion.div
+      initial={{ opacity: 0, y: -10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4 }}
+      className="rounded-sm shadow-lg p-3 bg-white"
+    >
       <div className="text-black font-bold">Dina grupper</div>
       <ul>
         {tournaments?.map((tournament) => (
@@ -16,7 +22,7 @@ const UserTournamentsList = ({ tournaments }) => {
           </li>
         ))}
       </ul>
-    </div>
+    </motion.div>
   );
 };
 

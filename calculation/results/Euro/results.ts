@@ -2,7 +2,7 @@ import { MatchGroup } from "../../types/matchGroup";
 import { RawMatchResult } from "../../types/rawMatchResult";
 import { Team } from "../../types/team";
 import {
-  calculateResults,
+  calculateWinners,
   getGroupResults,
   getGroupScores,
   getScores,
@@ -19,13 +19,13 @@ export function calculateGroupResults(
 }
 
 export function calculateGroupOf16Results(results: RawMatchResult[]): Team[] {
-  return calculateResults(results, 37, 44);
+  return calculateWinners(results, 37, 44);
 }
 
 export function calculateGroupOf8Results(results: RawMatchResult[]): Team[] {
-  return calculateResults(results, 45, 48);
+  return calculateWinners(results, 45, 48);
 }
 
 export function calculateSemiFinalsResults(results: RawMatchResult[]): Team[] {
-  return calculateResults(results, 49, 50);
+  return calculateWinners(results, 49, 50);
 }

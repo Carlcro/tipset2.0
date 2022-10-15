@@ -17,53 +17,41 @@ const getHighScore = async (req, res) => {
     populate: [{ path: "betSlip" }],
   });
 
-  const secondToLastGameHighscoreData = userTournament.members
-    .sort((a, b) => b.points - a.points)
-    .map((x) => {
-      const points = x?.betSlip?.points;
+  const getHighscore = (x, index) => {
+    const pointsArray = x?.betSlip?.pointsArray;
 
-      let secondToLastPoint;
-      if (points && points.length >= 2) {
-        secondToLastPoint = points[points.length - 2];
-      } else {
-        secondToLastPoint = "-";
-      }
-      return {
-        id: x._id.toString(),
-        fullName: x.fullName,
-        points: secondToLastPoint,
-      };
-    });
+    let secondToLastPoint;
+    if (pointsArray && pointsArray.length >= index) {
+      secondToLastPoint = pointsArray[pointsArray.length - index];
+    } else {
+      secondToLastPoint = "-";
+    }
+    return {
+      id: x._id.toString(),
+      fullName: x.fullName,
+      points: secondToLastPoint.points || null,
+    };
+  };
+
+  const secondToLastGameHighscoreData = userTournament.members
+    .map((x) => getHighscore(x, 2))
+    .sort((a, b) => b.points - a.points);
 
   const highscoreData = userTournament.members
-    .sort((a, b) => b.points - a.points)
-    .map((x) => {
-      const points = x?.betSlip?.points;
-
-      let lastPoints;
-      if (points) {
-        lastPoints = points[points.length - 1];
-      } else {
-        lastPoints = "-";
-      }
-      return {
-        id: x._id.toString(),
-        fullName: x.fullName,
-        points: lastPoints,
-      };
-    });
+    .map((x) => getHighscore(x, 1))
+    .sort((a, b) => b.points - a.points);
 
   const data = highscoreData.map((x, index) => {
-    const indexLast = secondToLastGameHighscoreData.findIndex(
+    const lastRank = secondToLastGameHighscoreData.findIndex(
       (y) => y.id === x.id
     );
 
-    const difference = indexLast - index;
+    const difference = lastRank - index;
 
     return {
       id: x.id,
       fullName: x.fullName,
-      points: x.points.points,
+      points: x.points,
       difference,
     };
   });

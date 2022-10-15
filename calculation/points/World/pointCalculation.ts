@@ -13,6 +13,7 @@ import {
   calculatePositionPoints,
   calculateSemiFinalAdvancePoints,
   calculateSemiFinalMatchPoints,
+  calculateThirdPlaceFinalMatchPoints,
   isGroupFinished,
 } from "../common";
 import { calculateTeamRanking } from "../../matchGroup/World/calculations";
@@ -81,6 +82,8 @@ export const getMatchPoint = (
     return calculateGroupOf8MatchPoints(matchResult, outcomeResult);
   } else if (outcomeResult.matchId <= 62) {
     return calculateSemiFinalMatchPoints(matchResult, outcomeResult);
+  } else if (outcomeResult.matchId === 63) {
+    return calculateThirdPlaceFinalMatchPoints(matchResult, outcomeResult);
   } else {
     return calculateFinalMatchPoints(matchResult, outcomeResult);
   }
@@ -119,7 +122,15 @@ export const calculateCorrectAdvanceTeam = (
       points: calculateSemiFinalAdvancePoints(
         betMatchResults,
         outcomeMatchResults,
-        63,
+        64,
+        64
+      ),
+    },
+    {
+      final: "Bronsmatch",
+      points: calculateFinalAdvancePoints(
+        betMatchResults,
+        outcomeMatchResults,
         63
       ),
     },
@@ -128,7 +139,7 @@ export const calculateCorrectAdvanceTeam = (
       points: calculateFinalAdvancePoints(
         betMatchResults,
         outcomeMatchResults,
-        51
+        64
       ),
     },
   ];

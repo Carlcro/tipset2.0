@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import {
   getAnswerSheet,
   saveAnswerSheet,
@@ -21,8 +21,8 @@ const AnswerSheet = () => {
   const setFromBetslip = useSetRecoilState(setFromBetslipState);
   const [password, setPassword] = useState("");
   const [goals, setGoals] = useState(0);
-  const [goalscorer, setGoalscorer] = useRecoilState(goalscorerState);
   const [betslip, setBetslip] = useRecoilState(betSlipState);
+  const [goalscorer, setGoalscorer] = useRecoilState(goalscorerState);
 
   const queryClient = useQueryClient();
 
@@ -41,19 +41,18 @@ const AnswerSheet = () => {
       }
     },
     {
-      staleTime: Infinity,
-      cacheTime: Infinity,
-      retry: false,
       onError: () => {
         setBetslip([]);
         setGoalscorer(null);
       },
+      retry: false,
     }
   );
 
   const mutation = useMutation(saveAnswerSheet, {
     onSuccess: () => {
       queryClient.invalidateQueries(["answerSheet"]);
+      toast.success("Sparat!");
     },
     onError: (error) => {
       toast.error(error.message);

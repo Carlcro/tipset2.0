@@ -17,8 +17,10 @@ import {
   calculateTeamRanking,
   getBestOfThirds,
   calculateGroupOf8Results,
+  calculateSemiFinalsLosers,
 } from "../../../calculation";
 import { championshipState } from "../../../recoil/championship/selectors";
+import { calculateThirdPlaceMatch } from "../../../calculation/matchGroup/World/calculations";
 
 export const setAllMatchesState = selector({
   key: "setAllMatches",
@@ -139,6 +141,7 @@ export const getMatchDrawState = selectorFamily({
     },
 });
 
+//Denhär funktionen är en fucking abomination
 export const setMatchState = selector({
   key: "setMatch",
   set: ({ get, set }, newValue) => {
@@ -216,11 +219,11 @@ export const setMatchState = selector({
         betSlip.push(newResult);
       }
     });
-
     const semiFinal = calculateSemiFinalsResults(betSlip);
-    const newFinal = calculateFinal(semiFinal);
 
-    newFinal.forEach((newMatch, newIndex) => {
+    const newThirdPlaceFinal = calculateThirdPlaceMatch(semiFinal);
+
+    newThirdPlaceFinal.forEach((newMatch, newIndex) => {
       const index5 = betSlip.findIndex(
         (match) => match.matchId === newMatch.matchId
       );
@@ -228,10 +231,28 @@ export const setMatchState = selector({
       if (betSlip[index5]) {
         const newResult = {
           ...betSlip[index5],
+          team1: newThirdPlaceFinal[newIndex].team1,
+          team2: newThirdPlaceFinal[newIndex].team2,
+        };
+        betSlip.splice(index5, 1);
+        betSlip.push(newResult);
+      }
+    });
+
+    const newFinal = calculateFinal(semiFinal);
+
+    newFinal.forEach((newMatch, newIndex) => {
+      const index6 = betSlip.findIndex(
+        (match) => match.matchId === newMatch.matchId
+      );
+
+      if (betSlip[index6]) {
+        const newResult = {
+          ...betSlip[index6],
           team1: newFinal[newIndex].team1,
           team2: newFinal[newIndex].team2,
         };
-        betSlip.splice(index5, 1);
+        betSlip.splice(index6, 1);
         betSlip.push(newResult);
       }
     });

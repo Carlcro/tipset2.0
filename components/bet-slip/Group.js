@@ -3,7 +3,7 @@ import { useRecoilValue } from "recoil";
 import { getPointsFromGroup } from "../../recoil/bet-slip/selectors/selectors";
 import { motion } from "framer-motion";
 
-export default function Group({ groupResult, groupName }) {
+export default function Group({ groupResult, groupName, mode }) {
   const points = useRecoilValue(getPointsFromGroup(groupName));
 
   return (
@@ -43,7 +43,7 @@ export default function Group({ groupResult, groupName }) {
           ))}
         </tbody>
       </table>
-      {points !== null ? (
+      {points !== null && mode === "placedBet" ? (
         <div className="border-t border-black mx-2 flex justify-between">
           <span>Poäng från grupp</span>
           <span>{points}</span>

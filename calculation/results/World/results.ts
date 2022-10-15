@@ -1,5 +1,6 @@
 import {
-  calculateResults,
+  calculateLosers,
+  calculateWinners,
   getGroupResults,
   getGroupScores,
   getScores,
@@ -19,13 +20,17 @@ export function calculateGroupResults(
 }
 
 export function calculateGroupOf16Results(results: RawMatchResult[]): Team[] {
-  return calculateResults(results, 49, 56);
+  return calculateWinners(results, 49, 56);
 }
 
 export function calculateGroupOf8Results(results: RawMatchResult[]): Team[] {
-  return calculateResults(results, 57, 60);
+  return calculateWinners(results, 57, 60);
 }
 
 export function calculateSemiFinalsResults(results: RawMatchResult[]): Team[] {
-  return calculateResults(results, 61, 62);
+  return calculateWinners(results, 61, 62);
+}
+
+export function calculateSemiFinalsLosers(results: RawMatchResult[]): Team[] {
+  return calculateLosers(results, 61, 62);
 }

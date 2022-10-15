@@ -1,9 +1,7 @@
 import React, { useEffect } from "react";
 import { forwardRef } from "react";
-
 import { Menu } from "@headlessui/react";
 import Link from "next/link";
-import LoginButton from "./login-button";
 import { useQuery } from "react-query";
 import { signOut, useSession } from "next-auth/react";
 import { getUser } from "../services/userService";
@@ -24,7 +22,7 @@ MyLink.displayName = "MyLink";
 
 function BurgerMenu({ user }) {
   return (
-    <Menu as="div" className="relative sm:hidden">
+    <Menu as="div" className="relative md:hidden">
       <Menu.Button className="inline-flex justify-center w-full rounded border border-gray-300 shadow-lg px-4 py-2 bg-white text-sm font-medium text-gray-700">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -42,35 +40,32 @@ function BurgerMenu({ user }) {
         </svg>
       </Menu.Button>
       <Menu.Items className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none">
-        {user ? (
-          routesLoggedIn(user).map((item) => (
-            <Menu.Item key={item.name}>
-              {({ active, hover }) => (
-                <MyLink
-                  className={`${
-                    active && "bg-blue-500"
-                  } flex items-center px-4 py-2 text-sm`}
-                  href={item.route}
-                >
-                  {item.name}
-                </MyLink>
-              )}
-            </Menu.Item>
-          ))
-        ) : (
-          <Menu.Item>
+        {routesLoggedIn(user).map((item) => (
+          <Menu.Item key={item.name}>
             {({ active, hover }) => (
               <MyLink
                 className={`${
                   active && "bg-blue-500"
                 } flex items-center px-4 py-2 text-sm`}
-                href={"/"}
+                href={item.route}
               >
-                Hem
+                {item.name}
               </MyLink>
             )}
           </Menu.Item>
-        )}
+        ))}
+        <Menu.Item>
+          {({ active, hover }) => (
+            <div
+              className={`${
+                active && "bg-blue-500"
+              } flex items-center px-4 py-2 text-sm`}
+              onClick={() => signOut({ callbackUrl: "/" })}
+            >
+              Logout
+            </div>
+          )}
+        </Menu.Item>
       </Menu.Items>
     </Menu>
   );
@@ -89,7 +84,7 @@ const routesLoggedIn = (user) => [
 ];
 
 const Navbar = () => {
-  const { status, data } = useSession();
+  const { status } = useSession();
   const router = useRouter();
 
   const { data: user } = useQuery(
@@ -105,40 +100,37 @@ const Navbar = () => {
     if (status === "unauthenticated") {
       router.push("/");
     }
-
-    if (status === "authenticated" && user && !user.firstName) {
-      router.push("/user");
-    }
-  }, [user, router, status]);
+  }, [router, status]);
 
   if (status === "loading") {
-    return null;
+    return <div className="h-[60px]"></div>;
+  }
+
+  if (!user?.fullName) {
+    return <div className="h-[60px]"></div>;
   }
 
   return (
     <nav
-      className=" p-3 mb-4 flex justify-between sm:justify-start"
+      className=" p-2 mb-4 flex justify-between md:justify-start"
       role="navigation"
       aria-label="main navigation"
     >
       {user && (
         <>
-          <div className="flex-1 mr-5 sm:hidden">
-            <button
-              className="bg-red-400 border-black border-1 text-sm px-2 py-2 text-white"
-              onClick={() => signOut({ callbackUrl: "/" })}
-            >
-              Logga ut
-            </button>
+          <div className="flex-1 mr-5 md:hidden space-x-5">
+            <Link href="/user">
+              <a className="font-extrabold">{user.fullName}</a>
+            </Link>
           </div>
 
           <BurgerMenu user={user} />
         </>
       )}
 
-      <div className="hidden sm:flex sm:justify-between w-full">
+      <div className="hidden md:flex md:justify-between w-full items-center">
         {status === "authenticated" ? (
-          <div className="flex gap-4 flex-1">
+          <div className="flex gap-4 flex-1 items-center">
             <>
               <Link href="/user-tournament">Grupper</Link>
               <Link href="/bet-slip">
@@ -154,13 +146,13 @@ const Navbar = () => {
             <Link href="/answer-sheet">
               <a>Answer Sheet</a>
             </Link>
-            <Link href="/user">
-              <a>Byt namn</a>
-            </Link>
 
-            <div className="text-right flex-1 mr-5">
+            <div className="text-right flex-1 mr-5 space-x-7 flex items-center justify-end">
+              <Link href="/user">
+                <a className="font-extrabold">{user.fullName}</a>
+              </Link>
               <button
-                className="bg-red-400 border-black border-1 text-sm px-2 py-2 text-white"
+                className="bg-red-400  text-sm px-2 py-2 text-white"
                 onClick={() => signOut({ callbackUrl: "/" })}
               >
                 Logga ut

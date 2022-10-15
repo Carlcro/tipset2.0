@@ -7,7 +7,6 @@ import { useRecoilValue, useSetRecoilState, useRecoilState } from "recoil";
 import TiebreakerInfo from "./TiebreakerInfo";
 import { goalscorerState } from "../../recoil/bet-slip/atoms";
 import {
-  getPointsFromAdvancement,
   resetAllBets,
   setAllMatchesState,
 } from "../../recoil/bet-slip/selectors/selectors";
@@ -16,6 +15,7 @@ import {
   getGroupOf8,
   getSemifinals,
   getFinal,
+  getThirdPlaceFinal,
 } from "../../recoil/bet-slip/selectors/matches";
 import { championshipState } from "../../recoil/championship/selectors";
 
@@ -24,6 +24,7 @@ const BetSlip = ({ mode, bettingAllowed, handleSave, error }) => {
   const groupOf16 = useRecoilValue(getGroupOf16);
   const groupOf8 = useRecoilValue(getGroupOf8);
   const semiFinals = useRecoilValue(getSemifinals);
+  const thirdPlaceFinal = useRecoilValue(getThirdPlaceFinal);
   const final = useRecoilValue(getFinal);
   const [goalscorer, setGoalscorer] = useRecoilState(goalscorerState);
   const setAllMatches = useSetRecoilState(setAllMatchesState);
@@ -70,8 +71,8 @@ const BetSlip = ({ mode, bettingAllowed, handleSave, error }) => {
           }
         </div>
       )}
-      <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr] mx-1 lg:mx-20">
-        <div className="mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr] mx-1 lg:flex lg:justify-center">
+        <div className="lg:justify-end">
           {championship.matchGroups.map((group) => (
             <MatchGroup
               group={group}
@@ -92,6 +93,11 @@ const BetSlip = ({ mode, bettingAllowed, handleSave, error }) => {
           />
           <MatchGroup
             group={semiFinals}
+            matchInfos={championship.matchInfos}
+            mode={mode}
+          />
+          <MatchGroup
+            group={thirdPlaceFinal}
             matchInfos={championship.matchInfos}
             mode={mode}
           />
@@ -122,8 +128,8 @@ const BetSlip = ({ mode, bettingAllowed, handleSave, error }) => {
             </div>
           )}
         </div>
-        <div className="mx-auto max-w-[500px] lg:max-w-[450px] ">
-          <GroupBoard />
+        <div className="max-w-[500px] lg:max-w-[450px] lg:justify-start ">
+          <GroupBoard mode={mode} />
           {mode === "betslip" && <TiebreakerInfo />}
         </div>
       </div>

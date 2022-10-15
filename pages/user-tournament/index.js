@@ -8,8 +8,10 @@ import mongoose from "mongoose";
 import { useQuery } from "react-query";
 import UserTournament from "../../models/user-tournament";
 import { getAllUserTournaments } from "../../services/userTournamentService";
+import Config from "../../models/config";
+import HighScoreTable from "../../components/user-tournament-page/HighScoreTable";
 
-const UserTournamentContainer = ({ tournaments }) => {
+const UserTournamentContainer = ({ tournaments, highscoreData }) => {
   const { data } = useQuery(
     "userTournaments",
     async () => {
@@ -20,13 +22,12 @@ const UserTournamentContainer = ({ tournaments }) => {
   );
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 px-5">
-      <div>
+    <div className="flex flex-col-reverse md:flex-row md:space-x-8 px-5 items-center md:items-start md:justify-center">
+      <div className="space-y-5  w-full max-w-[400px] mt-5 md:mt-0">
         <UserTournamentsList tournaments={data} />
-      </div>
-      <div>
         <UserTournamentForm />
       </div>
+      <HighScoreTable highscoreData={highscoreData} />
     </div>
   );
 };
@@ -52,7 +53,55 @@ export async function getServerSideProps(context) {
     name: x.name,
   }));
 
-  return { props: { tournaments } };
+  const config = await Config.findOne();
+
+  const userTournament = await UserTournament.findById(
+    config.autoJoinUserTournamentId
+  ).populate({
+    path: "members",
+    populate: [{ path: "betSlip" }],
+  });
+
+  const getHighscore = (x, index) => {
+    const pointsArray = x?.betSlip?.pointsArray;
+
+    let secondToLastPoint;
+    if (pointsArray && pointsArray.length >= index) {
+      secondToLastPoint = pointsArray[pointsArray.length - index];
+    } else {
+      secondToLastPoint = "-";
+    }
+    return {
+      id: x._id.toString(),
+      fullName: x.fullName,
+      points: secondToLastPoint.points || null,
+    };
+  };
+
+  const secondToLastGameHighscoreData = userTournament.members
+    .map((x) => getHighscore(x, 2))
+    .sort((a, b) => b.points - a.points);
+
+  const highscoreData = userTournament.members
+    .map((x) => getHighscore(x, 1))
+    .sort((a, b) => b.points - a.points);
+
+  const data = highscoreData.map((x, index) => {
+    const lastRank = secondToLastGameHighscoreData.findIndex(
+      (y) => y.id === x.id
+    );
+
+    const difference = lastRank - index;
+
+    return {
+      id: x.id,
+      fullName: x.fullName,
+      points: x.points,
+      difference,
+    };
+  });
+
+  return { props: { tournaments, highscoreData: data } };
 }
 
 export default UserTournamentContainer;

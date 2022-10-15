@@ -17,7 +17,7 @@ const DynamicUserTournamentPanel = dynamic(
   }
 );
 
-const UserTournamentPage = ({ highscoreData, isOwner }) => {
+const UserTournamentPage = ({ highscoreData, isOwner, name }) => {
   const router = useRouter();
   const { id } = router.query;
   const { data } = useQuery(
@@ -28,9 +28,9 @@ const UserTournamentPage = ({ highscoreData, isOwner }) => {
   );
 
   return (
-    <div className="flex flex-col-reverse md:flex-row md:space-x-8 px-5 items-center md:items-start">
+    <div className="flex flex-col-reverse md:flex-row md:space-x-8 px-5 items-center md:items-start md:justify-center">
       <DynamicUserTournamentPanel isOwner={isOwner} />
-      <HighScoreTable highscoreData={data} />
+      <HighScoreTable name={name} highscoreData={data} />
     </div>
   );
 };
@@ -47,29 +47,50 @@ export async function getServerSideProps({ params, res, req }) {
 
   const isOwner = user._id.equals(userTournament.owner);
 
+  const getHighscore = (x, index) => {
+    const pointsArray = x?.betSlip?.pointsArray;
+
+    let secondToLastPoint;
+    if (pointsArray && pointsArray.length >= index) {
+      secondToLastPoint = pointsArray[pointsArray.length - index];
+    } else {
+      secondToLastPoint = "-";
+    }
+    return {
+      id: x._id.toString(),
+      fullName: x.fullName,
+      points: secondToLastPoint.points || null,
+    };
+  };
+
+  const secondToLastGameHighscoreData = userTournament.members
+    .map((x) => getHighscore(x, 2))
+    .sort((a, b) => b.points - a.points);
+
   const highscoreData = userTournament.members
-    .sort((a, b) => b.points - a.points)
-    .map((x) => {
-      const points = x?.betSlip?.points;
+    .map((x) => getHighscore(x, 1))
+    .sort((a, b) => b.points - a.points);
 
-      let lastPoints;
-      if (points) {
-        lastPoints = points[points.length - 1];
-      } else {
-        lastPoints = "-";
-      }
+  const data = highscoreData.map((x, index) => {
+    const lastRank = secondToLastGameHighscoreData.findIndex(
+      (y) => y.id === x.id
+    );
 
-      return {
-        id: x._id.toString(),
-        fullName: x.fullName,
-        points: lastPoints.points,
-      };
-    });
+    const difference = lastRank - index;
+
+    return {
+      id: x.id,
+      fullName: x.fullName,
+      points: x.points,
+      difference,
+    };
+  });
 
   return {
     props: {
       isOwner,
-      highscoreData,
+      highscoreData: data,
+      name: userTournament.name,
     },
   };
 }

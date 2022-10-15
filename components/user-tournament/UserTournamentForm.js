@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { useMutation, useQueryClient } from "react-query";
 import { createUserTournament } from "../../services/userTournamentService";
+import { motion } from "framer-motion";
 
 const UserTournamentForm = () => {
   const [userTournamentName, setUserTournamentName] = useState("");
@@ -19,7 +20,12 @@ const UserTournamentForm = () => {
     setUserTournamentName("");
   };
   return (
-    <div className="shadow-lg rounded-sm p-3 bg-white">
+    <motion.div
+      initial={{ opacity: 0, y: -10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4 }}
+      className="shadow-lg rounded-sm p-3 bg-white"
+    >
       <div>
         <div className="font-bold mb-1">Namnge din grupp</div>
         <form className="flex flex-col" onSubmit={handleSubmit}>
@@ -36,7 +42,7 @@ const UserTournamentForm = () => {
           />
         </form>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

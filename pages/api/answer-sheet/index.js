@@ -34,7 +34,6 @@ const saveAnswerSheet = async (req, res) => {
       path: "matches teams",
     },
   });
-
   await AnswerSheet.deleteMany();
   await Result.deleteMany();
 
@@ -52,7 +51,7 @@ const saveAnswerSheet = async (req, res) => {
     answerSheet.goalscorer = null;
   }
 
-  const lastAnswerGame = req.body.answers[req.body.answers.length - 1];
+  const gameNumber = req.body.answers.length;
 
   for (const resultDto of req.body.answers) {
     let result = new Result({
@@ -80,7 +79,6 @@ const saveAnswerSheet = async (req, res) => {
     model: "Result",
     populate: [{ path: "team1 team2 penaltyWinner" }],
   });
-
   const allBetSlips = await BetSlip.find({
     championship: championship._id,
   }).populate({
@@ -102,16 +100,17 @@ const saveAnswerSheet = async (req, res) => {
 
     let totalPointsFromMatches = 0;
 
-    newAnswerSheet.results.forEach(async (result) => {
-      const betResult = betSlip.bets.find((x) => x.matchId === result.matchId);
+    betSlip.bets.forEach(async (bet) => {
+      const outcomeResult = newAnswerSheet.results.find(
+        (x) => x.matchId === bet.matchId
+      );
 
-      const matchPoint = getMatchPoint(result, betResult);
-
-      totalPointsFromMatches += matchPoint;
-
-      betResult.points = matchPoint;
-
-      await betResult.save();
+      if (outcomeResult) {
+        const matchPoint = getMatchPoint(outcomeResult, bet);
+        totalPointsFromMatches += matchPoint;
+        bet.points = matchPoint;
+        await bet.save();
+      }
     });
     const pointsFromGroup = betSlipGroupResult.map((groupResult, i) => {
       return {
@@ -159,14 +158,16 @@ const saveAnswerSheet = async (req, res) => {
 
     let pointsArray = [];
 
-    pointsArray =
-      [...betSlip?.points].filter(
-        (x) => x.matchId !== lastAnswerGame.matchId
-      ) || [];
+    if (betSlip.pointsArray) {
+      pointsArray = [...betSlip.pointsArray];
+    }
 
-    pointsArray.push({ matchId: lastAnswerGame.matchId, points });
+    pointsArray = [...pointsArray.slice(0, gameNumber - 1)];
 
-    betSlip.points = [...pointsArray];
+    pointsArray.push({ gameNumber, points });
+
+    betSlip.points = points;
+    betSlip.pointsArray = pointsArray;
 
     await betSlip.save();
   });
@@ -192,6 +193,10 @@ const getAnswerSheet = async (_, res) => {
         model: "Player",
       },
     });
+
+  if (!answerSheet) {
+    res.status(404).send("No answer sheet found");
+  }
 
   res.send(answerSheet);
 };

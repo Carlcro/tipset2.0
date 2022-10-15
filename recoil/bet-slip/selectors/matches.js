@@ -8,6 +8,7 @@ import {
   calculateTeamRanking,
   getBestOfThirds,
 } from "../../../calculation";
+import { calculateThirdPlaceMatch } from "../../../calculation/matchGroup/World/calculations";
 
 import { betSlipState } from "../atoms";
 import {
@@ -15,6 +16,7 @@ import {
   selectGroupOf16Results,
   selectGroupOf8Results,
   getSemiFinalsResults,
+  getSemiFinalsLosers,
 } from "./results";
 
 export const getGroupOf16 = selector({
@@ -79,14 +81,27 @@ export const getSemifinals = selector({
   },
 });
 
+export const getThirdPlaceFinal = selector({
+  key: "getThirdPlaceFinal",
+  get: ({ get }) => {
+    const semiFinalsLosers = get(getSemiFinalsLosers);
+
+    return {
+      name: "Bronsmatch",
+      matches: calculateThirdPlaceMatch(semiFinalsLosers),
+      finalsStage: true,
+    };
+  },
+});
+
 export const getFinal = selector({
   key: "getFinalsState",
   get: ({ get }) => {
-    const groupOf8 = get(getSemiFinalsResults);
+    const semiFinals = get(getSemiFinalsResults);
 
     return {
       name: "Final",
-      matches: calculateFinal(groupOf8),
+      matches: calculateFinal(semiFinals),
       finalsStage: true,
     };
   },
