@@ -110,6 +110,9 @@ const saveAnswerSheet = async (req, res) => {
         totalPointsFromMatches += matchPoint;
         bet.points = matchPoint;
         await bet.save();
+      } else {
+        bet.points = null;
+        await bet.save();
       }
     });
     const pointsFromGroup = betSlipGroupResult.map((groupResult, i) => {

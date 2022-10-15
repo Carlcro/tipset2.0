@@ -40,7 +40,7 @@ const HighScoreTable = ({ highscoreData, name }) => {
               </td>
               <td className="text-center">{score.points || "-"}</td>
               <td className="text-center">
-                {score.difference !== 0 && (
+                {score.difference ? (
                   <div className="justify-around my-2 absolute">
                     <span
                       className={
@@ -69,7 +69,7 @@ const HighScoreTable = ({ highscoreData, name }) => {
                       </div>
                     </div>
                   </div>
-                )}
+                ) : null}
               </td>
             </tr>
           ))}

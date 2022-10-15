@@ -23,13 +23,11 @@ const getHighScore = async (req, res) => {
     let secondToLastPoint;
     if (pointsArray && pointsArray.length >= index) {
       secondToLastPoint = pointsArray[pointsArray.length - index];
-    } else {
-      secondToLastPoint = "-";
     }
     return {
       id: x._id.toString(),
       fullName: x.fullName,
-      points: secondToLastPoint.points || null,
+      points: secondToLastPoint?.points || null,
     };
   };
 
@@ -46,7 +44,7 @@ const getHighScore = async (req, res) => {
       (y) => y.id === x.id
     );
 
-    const difference = lastRank - index;
+    const difference = x.points !== null ? lastRank - index : null;
 
     return {
       id: x.id,
