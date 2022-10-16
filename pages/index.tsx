@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import Spinner from "../components/Spinner";
 import { toast } from "react-toastify";
 import { useQuery } from "react-query";
@@ -33,8 +33,9 @@ const Home: NextPage = () => {
     }
   }, [router, status, user]);
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e: FormEvent) => {
     try {
+      e.preventDefault();
       await signIn("email", { email });
       setEmailSent(true);
     } catch (error) {
