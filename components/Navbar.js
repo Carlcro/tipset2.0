@@ -22,7 +22,7 @@ MyLink.displayName = "MyLink";
 
 function BurgerMenu({ user }) {
   return (
-    <Menu as="div" className="relative md:hidden">
+    <Menu as="div" className="relative md:hidden z-10">
       <Menu.Button className="inline-flex justify-center w-full rounded border border-gray-300 shadow-lg px-4 py-2 bg-white text-sm font-medium text-gray-700">
         <svg
           xmlns="http://www.w3.org/2000/svg"
