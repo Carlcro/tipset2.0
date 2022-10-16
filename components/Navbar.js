@@ -97,7 +97,7 @@ const Navbar = () => {
   );
 
   useEffect(() => {
-    if (status === "unauthenticated") {
+    if (router.pathname !== "/" && status === "unauthenticated") {
       router.push("/");
     }
   }, [router, status]);
