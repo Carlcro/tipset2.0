@@ -148,6 +148,16 @@ export const setMatchState = selector({
     const betSlip = [...get(betSlipState)];
     const championship = get(championshipState);
 
+    if (newValue.matchId < 49) {
+      betSlip = betSlip.filter((x) => x.matchId < 49);
+    } else if (newValue.matchId < 57) {
+      betSlip = betSlip.filter((x) => x.matchId < 57);
+    } else if (newValue.matchId < 61) {
+      betSlip = betSlip.filter((x) => x.matchId < 61);
+    } else if (newValue.matchId < 63) {
+      betSlip = betSlip.filter((x) => x.matchId < 63);
+    }
+
     const index1 = betSlip.findIndex(
       (match) => match.matchId === newValue.matchId
     );
