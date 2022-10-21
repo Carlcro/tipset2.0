@@ -100,13 +100,13 @@ const Match = ({ match, matchInfo, finalsStage, mode }) => {
       }
     >
       <div className="hidden md:flex md:flex-col items-center justify-center">
-        <span>{format(addHours(new Date(time), -2), "dd/M H:mm")}</span>
+        <span>{format(addHours(new Date(time), 0), "dd/M H:mm")}</span>
       </div>
       <div
         className={`text-sm md:text-base flex items-center truncate justify-end px-2`}
       >
         <span className={`truncate ${team1Style}`}>{team1.name}</span>
-        <span className="ml-2 text-xl hidden xs:flex">{flags[team1.name]}</span>
+        <span className="ml-2 text-xl xs:flex">{flags[team1.name]}</span>
       </div>
       <div className={`flex justify-center ${finalsStage && "col-span-2"}`}>
         <div
@@ -161,7 +161,7 @@ const Match = ({ match, matchInfo, finalsStage, mode }) => {
       <div
         className={`text-sm md:text-base truncate flex items-center justify-start px-2`}
       >
-        <span className="mr-2 text-xl hidden xs:flex">{flags[team2.name]}</span>
+        <span className="mr-2 text-xl xs:flex">{flags[team2.name]}</span>
 
         <span className={`truncate ${team2Style}`}>{team2.name}</span>
       </div>
