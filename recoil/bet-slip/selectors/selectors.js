@@ -141,22 +141,42 @@ export const getMatchDrawState = selectorFamily({
     },
 });
 
+function updateBetslip(betSlip, stage, newMatch, newIndex, newValue) {
+  const index = betSlip.findIndex(
+    (match) => match.matchId === newMatch.matchId
+  );
+  if (betSlip[index]) {
+    let newResult = {
+      ...betSlip[index],
+      team1: stage[newIndex].team1,
+      team2: stage[newIndex].team2,
+    };
+
+    if (
+      betSlip[index].penaltyWinner &&
+      betSlip[index].penaltyWinner._id !== stage[newIndex].team1._id &&
+      betSlip[index].penaltyWinner._id !== stage[newIndex].team2._id &&
+      betSlip[index].matchId !== newValue.matchId
+    ) {
+      const newPenaltyWinner =
+        betSlip[index].penaltyWinner._id === betSlip[index].team1._id
+          ? stage[newIndex].team1
+          : stage[newIndex].team2;
+      newResult.penaltyWinner = newPenaltyWinner;
+    }
+
+    return [newResult, index];
+  }
+
+  return [null, null];
+}
+
 //Denhär funktionen är en fucking abomination
 export const setMatchState = selector({
   key: "setMatch",
   set: ({ get, set }, newValue) => {
-    const betSlip = [...get(betSlipState)];
+    let betSlip = [...get(betSlipState)];
     const championship = get(championshipState);
-
-    if (newValue.matchId < 49) {
-      betSlip = betSlip.filter((x) => x.matchId < 49);
-    } else if (newValue.matchId < 57) {
-      betSlip = betSlip.filter((x) => x.matchId < 57);
-    } else if (newValue.matchId < 61) {
-      betSlip = betSlip.filter((x) => x.matchId < 61);
-    } else if (newValue.matchId < 63) {
-      betSlip = betSlip.filter((x) => x.matchId < 63);
-    }
 
     const index1 = betSlip.findIndex(
       (match) => match.matchId === newValue.matchId
@@ -178,17 +198,15 @@ export const setMatchState = selector({
 
     const newGroupOf16 = calculateGroupOf16(teamRankings, bestOfThirds);
     newGroupOf16.forEach((newMatch, newIndex) => {
-      const index2 = betSlip.findIndex(
-        (match) => match.matchId === newMatch.matchId
+      const [newResult, index] = updateBetslip(
+        betSlip,
+        newGroupOf16,
+        newMatch,
+        newIndex,
+        newValue
       );
-      if (betSlip[index2]) {
-        const newResult = {
-          ...betSlip[index2],
-          team1: newGroupOf16[newIndex].team1,
-          team2: newGroupOf16[newIndex].team2,
-        };
-
-        betSlip.splice(index2, 1);
+      if (newResult) {
+        betSlip.splice(index, 1);
         betSlip.push(newResult);
       }
     });
@@ -197,16 +215,15 @@ export const setMatchState = selector({
     const newGroupOf8 = calculateGroupOf8(groupOf16Result);
 
     newGroupOf8.forEach((newMatch, newIndex) => {
-      const index3 = betSlip.findIndex(
-        (match) => match.matchId === newMatch.matchId
+      const [newResult, index] = updateBetslip(
+        betSlip,
+        newGroupOf8,
+        newMatch,
+        newIndex,
+        newValue
       );
-      if (betSlip[index3]) {
-        const newResult = {
-          ...betSlip[index3],
-          team1: newGroupOf8[newIndex].team1,
-          team2: newGroupOf8[newIndex].team2,
-        };
-        betSlip.splice(index3, 1);
+      if (newResult) {
+        betSlip.splice(index, 1);
         betSlip.push(newResult);
       }
     });
@@ -215,17 +232,15 @@ export const setMatchState = selector({
     const newSemiFinals = calculateSemiFinals(groupOf8Result);
 
     newSemiFinals.forEach((newMatch, newIndex) => {
-      const index4 = betSlip.findIndex(
-        (match) => match.matchId === newMatch.matchId
+      const [newResult, index] = updateBetslip(
+        betSlip,
+        newSemiFinals,
+        newMatch,
+        newIndex,
+        newValue
       );
-
-      if (betSlip[index4]) {
-        const newResult = {
-          ...betSlip[index4],
-          team1: newSemiFinals[newIndex].team1,
-          team2: newSemiFinals[newIndex].team2,
-        };
-        betSlip.splice(index4, 1);
+      if (newResult) {
+        betSlip.splice(index, 1);
         betSlip.push(newResult);
       }
     });
@@ -234,17 +249,15 @@ export const setMatchState = selector({
     const newThirdPlaceFinal = calculateThirdPlaceMatch(semiFinal);
 
     newThirdPlaceFinal.forEach((newMatch, newIndex) => {
-      const index5 = betSlip.findIndex(
-        (match) => match.matchId === newMatch.matchId
+      const [newResult, index] = updateBetslip(
+        betSlip,
+        newThirdPlaceFinal,
+        newMatch,
+        newIndex,
+        newValue
       );
-
-      if (betSlip[index5]) {
-        const newResult = {
-          ...betSlip[index5],
-          team1: newThirdPlaceFinal[newIndex].team1,
-          team2: newThirdPlaceFinal[newIndex].team2,
-        };
-        betSlip.splice(index5, 1);
+      if (newResult) {
+        betSlip.splice(index, 1);
         betSlip.push(newResult);
       }
     });
@@ -252,17 +265,15 @@ export const setMatchState = selector({
     const newFinal = calculateFinal(semiFinal);
 
     newFinal.forEach((newMatch, newIndex) => {
-      const index6 = betSlip.findIndex(
-        (match) => match.matchId === newMatch.matchId
+      const [newResult, index] = updateBetslip(
+        betSlip,
+        newFinal,
+        newMatch,
+        newIndex,
+        newValue
       );
-
-      if (betSlip[index6]) {
-        const newResult = {
-          ...betSlip[index6],
-          team1: newFinal[newIndex].team1,
-          team2: newFinal[newIndex].team2,
-        };
-        betSlip.splice(index6, 1);
+      if (newResult) {
+        betSlip.splice(index, 1);
         betSlip.push(newResult);
       }
     });

@@ -71,6 +71,22 @@ const BetSlipContainer = () => {
     }
 
     if (
+      betslip.some((bet) => {
+        if (
+          bet.team1Score === bet.team2Score &&
+          bet.matchId > 48 &&
+          !bet.penaltyWinner
+        )
+          return true;
+      })
+    ) {
+      errorToast(
+        "En match i slutspelet som slutar oavgjort saknar straffvinnare"
+      );
+      return false;
+    }
+
+    if (
       betslip[62].team1Score === betslip[62].team2Score &&
       !betslip[62].penaltyWinner
     ) {
