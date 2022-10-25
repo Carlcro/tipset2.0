@@ -19,7 +19,7 @@ const HighScoreTable = ({ highscoreData, name }) => {
             <th>Rank</th>
             <th className="text-center md:text-left">Namn</th>
             <th>Poäng</th>
-            <th>Diff</th>
+            <th className="w-12">{""}</th>
           </tr>
         </thead>
         <tbody>

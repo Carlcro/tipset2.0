@@ -22,7 +22,7 @@ export const flags = {
   "Costa Rica": "🇨🇷",
   Belgien: "🇧🇪",
   Kanada: "🇨🇦",
-  Morocko: "🇲🇦",
+  Marocko: "🇲🇦",
   Kroatien: "🇭🇷",
   Brasilien: "🇧🇷",
   Serbien: "🇷🇸",

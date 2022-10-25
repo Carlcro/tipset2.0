@@ -120,7 +120,7 @@ const Navbar = () => {
         <>
           <div className="flex-1 mr-5 md:hidden space-x-5">
             <Link href="/user">
-              <a className="font-extrabold">{user.fullName}</a>
+              <a>{user.fullName}</a>
             </Link>
           </div>
 
@@ -132,7 +132,7 @@ const Navbar = () => {
         {status === "authenticated" ? (
           <div className="flex gap-4 flex-1 items-center">
             <>
-              <Link href="/user-tournament">Grupper</Link>
+              <Link href="/user-tournament">Hem</Link>
               <Link href="/bet-slip">
                 <a>{"Gör ditt tips"}</a>
               </Link>
@@ -149,7 +149,7 @@ const Navbar = () => {
 
             <div className="text-right flex-1 mr-5 space-x-7 flex items-center justify-end">
               <Link href="/user">
-                <a className="font-extrabold">{user.fullName}</a>
+                <a>{user.fullName}</a>
               </Link>
               <button
                 className="bg-red-400  text-sm px-2 py-2 text-white"
