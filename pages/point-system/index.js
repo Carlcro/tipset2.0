@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 
 function PointSystem() {
+  const [showGoalscorerRules, setShowGoalscorerRules] = useState(false);
+
   return (
-    <div className="flex w-full justify-center">
+    <div className="flex w-full justify-center max-w-[500px] mx-auto mb-28">
       <div className="flex flex-col bg-white rounded shadow-lg mx-5 p-3 max-w-6xl space-y-1">
-        <h1 className="font-bold">Poängsystem</h1>
+        <h1 className="font-bold">Poängsystem</h1>  
         <div>
           <h2 className="font-semibold text-gray-500">Gruppspel:</h2>
           <ul>
@@ -69,11 +71,41 @@ function PointSystem() {
 
         <div className="flex space-x-1">
           <span className="font-bold">Rätt skyttekung</span>
-          <span>Antal mål gjorda av honom x10</span>
+          <span>
+            Antal mål gjorda av honom x10
+            <button
+              onClick={() => setShowGoalscorerRules(!showGoalscorerRules)}
+              className="ml-4 px-2 hover:bg-slate-500   bg-slate-400 rounded-full text-white"
+            >
+              ?
+            </button>
+          </span>
         </div>
+        {showGoalscorerRules && <Hej />}
       </div>
     </div>
   );
 }
+
+const Hej = () => {
+  return (
+    <div>
+      <span className="font-bold">
+        Skyttekung blir den spelare som vinner 'The Golden Boot' enl. följande
+        kriterier (hämtade från FIFA:s regelbok):
+      </span>
+      <br />
+      <span className="italic">
+        The Golden Boot will be awarded to the player who scores the most goals
+        in the final competition. If two or more players score the same number
+        of goals, the number of assists (as determined by the members of the
+        FIFA Technical Study Group) shall be decisive. If two or more players
+        are still equal after taking into account the number of assists, the
+        total minutes played in the tournament will be taken into account, with
+        the player playing fewer minutes ranked first
+      </span>
+    </div>
+  );
+};
 
 export default PointSystem;
