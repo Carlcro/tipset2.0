@@ -24,7 +24,7 @@ function MatchGroup({ group, matchInfos, mode }) {
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
-      className="shadow-md my-2 rounded-sm p-2 lg:w-full bg-white"
+      className="shadow-lg my-2 rounded-sm p-2 lg:w-full bg-white"
       key={group.name}
     >
       <div className="flex justify-between">

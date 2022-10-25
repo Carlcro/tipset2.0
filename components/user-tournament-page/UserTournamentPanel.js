@@ -36,7 +36,7 @@ const UserTournamentPanel = ({ isOwner }) => {
               <AddMemberInput addMember={handleAddMember} />
             </div>
           </div>
-          <div className="shadow-md p-3 rounded-sm bg-white">
+          <div className="shadow-lg p-3 rounded-sm bg-white">
             För att bjuda in familj och vänner till den här gruppen behöver de
             klicka på länken du ser här nedanför. Klicka helt enkelt på länken
             för att kopiera den, och skicka den sedan till dem du vill bjuda in.
@@ -48,7 +48,7 @@ const UserTournamentPanel = ({ isOwner }) => {
             </span>
           </div>
 
-          <div className="shadow-md p-3 rounded-sm bg-white flex flex-col">
+          <div className="shadow-lg p-3 rounded-sm bg-white flex flex-col">
             <span className="text-sm">{window.location.href + "/join"}</span>
             <button
               className="cursor-pointer font-bold text-left active:text-gray-500"
