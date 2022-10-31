@@ -2,12 +2,12 @@ import { Html, Head, Main, NextScript } from "next/document";
 
 export default function Document() {
   return (
-    <Html className="bg-teal-300">
+    <Html className="bg-frost2 ">
       <Head>
         <link rel="preconnect" href="https://rsms.me/" />
         <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
       </Head>
-      <body>
+      <body className="text-polarNight">
         <Main />
         <NextScript />
       </body>

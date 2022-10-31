@@ -19,6 +19,7 @@ import {
 } from "../../recoil/bet-slip/selectors/matches";
 import { championshipState } from "../../recoil/championship/selectors";
 import Container from "../Container";
+import SubmitButton from "../SubmitButton";
 
 const BetSlip = ({ mode, bettingAllowed, handleSave, error }) => {
   const championship = useRecoilValue(championshipState);
@@ -115,12 +116,9 @@ const BetSlip = ({ mode, bettingAllowed, handleSave, error }) => {
           {mode !== "placedBet" && (
             <div className="flex mb-10 mt-4">
               {bettingAllowed ? (
-                <button
-                  className="bg-blue-500 border border-black hover:bg-blue-600 active:bg-blue-700 text-white px-3 py-2 rounded-sm"
-                  onClick={handleSave}
-                >
+                <SubmitButton type="button" onClick={handleSave}>
                   Spara tips
-                </button>
+                </SubmitButton>
               ) : (
                 <div className="rounded-lg my-3 py-1 px-2 ml-3  text-red-500 font-bold">
                   Det är inte längre tillåtet att uppdatera ditt tips.

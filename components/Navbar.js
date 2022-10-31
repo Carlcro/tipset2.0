@@ -23,7 +23,7 @@ MyLink.displayName = "MyLink";
 function BurgerMenu({ user }) {
   return (
     <Menu as="div" className="relative md:hidden z-10">
-      <Menu.Button className="inline-flex justify-center w-full rounded border border-gray-300 shadow-lg px-4 py-2 bg-white text-sm font-medium text-gray-700">
+      <Menu.Button className="inline-flex justify-center w-full rounded border border-polarNight shadow-lg px-4 py-2 bg-slate text-sm font-medium text-gray-700">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="h-6 w-6"
@@ -39,13 +39,13 @@ function BurgerMenu({ user }) {
           />
         </svg>
       </Menu.Button>
-      <Menu.Items className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none">
+      <Menu.Items className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-slate ring ring-polarNight ring-opacity-5 divide-y divide-gray-100 focus:outline-none">
         {routesLoggedIn(user).map((item) => (
           <Menu.Item key={item.name}>
             {({ active, hover }) => (
               <MyLink
                 className={`${
-                  active && "bg-blue-500"
+                  active && "bg-slate"
                 } flex items-center px-4 py-2 text-sm`}
                 href={item.route}
               >
@@ -58,7 +58,7 @@ function BurgerMenu({ user }) {
           {({ active, hover }) => (
             <div
               className={`${
-                active && "bg-blue-500"
+                active && "bg-snowStorm2"
               } flex items-center px-4 py-2 text-sm`}
               onClick={() => signOut({ callbackUrl: "/" })}
             >
@@ -112,7 +112,7 @@ const Navbar = () => {
 
   return (
     <nav
-      className=" p-2 mb-4 flex justify-between md:justify-start"
+      className="bg-slate border-b border-polarNight p-2 mb-10 flex justify-between items-center md:justify-start"
       role="navigation"
       aria-label="main navigation"
     >
@@ -132,27 +132,77 @@ const Navbar = () => {
         {status === "authenticated" ? (
           <div className="flex gap-4 flex-1 items-center">
             <>
-              <Link href="/user-tournament">Hem</Link>
+              <Link href="/user-tournament">
+                <a
+                  className={
+                    router.pathname === "/user-tournament"
+                      ? "underline underline-offset-4"
+                      : ""
+                  }
+                >
+                  {"Hem"}
+                </a>
+              </Link>
               <Link href="/bet-slip">
-                <a>{"Gör ditt tips"}</a>
+                <a
+                  className={
+                    router.pathname === "/bet-slip"
+                      ? "underline underline-offset-4"
+                      : ""
+                  }
+                >
+                  {"Gör ditt tips"}
+                </a>
               </Link>
             </>
             <Link href="/championship">
-              <a>Mästerskap</a>
+              <a
+                className={
+                  router.pathname === "/championship"
+                    ? "underline underline-offset-4"
+                    : ""
+                }
+              >
+                Mästerskap
+              </a>
             </Link>
             <Link href="/point-system">
-              <a>Poängsystem</a>
+              <a
+                className={
+                  router.pathname === "/point-system"
+                    ? "underline underline-offset-4"
+                    : ""
+                }
+              >
+                Poängsystem
+              </a>
             </Link>
             <Link href="/answer-sheet">
-              <a>Answer Sheet</a>
+              <a
+                className={
+                  router.pathname === "/answer-sheet"
+                    ? "underline underline-offset-4"
+                    : ""
+                }
+              >
+                Answer Sheet
+              </a>
             </Link>
 
             <div className="text-right flex-1 mr-5 space-x-7 flex items-center justify-end">
               <Link href="/user">
-                <a>{user.fullName}</a>
+                <a
+                  className={
+                    router.pathname === "/user"
+                      ? "underline underline-offset-4 "
+                      : ""
+                  }
+                >
+                  {user.fullName}
+                </a>
               </Link>
               <button
-                className="bg-red-400  text-sm px-2 py-2 text-white"
+                className="bg-auroraRed  text-sm px-2 py-2 text-slate"
                 onClick={() => signOut({ callbackUrl: "/" })}
               >
                 Logga ut

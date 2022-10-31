@@ -1,4 +1,5 @@
 import { useState } from "react";
+import SubmitButton from "../SubmitButton";
 
 const AddMemberInput = ({ addMember }) => {
   const [memberInput, setMemberInput] = useState("");
@@ -21,12 +22,7 @@ const AddMemberInput = ({ addMember }) => {
             value={memberInput}
             onChange={(e) => setMemberInput(e.target.value)}
           />
-          <button
-            className="rounded-sm bg-blue-500 border border-black px-3 hover:bg-blue-600 active:bg-blue-700   py-1 text-white mt-2"
-            type="submit"
-          >
-            Lägg till
-          </button>
+          <SubmitButton>Lägg till</SubmitButton>
         </form>
       </div>
     </div>

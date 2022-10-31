@@ -14,10 +14,7 @@ const UserTournamentsList = ({ tournaments }) => {
         <ul>
           {tournaments?.map((tournament) => (
             <li key={tournament._id}>
-              <Link
-                className="text-black"
-                href={`/user-tournament-page/${tournament._id}`}
-              >
+              <Link href={`/user-tournament-page/${tournament._id}`}>
                 <a>{tournament.name}</a>
               </Link>
             </li>

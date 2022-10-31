@@ -10,7 +10,7 @@ const HighScoreTable = ({ highscoreData, name }) => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
     >
-      <Container classNames="w-full max-w-[400px]">
+      <Container classNames="w-[400px]">
         <h2 className="font-semibold text-xl text-center">
           {name ? name : "Topplistan"}
         </h2>
@@ -28,8 +28,8 @@ const HighScoreTable = ({ highscoreData, name }) => {
               <tr
                 className={
                   index % 2 === 0
-                    ? "bg-gray-100 border-b-2 border-black"
-                    : "border-b-2 border-black"
+                    ? "bg-gray-100 border-b-2 border-polarNight"
+                    : "border-b-2 border-polarNight"
                 }
                 key={score.id}
               >

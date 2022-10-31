@@ -55,10 +55,7 @@ const PlacedBets = () => {
         >
           <Container classNames="p-6 mt-10 flex flex-col justify-center space-y-5">
             <h2>Användaren har inte lagt något tips</h2>
-            <button
-              className="text-blue-700 font-bold"
-              onClick={() => router.back()}
-            >
+            <button className="font-bold" onClick={() => router.back()}>
               Gå tillbaka
             </button>
           </Container>
