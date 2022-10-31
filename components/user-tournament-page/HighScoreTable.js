@@ -28,8 +28,8 @@ const HighScoreTable = ({ highscoreData, name }) => {
               <tr
                 className={
                   index % 2 === 0
-                    ? "bg-gray-100 border-b-2 border-black"
-                    : "border-b-2 border-black"
+                    ? "bg-gray-100 border-b-2 border-polarNight"
+                    : "border-b-2 border-polarNight"
                 }
                 key={score.id}
               >

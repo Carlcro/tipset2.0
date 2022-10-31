@@ -76,7 +76,7 @@ function PointSystem() {
             Antal mål gjorda av honom x10
             <button
               onClick={() => setShowGoalscorerRules(!showGoalscorerRules)}
-              className="ml-4 px-2 hover:bg-slate-500   bg-slate-400 rounded-full text-white"
+              className="ml-4 px-2 bg-gray-200 rounded-full text-white"
             >
               ?
             </button>
@@ -92,8 +92,8 @@ const Hej = () => {
   return (
     <div>
       <span className="font-bold">
-        Skyttekung blir den spelare som vinner 'The Golden Boot' enl. följande
-        kriterier (hämtade från FIFA:s regelbok):
+        {`  Skyttekung blir den spelare som vinner 'The Golden Boot' enl. följande
+        kriterier (hämtade från FIFA:s regelbok):`}
       </span>
       <br />
       <span className="italic">

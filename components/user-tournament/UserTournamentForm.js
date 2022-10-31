@@ -34,7 +34,7 @@ const UserTournamentForm = () => {
             onChange={({ target }) => setUserTournamentName(target.value)}
             type="text"
             value={userTournamentName}
-            className="rounded-sm mb-3 border border-black px-2 py-1.5 w-full"
+            className="rounded-sm mb-3 border border-polarNight px-2 py-1.5 w-full"
           ></input>
           <SubmitButton>Skapa grupp</SubmitButton>
         </form>
