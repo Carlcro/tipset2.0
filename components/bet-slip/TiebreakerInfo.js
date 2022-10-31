@@ -1,4 +1,5 @@
 import React from "react";
+import Container from "../Container";
 
 function TiebreakerInfo() {
   const rules = [
@@ -11,7 +12,7 @@ function TiebreakerInfo() {
   ];
 
   return (
-    <div className="bg-white shadow-lg rounded px-10 py-2 m-2">
+    <Container classNames="px-10 py-2 m-2">
       <h1 className="font-bold text-lg mb-2 -ml-5 ">
         Tiebreakers i gruppspelet
       </h1>
@@ -25,20 +26,8 @@ function TiebreakerInfo() {
         kriterier. Vid tippning där lag fortfarande inte kan särskiljas efter
         kriterier 1-6 kommer alfabetisk ordning avgöra.
       </div>
-    </div>
+    </Container>
   );
 }
 
 export default TiebreakerInfo;
-/*
-
-
-
-1. Antal inspelade poäng sett till samtliga spelade gruppspelsmatcher;
-2. Målskillnad sett till samtliga spelade gruppspelsmatcher;
-3. Antal gjorda mål sett till samtliga spelade gruppspelsmatcher;
-4. Antal inspelade poäng sett till matcherna mellan lagen i fråga;
-5. Målskillnad sett till matcherna mellan lagen i fråga;
-6. Antal gjorda mål sett till matcherna mellan lagen i fråga;
-
-*/

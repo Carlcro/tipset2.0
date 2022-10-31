@@ -7,6 +7,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 
 import dynamic from "next/dynamic";
+import Container from "../../components/Container";
 
 const DynamicBetslip = dynamic(
   () => import("../../components/bet-slip/BetSlip"),
@@ -51,15 +52,16 @@ const PlacedBets = () => {
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
-          className="bg-white rounded-sm shadow-lg p-6 mt-10 flex flex-col justify-center space-y-5"
         >
-          <h2>Användaren har inte lagt något tips</h2>
-          <button
-            className="text-blue-700 font-bold"
-            onClick={() => router.back()}
-          >
-            Gå tillbaka
-          </button>
+          <Container classNames="p-6 mt-10 flex flex-col justify-center space-y-5">
+            <h2>Användaren har inte lagt något tips</h2>
+            <button
+              className="text-blue-700 font-bold"
+              onClick={() => router.back()}
+            >
+              Gå tillbaka
+            </button>
+          </Container>
         </motion.div>
       </div>
     );

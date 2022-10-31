@@ -6,6 +6,7 @@ import Spinner from "../components/Spinner";
 import { toast } from "react-toastify";
 import { useQuery } from "react-query";
 import { getUser } from "../services/userService";
+import Container from "../components/Container";
 
 const Home: NextPage = () => {
   const [email, setEmail] = useState("");
@@ -55,7 +56,7 @@ const Home: NextPage = () => {
     return (
       <div className="min-h-screenflex flex-col justify-center sm:py-12">
         <div className="p-4 xs:p-0 mx-auto md:w-full md:max-w-md">
-          <div className="bg-white shadow w-full rounded-lg divide-y divide-gray-200">
+          <Container classNames="w-full divide-y divide-gray-200">
             <div className="flex flex-col items-center py-4">
               <h1 className="text-3xl">Hej!</h1>
 
@@ -93,7 +94,7 @@ const Home: NextPage = () => {
                 </form>
               </div>
             )}
-          </div>
+          </Container>
         </div>
       </div>
     );

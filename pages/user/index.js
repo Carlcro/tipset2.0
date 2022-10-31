@@ -4,6 +4,7 @@ import { useMutation, useQueryClient } from "react-query";
 import { createUser } from "../../services/userService";
 import Spinner from "../../components/Spinner";
 import { useRouter } from "next/router";
+import Container from "../../components/Container";
 
 export default function UserContainer() {
   const router = useRouter();
@@ -26,7 +27,7 @@ export default function UserContainer() {
   }
 
   return (
-    <div className="mx-auto w-72 bg-white rounded-sm p-7 mt-20">
+    <Container classNames="mx-auto w-72 p-7 mt-20">
       <h2>Byt namn</h2>
       <form
         className="flex flex-col gap-y-4"
@@ -57,6 +58,6 @@ export default function UserContainer() {
           Spara
         </button>
       </form>
-    </div>
+    </Container>
   );
 }

@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { useMutation, useQueryClient } from "react-query";
 import { createUserTournament } from "../../services/userTournamentService";
 import { motion } from "framer-motion";
+import Container from "../Container";
 
 const UserTournamentForm = () => {
   const [userTournamentName, setUserTournamentName] = useState("");
@@ -24,9 +25,8 @@ const UserTournamentForm = () => {
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
-      className="shadow-lg rounded-sm p-3 bg-white"
     >
-      <div>
+      <Container>
         <div className="font-bold mb-1">Namnge din grupp</div>
         <form className="flex flex-col" onSubmit={handleSubmit}>
           <input
@@ -41,7 +41,7 @@ const UserTournamentForm = () => {
             value="Skapa grupp"
           />
         </form>
-      </div>
+      </Container>
     </motion.div>
   );
 };

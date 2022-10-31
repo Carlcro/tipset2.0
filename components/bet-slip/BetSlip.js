@@ -18,6 +18,7 @@ import {
   getThirdPlaceFinal,
 } from "../../recoil/bet-slip/selectors/matches";
 import { championshipState } from "../../recoil/championship/selectors";
+import Container from "../Container";
 
 const BetSlip = ({ mode, bettingAllowed, handleSave, error }) => {
   const championship = useRecoilValue(championshipState);
@@ -49,7 +50,7 @@ const BetSlip = ({ mode, bettingAllowed, handleSave, error }) => {
   return (
     <div>
       {mode !== "placedBet" && (
-        <div className="mx-auto w-[300px] md:w-[500px] rounded-sm px-3 py-4 shadow-lg bg-white flex flex-col space-y-3 ">
+        <Container classNames="mx-auto w-[300px] md:w-[500px] flex flex-col space-y-3 ">
           <h1 className="text-center text-xl">
             Lägg tips för Världsmästerskapet i fotboll 2022
           </h1>
@@ -69,7 +70,7 @@ const BetSlip = ({ mode, bettingAllowed, handleSave, error }) => {
               </button>
             </div>
           }
-        </div>
+        </Container>
       )}
       <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr] mx-1 lg:flex lg:justify-center">
         <div className="lg:justify-end">

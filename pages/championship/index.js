@@ -3,6 +3,7 @@ import { useSetRecoilState } from "recoil";
 import { setFromBetslipState } from "../../recoil/bet-slip/selectors/selectors";
 import { getAnswerSheet } from "../../services/championshipService";
 import dynamic from "next/dynamic";
+import Container from "../../components/Container";
 
 const DynamicBetslip = dynamic(
   () => import("../../components/bet-slip/BetSlip"),
@@ -25,9 +26,9 @@ const Championship = () => {
 
   return (
     <div className="pb-10">
-      <div className="bg-white rounded-sm mx-auto px-3 py-5 w-64 flex justify-center">
+      <Container classNames="mx-auto w-64 flex justify-center">
         <h1 className="text-lg">Mästerskap</h1>
-      </div>
+      </Container>
       <DynamicBetslip mode={"placedBet"}></DynamicBetslip>;
     </div>
   );

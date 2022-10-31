@@ -1,12 +1,13 @@
 import React, { useState } from "react";
+import Container from "../../components/Container";
 
 function PointSystem() {
   const [showGoalscorerRules, setShowGoalscorerRules] = useState(false);
 
   return (
     <div className="flex w-full justify-center max-w-[500px] mx-auto mb-28">
-      <div className="flex flex-col bg-white rounded shadow-lg mx-5 p-3 max-w-6xl space-y-1">
-        <h1 className="font-bold">Poängsystem</h1>  
+      <Container classNames="flex flex-col mx-5 max-w-6xl space-y-1">
+        <h1 className="font-bold">Poängsystem</h1>
         <div>
           <h2 className="font-semibold text-gray-500">Gruppspel:</h2>
           <ul>
@@ -82,7 +83,7 @@ function PointSystem() {
           </span>
         </div>
         {showGoalscorerRules && <Hej />}
-      </div>
+      </Container>
     </div>
   );
 }

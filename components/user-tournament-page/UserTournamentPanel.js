@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { addMember } from "../../services/userTournamentService";
+import Container from "../Container";
 import AddMemberInput from "./AddMemberInput";
 import DeleteUserTournamentDialog from "./DeleteUserTournamentDialog";
 
@@ -31,12 +32,12 @@ const UserTournamentPanel = ({ isOwner }) => {
       ></DeleteUserTournamentDialog>
       <div className="flex flex-col max-w-[400px] mt-5 md:mt-0">
         <div className="space-y-2">
-          <div className="shadow-lg p-3 rounded-sm bg-white">
+          <Container>
             <div>
               <AddMemberInput addMember={handleAddMember} />
             </div>
-          </div>
-          <div className="shadow-lg p-3 rounded-sm bg-white">
+          </Container>
+          <Container>
             För att bjuda in familj och vänner till den här gruppen behöver de
             klicka på länken du ser här nedanför. Klicka helt enkelt på länken
             för att kopiera den, och skicka den sedan till dem du vill bjuda in.
@@ -46,9 +47,9 @@ const UserTournamentPanel = ({ isOwner }) => {
                 " OBS! Tänk på att de måste ha skapat ett konto innan de använder länken."
               }
             </span>
-          </div>
+          </Container>
 
-          <div className="shadow-lg p-3 rounded-sm bg-white flex flex-col">
+          <Container classNames="flex flex-col">
             <span className="text-sm">{window.location.href + "/join"}</span>
             <button
               className="cursor-pointer font-bold text-left active:text-gray-500"
@@ -58,7 +59,7 @@ const UserTournamentPanel = ({ isOwner }) => {
             >
               Klicka här för att kopiera
             </button>
-          </div>
+          </Container>
           <div>
             <button
               className="bg-red-500 text-white hover:bg-red-700 py-1 px-2 rounded-sm border border-black  "

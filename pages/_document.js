@@ -4,16 +4,8 @@ export default function Document() {
   return (
     <Html className="bg-teal-300">
       <Head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="true"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Dosis&family=Nunito&display=swap"
-          rel="stylesheet"
-        />
+        <link rel="preconnect" href="https://rsms.me/" />
+        <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
       </Head>
       <body>
         <Main />
