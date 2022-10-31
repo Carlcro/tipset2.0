@@ -62,7 +62,7 @@ const UserTournamentPanel = ({ isOwner }) => {
           </Container>
           <div>
             <button
-              className="bg-red-500 text-white hover:bg-red-700 py-1 px-2 rounded-sm border border-black  "
+              className="bg-auroraRed text-snowStorm3 border-polarNight py-1 px-2 rounded-sm border border-black  "
               onClick={() => setIsDialogOpen(true)}
             >
               {`${isOwner ? "Radera grupp" : "Lämna grupp"}`}

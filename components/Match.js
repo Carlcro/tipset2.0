@@ -67,17 +67,17 @@ const Match = ({ match, matchInfo, finalsStage, mode }) => {
 
     if (team === 1) {
       if (score1 > score2) {
-        return "text-blue-600 font-bold";
+        return "text-frost4 font-bold";
       } else if (score1 < score2) {
-        return "text-red-600 font-light";
+        return "text-auroraRed font-light";
       } else if (score1 === score2) {
         return "text-gray-600 italic";
       }
     } else if (team === 2) {
       if (score2 > score1) {
-        return "text-blue-600 font-bold";
+        return "text-frost4 font-bold";
       } else if (score2 < score1) {
-        return "text-red-600 font-light";
+        return "text-auroraRed font-light";
       } else if (score1 === score2) {
         return "text-gray-600 italic";
       }

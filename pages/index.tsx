@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import { useQuery } from "react-query";
 import { getUser } from "../services/userService";
 import Container from "../components/Container";
+import SubmitButton from "../components/SubmitButton";
 
 const Home: NextPage = () => {
   const [email, setEmail] = useState("");
@@ -70,8 +71,8 @@ const Home: NextPage = () => {
               </div>
             ) : (
               <div className="px-5 py-7">
-                <form>
-                  <label className="font-semibold text-sm text-gray-600 pb-1 block">
+                <form className="flex flex-col items-center">
+                  <label className="self-start font-semibold text-sm pb-1 block">
                     E-mail
                   </label>
                   <input
@@ -79,18 +80,14 @@ const Home: NextPage = () => {
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
+                    className="border rounded-sm px-3 py-2 mt-1 mb-5 text-sm w-full"
                   />
 
-                  <button
-                    type="submit"
-                    onClick={handleSubmit}
-                    className="transition duration-200 bg-blue-500 hover:bg-blue-600 focus:bg-blue-700 focus:shadow-lg focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 text-white w-full py-2.5 rounded-lg text-sm shadow-lg hover:shadow-lg font-semibold text-center inline-block"
-                  >
+                  <SubmitButton type="submit" onClick={handleSubmit}>
                     <span className="inline-block mr-2">
                       Skapa konto/Logga in
                     </span>
-                  </button>
+                  </SubmitButton>
                 </form>
               </div>
             )}

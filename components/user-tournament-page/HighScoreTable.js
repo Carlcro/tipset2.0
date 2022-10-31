@@ -10,7 +10,7 @@ const HighScoreTable = ({ highscoreData, name }) => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
     >
-      <Container classNames="w-full max-w-[400px]">
+      <Container classNames="w-[400px]">
         <h2 className="font-semibold text-xl text-center">
           {name ? name : "Topplistan"}
         </h2>
