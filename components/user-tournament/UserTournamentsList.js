@@ -10,7 +10,7 @@ const UserTournamentsList = ({ tournaments }) => {
       transition={{ duration: 0.4 }}
     >
       <Container>
-        <div className="text-black font-bold">Dina grupper</div>
+        <div className="font-bold">Dina grupper</div>
         <ul>
           {tournaments?.map((tournament) => (
             <li key={tournament._id}>

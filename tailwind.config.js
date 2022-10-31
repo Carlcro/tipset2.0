@@ -22,7 +22,7 @@ module.exports = {
       red: colors.red,
       blue: colors.blue,
       green: colors.green,
-      grey: colors.grey,
+      gray: colors.gray,
     },
     extend: {
       screens: {
