@@ -132,24 +132,74 @@ const Navbar = () => {
         {status === "authenticated" ? (
           <div className="flex gap-4 flex-1 items-center">
             <>
-              <Link href="/user-tournament">Hem</Link>
+              <Link href="/user-tournament">
+                <a
+                  className={
+                    router.pathname === "/user-tournament"
+                      ? "underline underline-offset-4"
+                      : ""
+                  }
+                >
+                  {"Hem"}
+                </a>
+              </Link>
               <Link href="/bet-slip">
-                <a>{"Gör ditt tips"}</a>
+                <a
+                  className={
+                    router.pathname === "/bet-slip"
+                      ? "underline underline-offset-4"
+                      : ""
+                  }
+                >
+                  {"Gör ditt tips"}
+                </a>
               </Link>
             </>
             <Link href="/championship">
-              <a>Mästerskap</a>
+              <a
+                className={
+                  router.pathname === "/championship"
+                    ? "underline underline-offset-4"
+                    : ""
+                }
+              >
+                Mästerskap
+              </a>
             </Link>
             <Link href="/point-system">
-              <a>Poängsystem</a>
+              <a
+                className={
+                  router.pathname === "/point-system"
+                    ? "underline underline-offset-4"
+                    : ""
+                }
+              >
+                Poängsystem
+              </a>
             </Link>
             <Link href="/answer-sheet">
-              <a>Answer Sheet</a>
+              <a
+                className={
+                  router.pathname === "/answer-sheet"
+                    ? "underline underline-offset-4"
+                    : ""
+                }
+              >
+                Answer Sheet
+              </a>
             </Link>
 
             <div className="text-right flex-1 mr-5 space-x-7 flex items-center justify-end">
               <Link href="/user">
-                <a>{user.fullName}</a>
+                <a
+                  className={
+                    router.pathname === "/user"
+                      ? "underline underline-offset-4 "
+                      : ""
+                  }
+                >
+                  {user.fullName}
+                </a>
               </Link>
               <button
                 className="bg-auroraRed  text-sm px-2 py-2 text-slate"
