@@ -27,7 +27,7 @@ const UserTournamentForm = () => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
     >
-      <Container classNames="mb-3">
+      <Container classNames="mb-5">
         <div className="font-bold mb-1">Namnge din grupp</div>
         <form className="flex flex-col items-center" onSubmit={handleSubmit}>
           <input

@@ -66,9 +66,9 @@ const PlacedBets = () => {
 
   return (
     <div className="pb-10">
-      <div className="bg-white rounded-sm mx-auto px-3 py-5 w-64 flex justify-center">
+      <Container classNames="mx-auto w-64 flex justify-center">
         <h1 className="text-lg">{name}</h1>
-      </div>
+      </Container>
       <DynamicBetslip bettingAllowed={true} mode={"placedBet"}></DynamicBetslip>
       )
     </div>

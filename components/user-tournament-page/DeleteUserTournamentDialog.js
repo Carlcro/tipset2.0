@@ -6,6 +6,7 @@ import {
 } from "../../services/userTournamentService";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
+import Container from "../Container";
 
 export default function DeleteUserTournamentDialog({
   isOpen,
@@ -46,7 +47,7 @@ export default function DeleteUserTournamentDialog({
       >
         <div className="flex items-center justify-center min-h-screen">
           <Dialog.Overlay className="fixed inset-0 bg-black opacity-20" />
-          <div className="bg-white z-10 border border-black p-5 shadow-lg rounded max-w-sm mx-auto">
+          <Container classNames="z-10 border border-black max-w-sm mx-auto">
             <Dialog.Description>
               {`Är du säker på att du vill ${
                 isOwner ? "radera gruppen?" : "lämna gruppen?"
@@ -68,7 +69,7 @@ export default function DeleteUserTournamentDialog({
                 Avbryt
               </button>
             </div>
-          </div>
+          </Container>
         </div>
       </Dialog>
     </Transition>

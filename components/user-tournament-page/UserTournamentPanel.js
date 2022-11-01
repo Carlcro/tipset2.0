@@ -60,7 +60,7 @@ const UserTournamentPanel = ({ isOwner }) => {
               Klicka här för att kopiera
             </button>
           </Container>
-          <div>
+          <div className="mb-5">
             <button
               className="bg-auroraRed text-snowStorm3 border-polarNight py-1 px-2 rounded-sm border border-black  "
               onClick={() => setIsDialogOpen(true)}
