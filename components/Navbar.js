@@ -62,7 +62,7 @@ function BurgerMenu({ user }) {
               } flex items-center px-4 py-2 text-sm`}
               onClick={() => signOut({ callbackUrl: "/" })}
             >
-              Logout
+              Logga ut
             </div>
           )}
         </Menu.Item>
