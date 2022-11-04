@@ -55,7 +55,7 @@ export default function DeleteUserTournamentDialog({
             </Dialog.Description>
             <div className="flex justify-between mt-3">
               <button
-                className="bg-red-500 text-white px-2 py-1 rounded"
+                className="bg-auroraRed text-snowStorm3 border-polarNight py-1 px-2 rounded-sm border border-black"
                 onClick={() =>
                   isOwner ? removeUserTournament() : exitUserTournament()
                 }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import MatchGroup from "./MatchGroup";
 import GroupBoard from "./GroupBoard";
 import GoalscorerInput from "./GoalscorerInput";
@@ -21,7 +21,7 @@ import { championshipState } from "../../recoil/championship/selectors";
 import Container from "../Container";
 import SubmitButton from "../SubmitButton";
 
-const BetSlip = ({ mode, bettingAllowed, handleSave, error }) => {
+const BetSlip = ({ mode, bettingAllowed, handleSave, setFinalsMatches }) => {
   const championship = useRecoilValue(championshipState);
   const groupOf16 = useRecoilValue(getGroupOf16);
   const groupOf8 = useRecoilValue(getGroupOf8);
@@ -29,6 +29,26 @@ const BetSlip = ({ mode, bettingAllowed, handleSave, error }) => {
   const thirdPlaceFinal = useRecoilValue(getThirdPlaceFinal);
   const final = useRecoilValue(getFinal);
   const [goalscorer, setGoalscorer] = useRecoilState(goalscorerState);
+
+  useMemo(() => {
+    if (setFinalsMatches) {
+      setFinalsMatches([
+        ...groupOf16.matches,
+        ...groupOf8.matches,
+        ...semiFinals.matches,
+        ...thirdPlaceFinal.matches,
+        ...final.matches,
+      ]);
+    }
+  }, [
+    final.matches,
+    groupOf16.matches,
+    groupOf8.matches,
+    semiFinals.matches,
+    setFinalsMatches,
+    thirdPlaceFinal.matches,
+  ]);
+
   const setAllMatches = useSetRecoilState(setAllMatchesState);
   const resetAllMatches = useSetRecoilState(resetAllBets);
 

@@ -24,6 +24,8 @@ const AnswerSheet = () => {
   const [betslip, setBetslip] = useRecoilState(betSlipState);
   const [goalscorer, setGoalscorer] = useRecoilState(goalscorerState);
 
+  const [finalsMatches, setFinalsMatches] = useState([]);
+
   const queryClient = useQueryClient();
 
   useQuery(
@@ -60,9 +62,13 @@ const AnswerSheet = () => {
   });
 
   const submitAnswer = () => {
+    const finalsNotPlayed = finalsMatches.filter(
+      (x) => x.matchId > betslip.length
+    );
+
     mutation.mutate({
       answerSheet: {
-        answers: betslip.map((matchResult) =>
+        answers: [...betslip, ...finalsNotPlayed].map((matchResult) =>
           Object.assign({}, matchResult, {
             team1: matchResult.team1._id,
             team2: matchResult.team2._id,
@@ -80,6 +86,7 @@ const AnswerSheet = () => {
         <h1 className="text-3xl font-bold">Answer Sheet</h1>
       </div>
       <DynamicBetslip
+        setFinalsMatches={setFinalsMatches}
         bettingAllowed={true}
         handleSave={submitAnswer}
         mode={"answerSheet"}
