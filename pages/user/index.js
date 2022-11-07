@@ -5,6 +5,7 @@ import { createUser } from "../../services/userService";
 import Spinner from "../../components/Spinner";
 import { useRouter } from "next/router";
 import Container from "../../components/Container";
+import SubmitButton from "../../components/SubmitButton";
 
 export default function UserContainer() {
   const router = useRouter();
@@ -51,12 +52,7 @@ export default function UserContainer() {
           name="lastName"
         ></input>
 
-        <button
-          className="bg-blue-500 rounded-md text-white px-2 py-2"
-          type="submit"
-        >
-          Spara
-        </button>
+        <SubmitButton type="submit">Spara</SubmitButton>
       </form>
     </Container>
   );
