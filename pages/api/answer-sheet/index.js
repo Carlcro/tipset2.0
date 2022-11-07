@@ -5,7 +5,6 @@ import BetSlip from "../../../models/bet-slip";
 import connectDB from "../../../middleware/mongodb";
 import {
   calculateGroupResults,
-  calculatePoints,
   calculatePointsFromGroup,
   getMatchPoint,
   calculateCorrectAdvanceTeam,
@@ -23,10 +22,9 @@ function handler(req, res) {
 export default connectDB(handler);
 
 const saveAnswerSheet = async (req, res) => {
-  /*   if (req.header("password") !== PASSWORD) {
-    return res.send(401);
+  if (req.headers["password"] !== process.env.API_SECRET_KEY) {
+    return res.status(401).send("Fel lösenord");
   }
- */
 
   const championship = await Championship.findOne().populate({
     path: "matchGroups",

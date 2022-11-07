@@ -6,6 +6,7 @@ import { useQuery } from "react-query";
 import { signOut, useSession } from "next-auth/react";
 import { getUser } from "../services/userService";
 import { useRouter } from "next/router";
+import { getConfig } from "../services/configService";
 
 const MyLink = forwardRef((props, ref) => {
   let { href, children, ...rest } = props;
@@ -78,13 +79,17 @@ const routesLoggedIn = (user) => [
     route: "/bet-slip",
   },
   { name: "Poängsystem", route: "/point-system" },
-  { name: "Mästerskapet", route: "/championship" },
+  { name: "Facit", route: "/championship" },
   { name: "Byt namn", route: "/user" },
 ];
 
 const Navbar = () => {
   const { status } = useSession();
   const router = useRouter();
+  const { data: config, isLoading: configLoading } = useQuery(
+    ["config"],
+    getConfig
+  );
 
   const { data: user } = useQuery(
     ["user"],
@@ -118,7 +123,7 @@ const Navbar = () => {
       {user && (
         <>
           <div className="flex-1 mr-5 md:hidden space-x-5">
-            <Link href="/user">
+            <Link href="/user-tournament">
               <a>{user.fullName}</a>
             </Link>
           </div>
@@ -142,7 +147,13 @@ const Navbar = () => {
                   {"Hem"}
                 </a>
               </Link>
-              <Link href="/bet-slip">
+              <Link
+                href={
+                  !config.bettingAllowed && user && user.betSlip
+                    ? `/placed-bets/${user._id}`
+                    : "/bet-slip"
+                }
+              >
                 <a
                   className={
                     router.pathname === "/bet-slip"
@@ -162,7 +173,7 @@ const Navbar = () => {
                     : ""
                 }
               >
-                Mästerskap
+                Facit
               </a>
             </Link>
             <Link href="/point-system">
@@ -174,17 +185,6 @@ const Navbar = () => {
                 }
               >
                 Poängsystem
-              </a>
-            </Link>
-            <Link href="/answer-sheet">
-              <a
-                className={
-                  router.pathname === "/answer-sheet"
-                    ? "underline underline-offset-4"
-                    : ""
-                }
-              >
-                Answer Sheet
               </a>
             </Link>
 

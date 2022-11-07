@@ -8,6 +8,7 @@ import { motion } from "framer-motion";
 
 import dynamic from "next/dynamic";
 import Container from "../../components/Container";
+import { getConfig } from "../../services/configService";
 
 const DynamicBetslip = dynamic(
   () => import("../../components/bet-slip/BetSlip"),
@@ -23,7 +24,9 @@ const PlacedBets = () => {
   const router = useRouter();
   const { id } = router.query;
 
-  const { isLoading } = useQuery(
+  const { data, isLoading: configLoading } = useQuery(["config"], getConfig);
+
+  const { isLoading: placedBetLoading } = useQuery(
     ["placedBets", id],
     async () => {
       const { data } = await getPlacedBet(id);
@@ -41,8 +44,27 @@ const PlacedBets = () => {
     }
   );
 
-  if (isLoading) {
+  if (placedBetLoading || configLoading) {
     return null;
+  }
+
+  if (data.bettingAllowed) {
+    return (
+      <div className=" grid place-content-center">
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+        >
+          <Container classNames="p-6 mt-10 flex flex-col justify-center space-y-5">
+            <h2>När VM startar kommer du kunna se andras tips</h2>
+            <button className="font-bold" onClick={() => router.back()}>
+              Gå tillbaka
+            </button>
+          </Container>
+        </motion.div>
+      </div>
+    );
   }
 
   if (!placedBet) {
@@ -70,7 +92,6 @@ const PlacedBets = () => {
         <h1 className="text-lg">{name}</h1>
       </Container>
       <DynamicBetslip bettingAllowed={true} mode={"placedBet"}></DynamicBetslip>
-      )
     </div>
   );
 };
