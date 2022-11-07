@@ -75,7 +75,7 @@ function BurgerMenu({ user }) {
 const routesLoggedIn = (user) => [
   { name: "Hem", route: "/user-tournament" },
   {
-    name: user && user.betSlip ? "Ditt tips" : "Gör ditt tips",
+    name: user && user.betSlip ? "Mitt tips" : "Gör ditt tips",
     route: "/bet-slip",
   },
   { name: "Poängsystem", route: "/point-system" },
@@ -161,7 +161,7 @@ const Navbar = () => {
                       : ""
                   }
                 >
-                  {user && user.betSlip ? "Ditt tips" : "Gör ditt tips"}
+                  {user && user.betSlip ? "Mitt tips" : "Gör ditt tips"}
                 </a>
               </Link>
             </>

@@ -8,7 +8,7 @@ export const flags = {
   USA: "🇺🇸",
   Wales: "🏴󠁧󠁢󠁷󠁬󠁳󠁿",
   Mexiko: "🇲🇽",
-  Poland: "🇵🇱",
+  Polen: "🇵🇱",
   Argentina: "🇦🇷",
   Saudiarabien: "🇸🇦",
   Frankrike: "🇫🇷",
