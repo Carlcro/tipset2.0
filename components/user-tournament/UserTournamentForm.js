@@ -28,6 +28,11 @@ const UserTournamentForm = () => {
       transition={{ duration: 0.4 }}
     >
       <Container classNames="mb-5">
+        <div className="text-sm mb-3">
+          {`För att göra det lättare att följa ställningen mellan familj och
+          vänner kan du skapa en grupp för just er. Det gör du genom att skriva
+          in ett gruppnamn här och sedan och klicka på 'skapa grupp'.`}
+        </div>
         <div className="font-bold mb-1">Namnge din grupp</div>
         <form className="flex flex-col items-center" onSubmit={handleSubmit}>
           <input
