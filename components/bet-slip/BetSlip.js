@@ -75,22 +75,6 @@ const BetSlip = ({ mode, bettingAllowed, handleSave, setFinalsMatches }) => {
           <h1 className="text-center text-xl">
             Lägg tips för Världsmästerskapet i fotboll 2022
           </h1>
-          {
-            <div className="flex justify-center flex-col space-y-2">
-              <button
-                className="border border-black mx-auto px-3 py-1"
-                onClick={handleSetAllMatches}
-              >
-                Populera alla matcher
-              </button>
-              <button
-                className="border border-black mx-auto px-3 py-1"
-                onClick={reset}
-              >
-                Nollställ tips
-              </button>
-            </div>
-          }
         </Container>
       )}
       <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr] mx-1 lg:flex lg:justify-center">

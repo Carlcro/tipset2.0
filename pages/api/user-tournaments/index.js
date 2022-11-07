@@ -4,6 +4,7 @@ import Championship from "../../../models/championship";
 import connectDB from "../../../middleware/mongodb";
 import { unstable_getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]";
+import Config from "../../../models/config";
 
 function handler(req, res) {
   if (req.method === "POST") {
@@ -34,10 +35,17 @@ const createUserTournament = async (req, res) => {
 const getUserTournaments = async (req, res) => {
   const session = await unstable_getServerSession(req, res, authOptions);
   const user = await User.findOne({ email: session?.user.email });
+  const config = await Config.findOne();
 
-  const userTournaments = await UserTournament.find({
+  let userTournaments = await UserTournament.find({
     members: { $in: user._id },
   });
+
+  console.log(config.autoJoinUserTournamentId);
+
+  userTournaments = userTournaments.filter(
+    (x) => x._id.toString() !== config.autoJoinUserTournamentId.toString()
+  );
 
   res.send(userTournaments);
 };
