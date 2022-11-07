@@ -73,7 +73,7 @@ const BetSlip = ({ mode, bettingAllowed, handleSave, setFinalsMatches }) => {
       {mode !== "placedBet" && (
         <Container classNames="mx-auto w-[300px] md:w-[500px] flex flex-col space-y-3 ">
           <h1 className="text-center text-xl">
-            Lägg tips för Världsmästerskapet i fotboll 2022
+            Lägg tips för Bröderna Duhlins VM-tips 2022
           </h1>
         </Container>
       )}
