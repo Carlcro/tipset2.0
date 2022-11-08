@@ -100,7 +100,7 @@ const Match = ({ match, matchInfo, finalsStage, mode }) => {
       }
     >
       <div className="hidden md:flex md:flex-col items-center justify-center">
-        <span>{format(addHours(new Date(time), 0), "dd/M H:mm")}</span>
+        <span>{format(addHours(new Date(time), -2), "dd/M H:mm")}</span>
       </div>
       <div
         className={`text-sm md:text-base flex items-center truncate justify-end px-2`}
