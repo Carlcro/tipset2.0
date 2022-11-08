@@ -41,8 +41,6 @@ const getUserTournaments = async (req, res) => {
     members: { $in: user._id },
   });
 
-  console.log(config.autoJoinUserTournamentId);
-
   userTournaments = userTournaments.filter(
     (x) => x._id.toString() !== config.autoJoinUserTournamentId.toString()
   );

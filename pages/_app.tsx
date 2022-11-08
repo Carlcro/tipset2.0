@@ -10,6 +10,7 @@ import Spinner from "../components/Spinner";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Head from "next/head";
+import { Analytics } from "@vercel/analytics/react";
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   const [queryClient] = useState(() => new QueryClient());
@@ -33,6 +34,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
                 <ToastContainer />
                 <Layout>
                   <Component {...pageProps} />
+                  <Analytics />
                 </Layout>
               </Suspense>
             </Hydrate>
