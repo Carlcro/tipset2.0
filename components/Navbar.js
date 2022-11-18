@@ -149,7 +149,7 @@ const Navbar = () => {
               </Link>
               <Link
                 href={
-                  !config.bettingAllowed && user && user.betSlip
+                  config?.bettingAllowed === false && user && user.betSlip
                     ? `/placed-bets/${user._id}`
                     : "/bet-slip"
                 }
