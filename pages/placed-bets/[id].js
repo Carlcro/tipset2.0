@@ -24,6 +24,8 @@ const PlacedBets = () => {
   const router = useRouter();
   const { id } = router.query;
 
+  const { data, isLoading: configLoading } = useQuery(["config"], getConfig);
+
   const { isLoading: placedBetLoading } = useQuery(
     ["placedBets", id],
     async () => {
@@ -42,7 +44,7 @@ const PlacedBets = () => {
     }
   );
 
-  if (placedBetLoading) {
+  if (placedBetLoading || configLoading) {
     return null;
   }
 
