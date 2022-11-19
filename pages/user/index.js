@@ -1,5 +1,5 @@
 import { useSession } from "next-auth/react";
-import React from "react";
+import React, { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { createUser } from "../../services/userService";
 import Spinner from "../../components/Spinner";
@@ -8,6 +8,7 @@ import Container from "../../components/Container";
 import SubmitButton from "../../components/SubmitButton";
 
 export default function UserContainer() {
+  const [missingNameError, setMissingNameError] = useState("");
   const router = useRouter();
   const { data: session, status } = useSession();
   const queryClient = useQueryClient();
@@ -36,7 +37,11 @@ export default function UserContainer() {
           e.preventDefault();
           const formData = new FormData(e.target);
           const data = Object.fromEntries(formData);
-          mutate({ ...data, email: session.user.email });
+          if (!data.firstName || !data.lastName) {
+            setMissingNameError("Du måste ha ett namn");
+          } else {
+            mutate({ ...data, email: session.user.email });
+          }
         }}
       >
         <input
@@ -51,7 +56,7 @@ export default function UserContainer() {
           placeholder="Efternamn"
           name="lastName"
         ></input>
-
+        <p className="text-auroraRed">{missingNameError}</p>
         <SubmitButton type="submit">Spara</SubmitButton>
       </form>
     </Container>
