@@ -42,7 +42,7 @@ const PlacedBets = () => {
     }
   );
 
-  if (placedBetLoading || configLoading) {
+  if (placedBetLoading) {
     return null;
   }
 
