@@ -24,8 +24,6 @@ const PlacedBets = () => {
   const router = useRouter();
   const { id } = router.query;
 
-  const { data, isLoading: configLoading } = useQuery(["config"], getConfig);
-
   const { isLoading: placedBetLoading } = useQuery(
     ["placedBets", id],
     async () => {
@@ -91,7 +89,7 @@ const PlacedBets = () => {
       <Container classNames="mx-auto w-64 flex justify-center">
         <h1 className="text-lg">{name}</h1>
       </Container>
-      <DynamicBetslip bettingAllowed={true} mode={"placedBet"}></DynamicBetslip>
+      <DynamicBetslip mode={"placedBet"}></DynamicBetslip>
     </div>
   );
 };

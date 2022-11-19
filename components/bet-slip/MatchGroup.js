@@ -5,7 +5,13 @@ import { getPointsFromAdvancement } from "../../recoil/bet-slip/selectors/select
 import Container from "../Container";
 import Match from "../Match";
 
-function MatchGroup({ group, matchInfos, mode }) {
+function MatchGroup({
+  group,
+  matchInfos,
+  mode,
+  matchStatistics,
+  bettingAllowed,
+}) {
   // För många "?"" i den här filen. Kan snyggas till
 
   const points = useRecoilValue(getPointsFromAdvancement(group.name));
@@ -37,6 +43,10 @@ function MatchGroup({ group, matchInfos, mode }) {
           const match = group.matches.find(
             (match) => matchInfo.matchId === match.matchId
           );
+
+          const stats = matchStatistics?.find(
+            (x) => x.matchId === match.matchId
+          );
           return (
             <Match
               key={match.team1.name + match.team2.name}
@@ -44,6 +54,8 @@ function MatchGroup({ group, matchInfos, mode }) {
               matchInfo={matchInfo}
               finalsStage={group.finalsStage}
               mode={mode}
+              matchStatistic={stats}
+              bettingAllowed={bettingAllowed}
             />
           );
         })}

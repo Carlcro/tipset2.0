@@ -87,7 +87,6 @@ const AnswerSheet = () => {
       </div>
       <DynamicBetslip
         setFinalsMatches={setFinalsMatches}
-        bettingAllowed={true}
         handleSave={submitAnswer}
         mode={"answerSheet"}
       ></DynamicBetslip>

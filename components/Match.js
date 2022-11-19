@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import GoalInput from "./GoalInput";
 import { format, addHours } from "date-fns";
 import {
@@ -12,7 +12,96 @@ import { polyfillCountryFlagEmojis } from "country-flag-emoji-polyfill";
 
 polyfillCountryFlagEmojis();
 
-const Match = ({ match, matchInfo, finalsStage, mode }) => {
+const StatsRow = ({ stats }) => (
+  <>
+    <div className={`flex justify-between px-2 text-xs`}>
+      <div className="flex items-center justify-center">
+        {(stats.team1Percentage * 100).toFixed(0) + "%"}
+      </div>
+      <div className="flex justify-center items-center">
+        {(stats.drawPercentage * 100).toFixed(0) + "%"}
+      </div>
+      <div className="flex items-center justify-center">
+        {(stats.team2Percentage * 100).toFixed(0) + "%"}
+      </div>
+    </div>
+  </>
+);
+
+const ResultRow = ({
+  finalsStage,
+  draw,
+  matchScore,
+  team1,
+  team2,
+  handleTeam1Score,
+  handleTeam2Score,
+  handlePenaltyWinner,
+  mode,
+}) => (
+  <>
+    <div className={`flex justify-center ${finalsStage && "col-span-2"}`}>
+      <div
+        className={`grid place-items-center ${
+          finalsStage && draw ? "" : "invisible"
+        }`}
+      >
+        <input
+          checked={
+            matchScore.penaltyWinner
+              ? matchScore.penaltyWinner._id === team1._id
+              : false
+          }
+          disabled={mode === "placedBet"}
+          onChange={handlePenaltyWinner(team1)}
+          type="checkbox"
+        />
+      </div>
+      <div className="flex items-center justify-center">
+        <GoalInput
+          teamScore={matchScore.team1Score}
+          setTeamScore={handleTeam1Score}
+          mode={mode}
+        />
+      </div>
+      <div className="flex justify-center items-center">-</div>
+      <div className="flex items-center justify-center">
+        <GoalInput
+          teamScore={matchScore.team2Score}
+          setTeamScore={handleTeam2Score}
+          mode={mode}
+        />
+      </div>
+      <div
+        className={`grid place-items-center ${
+          finalsStage && draw ? "" : "invisible"
+        }`}
+      >
+        <input
+          checked={
+            matchScore.penaltyWinner
+              ? matchScore.penaltyWinner._id === team2._id
+              : false
+          }
+          disabled={mode === "placedBet"}
+          onChange={handlePenaltyWinner(team2)}
+          type="checkbox"
+        />
+      </div>
+    </div>
+  </>
+);
+
+const Match = ({
+  match,
+  matchInfo,
+  finalsStage,
+  mode,
+  matchStatistic,
+  bettingAllowed,
+}) => {
+  const [showStats, setShowStats] = useState(false);
+
   const { team1, team2, matchId } = match;
   const { arena, city, time } = matchInfo;
 
@@ -86,14 +175,18 @@ const Match = ({ match, matchInfo, finalsStage, mode }) => {
   };
   const team1Style = determineWinner(1);
   const team2Style = determineWinner(2);
-
   return (
     <div
+      onClick={
+        bettingAllowed || !matchStatistic
+          ? () => {}
+          : () => setShowStats(!showStats)
+      }
       className={
         mode === "placedBet"
           ? finalsStage
             ? "mb-1 grid grid-cols-[minmax(75px,_1fr)_90px_70px_minmax(70px,_1fr)_20px] md:grid-cols-[85px_110px_90px_110px_100px_15px] lg:grid-cols-[100px_150px_90px_90px_150px_50px_1fr]"
-            : "mb-1 grid grid-cols-[minmax(90px,_1fr)_120px_minmax(90px,_1fr)_30px] md:grid-cols-[90px_minmax(110px,_1fr)_110px_minmax(110px,_1fr)_40px] lg:grid-cols-[100px_repeat(3,_130px)_80px_1fr]"
+            : "mb-1 grid grid-cols-[minmax(90px,_1fr)_120px_minmax(90px,_1fr)_30px] md:grid-cols-[90px_minmax(110px,_1fr)_110px_minmax(110px,_1fr)_40px] lg:grid-cols-[100px_repeat(3,_130px)_80px_1fr] cursor-pointer"
           : finalsStage
           ? "mb-1 grid grid-cols-4 md:grid-cols-5 lg:grid-cols-[100px_150px_90px_90px_150px_1fr]"
           : "mb-1 grid grid-cols-3 md:grid-cols-4 lg:grid-cols-[100px_repeat(3,_160px)_1fr]"
@@ -108,55 +201,21 @@ const Match = ({ match, matchInfo, finalsStage, mode }) => {
         <span className={`truncate ${team1Style}`}>{team1.name}</span>
         <span className="ml-2 text-xl xs:flex">{flags[team1.name]}</span>
       </div>
-      <div className={`flex justify-center ${finalsStage && "col-span-2"}`}>
-        <div
-          className={`grid place-items-center ${
-            finalsStage && draw ? "" : "invisible"
-          }`}
-        >
-          <input
-            checked={
-              matchScore.penaltyWinner
-                ? matchScore.penaltyWinner._id === team1._id
-                : false
-            }
-            disabled={mode === "placedBet"}
-            onChange={handlePenaltyWinner(team1)}
-            type="checkbox"
-          />
-        </div>
-        <div className="flex items-center justify-center">
-          <GoalInput
-            teamScore={matchScore.team1Score}
-            setTeamScore={handleTeam1Score}
-            mode={mode}
-          />
-        </div>
-        <div className="flex justify-center items-center">-</div>
-        <div className="flex items-center justify-center">
-          <GoalInput
-            teamScore={matchScore.team2Score}
-            setTeamScore={handleTeam2Score}
-            mode={mode}
-          />
-        </div>
-        <div
-          className={`grid place-items-center ${
-            finalsStage && draw ? "" : "invisible"
-          }`}
-        >
-          <input
-            checked={
-              matchScore.penaltyWinner
-                ? matchScore.penaltyWinner._id === team2._id
-                : false
-            }
-            disabled={mode === "placedBet"}
-            onChange={handlePenaltyWinner(team2)}
-            type="checkbox"
-          />
-        </div>
-      </div>
+      {showStats ? (
+        <StatsRow stats={matchStatistic} />
+      ) : (
+        <ResultRow
+          finalsStage={finalsStage}
+          draw={draw}
+          matchScore={matchScore}
+          team1={team1}
+          team2={team2}
+          handleTeam1Score={handleTeam1Score}
+          handleTeam2Score={handleTeam2Score}
+          handlePenaltyWinner={handlePenaltyWinner}
+          mode={mode}
+        ></ResultRow>
+      )}
 
       <div
         className={`text-sm md:text-base truncate flex items-center justify-start px-2`}

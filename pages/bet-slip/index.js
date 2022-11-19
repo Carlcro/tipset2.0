@@ -35,8 +35,6 @@ const BetSlipContainer = () => {
     });
   };
 
-  const { data } = useQuery(["config"], getConfig);
-
   const { isLoading } = useQuery(
     ["betslip"],
     async () => {
@@ -142,17 +140,7 @@ const BetSlipContainer = () => {
     return null;
   }
 
-  if (!data) {
-    return null;
-  }
-
-  return (
-    <DynamicBetslip
-      bettingAllowed={data.bettingAllowed}
-      handleSave={submitBet}
-      mode={"betslip"}
-    />
-  );
+  return <DynamicBetslip handleSave={submitBet} mode={"betslip"} />;
 };
 
 export default BetSlipContainer;

@@ -1,6 +1,16 @@
 import { Schema, model, models } from "mongoose";
 import Team from "./team";
 
+export interface IBet {
+  matchId: number;
+  team1Score: number;
+  team2Score: number;
+  team1: string;
+  team2: string;
+  penaltyWinner?: string;
+  points?: number;
+}
+
 var BetSchema = new Schema({
   matchId: Number,
   team1Score: Number,
@@ -20,4 +30,4 @@ var BetSchema = new Schema({
   points: Number,
 });
 
-export default models.Bet || model("Bet", BetSchema);
+export default models.Bet || model<IBet>("Bet", BetSchema);

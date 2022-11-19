@@ -3,7 +3,6 @@ import MatchGroup from "./MatchGroup";
 import GroupBoard from "./GroupBoard";
 import GoalscorerInput from "./GoalscorerInput";
 import { useRecoilValue, useSetRecoilState, useRecoilState } from "recoil";
-
 import TiebreakerInfo from "./TiebreakerInfo";
 import { goalscorerState } from "../../recoil/bet-slip/atoms";
 import {
@@ -20,6 +19,9 @@ import {
 import { championshipState } from "../../recoil/championship/selectors";
 import Container from "../Container";
 import SubmitButton from "../SubmitButton";
+import { getMatchStatistics } from "../../services/statisticsService";
+import { useQuery } from "react-query";
+import { getConfig } from "../../services/configService";
 
 const BetSlip = ({ mode, bettingAllowed, handleSave, setFinalsMatches }) => {
   const championship = useRecoilValue(championshipState);
@@ -29,6 +31,17 @@ const BetSlip = ({ mode, bettingAllowed, handleSave, setFinalsMatches }) => {
   const thirdPlaceFinal = useRecoilValue(getThirdPlaceFinal);
   const final = useRecoilValue(getFinal);
   const [goalscorer, setGoalscorer] = useRecoilState(goalscorerState);
+
+  const { data: config, isLoading: configLoading } = useQuery(
+    ["config"],
+    getConfig
+  );
+
+  const { data: matchStats, isLoading: matchStatisticsLoading } = useQuery(
+    ["matchStatistics"],
+    getMatchStatistics,
+    { enabled: config && !config.bettingAllowed }
+  );
 
   useMemo(() => {
     if (setFinalsMatches) {
@@ -67,6 +80,9 @@ const BetSlip = ({ mode, bettingAllowed, handleSave, setFinalsMatches }) => {
   const handleSetGoalscorer = (goalscorer) => {
     setGoalscorer(goalscorer);
   };
+  if (configLoading || matchStatisticsLoading) {
+    return null;
+  }
 
   return (
     <div>
@@ -85,6 +101,8 @@ const BetSlip = ({ mode, bettingAllowed, handleSave, setFinalsMatches }) => {
               key={group.name}
               matchInfos={championship.matchInfos}
               mode={mode}
+              matchStatistics={matchStats}
+              bettingAllowed={config.bettingAllowed}
             />
           ))}
           <MatchGroup
