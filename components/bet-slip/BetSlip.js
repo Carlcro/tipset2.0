@@ -137,7 +137,7 @@ const BetSlip = ({ mode, bettingAllowed, handleSave, setFinalsMatches }) => {
           />
           {mode !== "placedBet" && (
             <div className="flex mb-10 mt-4">
-              {bettingAllowed ? (
+              {config.bettingAllowed ? (
                 <SubmitButton type="button" onClick={handleSave}>
                   Spara tips
                 </SubmitButton>
