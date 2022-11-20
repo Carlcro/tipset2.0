@@ -98,10 +98,8 @@ const Match = ({
   finalsStage,
   mode,
   matchStatistic,
-  bettingAllowed,
+  showStatistics,
 }) => {
-  const [showStats, setShowStats] = useState(false);
-
   const { team1, team2, matchId } = match;
   const { arena, city, time } = matchInfo;
 
@@ -177,16 +175,11 @@ const Match = ({
   const team2Style = determineWinner(2);
   return (
     <div
-      onClick={
-        bettingAllowed || !matchStatistic
-          ? () => {}
-          : () => setShowStats(!showStats)
-      }
       className={
         mode === "placedBet"
           ? finalsStage
             ? "mb-1 grid grid-cols-[minmax(75px,_1fr)_90px_70px_minmax(70px,_1fr)_20px] md:grid-cols-[85px_110px_90px_110px_100px_15px] lg:grid-cols-[100px_150px_90px_90px_150px_50px_1fr]"
-            : "mb-1 grid grid-cols-[minmax(90px,_1fr)_120px_minmax(90px,_1fr)_30px] md:grid-cols-[90px_minmax(110px,_1fr)_110px_minmax(110px,_1fr)_40px] lg:grid-cols-[100px_repeat(3,_130px)_80px_1fr] cursor-pointer"
+            : "mb-1 grid grid-cols-[minmax(90px,_1fr)_120px_minmax(90px,_1fr)_30px] md:grid-cols-[90px_minmax(110px,_1fr)_110px_minmax(110px,_1fr)_40px] lg:grid-cols-[100px_repeat(3,_130px)_80px_1fr]"
           : finalsStage
           ? "mb-1 grid grid-cols-4 md:grid-cols-5 lg:grid-cols-[100px_150px_90px_90px_150px_1fr]"
           : "mb-1 grid grid-cols-3 md:grid-cols-4 lg:grid-cols-[100px_repeat(3,_160px)_1fr]"
@@ -201,7 +194,7 @@ const Match = ({
         <span className={`truncate ${team1Style}`}>{team1.name}</span>
         <span className="ml-2 text-xl xs:flex">{flags[team1.name]}</span>
       </div>
-      {showStats ? (
+      {showStatistics ? (
         <StatsRow stats={matchStatistic} />
       ) : (
         <ResultRow

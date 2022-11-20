@@ -140,7 +140,13 @@ const BetSlipContainer = () => {
     return null;
   }
 
-  return <DynamicBetslip handleSave={submitBet} mode={"betslip"} />;
+  return (
+    <DynamicBetslip
+      headerText={"Lägg ditt tips för Bröderna Duhlins VM-tips 2022"}
+      handleSave={submitBet}
+      mode={"betslip"}
+    />
+  );
 };
 
 export default BetSlipContainer;

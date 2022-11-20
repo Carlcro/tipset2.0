@@ -10,7 +10,7 @@ function MatchGroup({
   matchInfos,
   mode,
   matchStatistics,
-  bettingAllowed,
+  showStatistics,
 }) {
   // För många "?"" i den här filen. Kan snyggas till
 
@@ -55,7 +55,7 @@ function MatchGroup({
               finalsStage={group.finalsStage}
               mode={mode}
               matchStatistic={stats}
-              bettingAllowed={bettingAllowed}
+              showStatistics={showStatistics}
             />
           );
         })}

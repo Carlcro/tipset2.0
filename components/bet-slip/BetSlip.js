@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import MatchGroup from "./MatchGroup";
 import GroupBoard from "./GroupBoard";
 import GoalscorerInput from "./GoalscorerInput";
@@ -23,7 +23,7 @@ import { getMatchStatistics } from "../../services/statisticsService";
 import { useQuery } from "react-query";
 import { getConfig } from "../../services/configService";
 
-const BetSlip = ({ mode, handleSave, setFinalsMatches }) => {
+const BetSlip = ({ mode, handleSave, setFinalsMatches, headerText }) => {
   const championship = useRecoilValue(championshipState);
   const groupOf16 = useRecoilValue(getGroupOf16);
   const groupOf8 = useRecoilValue(getGroupOf8);
@@ -31,6 +31,8 @@ const BetSlip = ({ mode, handleSave, setFinalsMatches }) => {
   const thirdPlaceFinal = useRecoilValue(getThirdPlaceFinal);
   const final = useRecoilValue(getFinal);
   const [goalscorer, setGoalscorer] = useRecoilState(goalscorerState);
+
+  const [showStatistics, setShowStatistics] = useState(false);
 
   const { data: config, isLoading: configLoading } = useQuery(
     ["config"],
@@ -86,13 +88,23 @@ const BetSlip = ({ mode, handleSave, setFinalsMatches }) => {
 
   return (
     <div>
-      {mode !== "placedBet" && (
-        <Container classNames="mx-auto w-[300px] md:w-[500px] flex flex-col space-y-3 ">
-          <h1 className="text-center text-xl">
-            Lägg ditt tips för Bröderna Duhlins VM-tips 2022
-          </h1>
-        </Container>
-      )}
+      <div className=" flex flex-col-reverse space-y-3 sm:space-y-0 items-center md:flex-row px-8">
+        {!config.bettingAllowed && (
+          <SubmitButton
+            className="w-44"
+            onClick={() => setShowStatistics(!showStatistics)}
+          >
+            {!showStatistics ? "Visa tipsfördelning" : "Visa lagt tips"}
+          </SubmitButton>
+        )}
+
+        <div className="flex-1">
+          <Container classNames="mx-auto w-[300px] md:w-[500px] flex flex-col space-y-3 items-center ">
+            <h1 className="text-center text-xl">{headerText} </h1>
+          </Container>
+        </div>
+      </div>
+
       <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr] mx-1 lg:flex lg:justify-center">
         <div className="lg:justify-end">
           {championship.matchGroups.map((group) => (
@@ -102,7 +114,7 @@ const BetSlip = ({ mode, handleSave, setFinalsMatches }) => {
               matchInfos={championship.matchInfos}
               mode={mode}
               matchStatistics={matchStats}
-              bettingAllowed={config.bettingAllowed}
+              showStatistics={showStatistics}
             />
           ))}
           <MatchGroup

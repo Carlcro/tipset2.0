@@ -88,10 +88,7 @@ const PlacedBets = () => {
 
   return (
     <div className="pb-10">
-      <Container classNames="mx-auto w-64 flex justify-center">
-        <h1 className="text-lg">{name}</h1>
-      </Container>
-      <DynamicBetslip mode={"placedBet"}></DynamicBetslip>
+      <DynamicBetslip headerText={name} mode={"placedBet"}></DynamicBetslip>
     </div>
   );
 };
