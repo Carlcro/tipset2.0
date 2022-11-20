@@ -14,7 +14,7 @@ export const flags = {
   Frankrike: "🇫🇷",
   Australien: "🇦🇺",
   Danmark: "🇩🇰",
-  Tunisen: "🇹🇳",
+  Tunisien: "🇹🇳",
   Tyskland: "🇩🇪",
   Japan: "🇯🇵",
   Spanien: "🇪🇸",
