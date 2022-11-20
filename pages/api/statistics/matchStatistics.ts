@@ -8,9 +8,7 @@ import BetSlip from "../../../models/bet-slip";
 import Championship from "../../../models/championship";
 
 function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method === "POST") {
-    return createStatistics(req, res);
-  } else if (req.method === "GET") {
+  if (req.method === "GET") {
     getMatchStatistics(req, res);
   }
 }
@@ -30,7 +28,14 @@ const getMatchStatistics = async (
 ) => {
   const allStats = await MatchStatistics.find();
 
-  res.send(allStats);
+  const withoutId = allStats.map((x) => ({
+    matchId: x.matchId,
+    team1Percentage: x.team1Percentage,
+    team2Percentage: x.team2Percentage,
+    drawPercentage: x.drawPercentage,
+  }));
+
+  return res.send(withoutId);
 };
 
 const createStatistics = async (req: NextApiRequest, res: NextApiResponse) => {
