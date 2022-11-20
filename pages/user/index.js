@@ -40,7 +40,9 @@ export default function UserContainer() {
           if (!data.firstName || !data.lastName) {
             setMissingNameError("Du måste ha ett namn");
           } else {
-            mutate({ ...data, email: session.user.email });
+            setMissingNameError("Du kan inte längre byta namn");
+
+            // mutate({ ...data, email: session.user.email });
           }
         }}
       >

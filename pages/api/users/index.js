@@ -16,6 +16,12 @@ function handler(req, res) {
 export default connectDB(handler);
 
 const updateUsername = async (req, res) => {
+  const configuration = await Config.findOne();
+
+  if (configuration && !configuration.bettingAllowed) {
+    return res.send("Du kan inte längre byta namn");
+  }
+
   const session = await unstable_getServerSession(req, res, authOptions);
 
   let user = await User.findOne({ email: session?.user.email });
