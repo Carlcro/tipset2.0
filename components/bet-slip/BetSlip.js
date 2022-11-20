@@ -23,7 +23,7 @@ import { getMatchStatistics } from "../../services/statisticsService";
 import { useQuery } from "react-query";
 import { getConfig } from "../../services/configService";
 
-const BetSlip = ({ mode, bettingAllowed, handleSave, setFinalsMatches }) => {
+const BetSlip = ({ mode, handleSave, setFinalsMatches }) => {
   const championship = useRecoilValue(championshipState);
   const groupOf16 = useRecoilValue(getGroupOf16);
   const groupOf8 = useRecoilValue(getGroupOf8);
@@ -137,7 +137,7 @@ const BetSlip = ({ mode, bettingAllowed, handleSave, setFinalsMatches }) => {
           />
           {mode !== "placedBet" && (
             <div className="flex mb-10 mt-4">
-              {config.bettingAllowed ? (
+              {config.bettingAllowed || mode === "answerSheet" ? (
                 <SubmitButton type="button" onClick={handleSave}>
                   Spara tips
                 </SubmitButton>
