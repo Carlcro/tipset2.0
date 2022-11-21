@@ -174,10 +174,14 @@ const saveAnswerSheet = async (req, res) => {
     betSlip.points = points;
     betSlip.pointsArray = pointsArray;
 
-    await betSlip.save();
+    try {
+      await betSlip.save();
+    } catch (error) {
+      console.log(error);
+    }
   });
 
-  res.status(201).end();
+  res.status(201).send("Sparat");
 };
 
 const getAnswerSheet = async (_, res) => {
