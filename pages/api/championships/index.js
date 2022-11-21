@@ -13,10 +13,9 @@ async function handler(req, res) {
 }
 
 export const createChampionship = async (req, res) => {
-  /*   if (req.header("password") !== PASSWORD) {
+  if (req.header("password") !== PASSWORD) {
     return res.send(401);
   }
- */
 
   const { error } = championshipSchema.validate(req.body);
 

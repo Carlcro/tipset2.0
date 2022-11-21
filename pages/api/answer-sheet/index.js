@@ -79,11 +79,14 @@ const saveAnswerSheet = async (req, res) => {
   });
   const allBetSlips = await BetSlip.find({
     championship: championship._id,
-  }).populate({
-    path: "bets",
-    model: "Bet",
-    populate: [{ path: "team1 team2 penaltyWinner" }],
-  });
+  })
+    .limit(10)
+    .skip(req.body.skip)
+    .populate({
+      path: "bets",
+      model: "Bet",
+      populate: [{ path: "team1 team2 penaltyWinner" }],
+    });
 
   const answerSheetGroupResult = calculateGroupResults(
     newAnswerSheet.results,

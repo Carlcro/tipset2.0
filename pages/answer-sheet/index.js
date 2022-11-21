@@ -61,23 +61,35 @@ const AnswerSheet = () => {
     },
   });
 
-  const submitAnswer = () => {
+  const submitAnswer = async () => {
     const finalsNotPlayed = finalsMatches.filter(
       (x) => x.matchId > betslip.length
     );
 
-    mutation.mutate({
-      answerSheet: {
-        answers: [...betslip, ...finalsNotPlayed].map((matchResult) =>
-          Object.assign({}, matchResult, {
-            team1: matchResult.team1._id,
-            team2: matchResult.team2._id,
-          })
-        ),
-        goalscorer: { ...goalscorer, goals },
-      },
-      password,
-    });
+    const skip = 0;
+    const iterations = Math.ceil(294 / 10);
+
+    for (let index = 0; index < iterations; index++) {
+      mutation.mutate({
+        answerSheet: {
+          answers: [...betslip, ...finalsNotPlayed].map((matchResult) =>
+            Object.assign({}, matchResult, {
+              team1: matchResult.team1._id,
+              team2: matchResult.team2._id,
+            })
+          ),
+          goalscorer: { ...goalscorer, goals },
+          skip,
+        },
+        password,
+      });
+
+      await new Promise((res) => setTimeout(res, 2000));
+
+      skip = skip + 10;
+    }
+
+    toast.success("allt sparat");
   };
 
   return (

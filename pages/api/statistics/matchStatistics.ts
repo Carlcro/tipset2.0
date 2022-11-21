@@ -9,7 +9,7 @@ import Championship from "../../../models/championship";
 
 function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "GET") {
-    getMatchStatistics(req, res);
+    return getMatchStatistics(req, res);
   }
 }
 
