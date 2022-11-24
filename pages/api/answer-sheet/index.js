@@ -80,7 +80,7 @@ const saveAnswerSheet = async (req, res) => {
   const allBetSlips = await BetSlip.find({
     championship: championship._id,
   })
-    .limit(10)
+    .limit(6)
     .skip(req.body.skip)
     .populate({
       path: "bets",
@@ -111,10 +111,12 @@ const saveAnswerSheet = async (req, res) => {
         !isNaN(outcomeResult.team1Score) &&
         !isNaN(outcomeResult.team2Score)
       ) {
-        const matchPoint = getMatchPoint(outcomeResult, bet);
-        totalPointsFromMatches += matchPoint;
-        bet.points = matchPoint;
-        await bet.save();
+        if (isNaN(bet.points)) {
+          const matchPoint = getMatchPoint(outcomeResult, bet);
+          totalPointsFromMatches += matchPoint;
+          bet.points = matchPoint;
+          await bet.save();
+        }
       } else {
         bet.points = null;
         await bet.save();
