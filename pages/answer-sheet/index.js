@@ -53,7 +53,6 @@ const AnswerSheet = () => {
 
   const mutation = useMutation(saveAnswerSheet, {
     onSuccess: () => {
-      queryClient.invalidateQueries(["answerSheet"]);
       toast.success("Sparat!");
     },
     onError: (error) => {
@@ -67,7 +66,7 @@ const AnswerSheet = () => {
     );
 
     const skip = 0;
-    const iterations = Math.ceil(294 / 10);
+    const iterations = Math.ceil(294 / 10) + 1;
 
     for (let index = 0; index < iterations; index++) {
       mutation.mutate({

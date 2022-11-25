@@ -32,13 +32,18 @@ const saveAnswerSheet = async (req, res) => {
       path: "matches teams",
     },
   });
-  await AnswerSheet.deleteMany();
-  await Result.deleteMany();
 
-  const answerSheet = new AnswerSheet({
+  let answerSheet = await AnswerSheet.findOne({
     championship: championship._id,
-    goalscorer: {},
   });
+
+  if (!answerSheet) {
+    answerSheet = new AnswerSheet({
+      championship: championship._id,
+      goalscorer: {},
+      results: [],
+    });
+  }
 
   if (req.body.goalscorer) {
     answerSheet.goalscorer = {
@@ -51,23 +56,41 @@ const saveAnswerSheet = async (req, res) => {
 
   const gameNumber = req.body.answers.length;
 
+  let newResults = [...answerSheet.results];
+
   for (const resultDto of req.body.answers) {
-    let result = new Result({
-      matchId: resultDto.matchId,
-      team1Score: resultDto.team1Score,
-      team2Score: resultDto.team2Score,
-      team1: resultDto.team1,
-      team2: resultDto.team2,
-    });
+    let result = await Result.findOne({ matchId: resultDto.matchId });
+    if (!result) {
+      result = new Result({
+        matchId: resultDto.matchId,
+        team1Score: resultDto.team1Score,
+        team2Score: resultDto.team2Score,
+        team1: resultDto.team1,
+        team2: resultDto.team2,
+      });
 
-    if (resultDto.penaltyWinner) {
-      result.penaltyWinner = resultDto.penaltyWinner;
+      console.log("New Result!", result);
+      if (resultDto.penaltyWinner) {
+        result.penaltyWinner = resultDto.penaltyWinner;
+      }
+      newResults.push(result._id);
+      await result.save();
+    } else if (
+      result.team1Score !== resultDto.team1Score ||
+      result.team2Score !== resultDto.team2Score ||
+      (resultDto?.penaltyWinner &&
+        result.penaltyWinner !== resultDto.penaltyWinner)
+    ) {
+      result.team1Score = resultDto.team1Score;
+      result.team2Score = resultDto.team2Score;
+      if (resultDto.penaltyWinner) {
+        result.penaltyWinner = resultDto.penaltyWinner;
+      }
+      await result.save();
     }
-
-    await result.save();
-    answerSheet.results.push(result._id);
   }
 
+  answerSheet.results = newResults;
   await answerSheet.save();
 
   const newAnswerSheet = await AnswerSheet.findOne({
@@ -111,10 +134,15 @@ const saveAnswerSheet = async (req, res) => {
         !isNaN(outcomeResult.team1Score) &&
         !isNaN(outcomeResult.team2Score)
       ) {
-        const matchPoint = getMatchPoint(outcomeResult, bet);
-        totalPointsFromMatches += matchPoint;
-        bet.points = matchPoint;
-        await bet.save();
+        if (isNaN(bet.points)) {
+          console.log("New Points!");
+          const matchPoint = getMatchPoint(outcomeResult, bet);
+          totalPointsFromMatches += matchPoint;
+          bet.points = matchPoint;
+          await bet.save();
+        } else {
+          totalPointsFromMatches += bet.points;
+        }
       } else {
         bet.points = null;
         await bet.save();
@@ -158,6 +186,14 @@ const saveAnswerSheet = async (req, res) => {
       0
     );
 
+    console.log(
+      "asd",
+      totalPointsFromMatches,
+      totalPointsFromGroup,
+      totalPointsFromAdvancement,
+      goalScorerPoints
+    );
+
     const points =
       totalPointsFromMatches +
       totalPointsFromGroup +
@@ -176,6 +212,7 @@ const saveAnswerSheet = async (req, res) => {
 
     betSlip.points = points;
     betSlip.pointsArray = pointsArray;
+    console.log("pointsArray", pointsArray);
 
     try {
       await betSlip.save();
