@@ -8,6 +8,13 @@ import { unstable_getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]";
 import Config from "../../../models/config";
 import AnswerSheet from "../../../models/answer-sheet";
+import {
+  calculateCorrectAdvanceTeam,
+  calculateGroupResults,
+  calculatePointsFromGroup,
+  getMatchPoint,
+} from "../../../calculation";
+import { calculateGoalScorer } from "../../../calculation/points/common";
 
 function handler(req, res) {
   if (req.method === "POST") {
@@ -22,10 +29,16 @@ function handler(req, res) {
 export default connectDB(handler);
 
 const updatePoints = async (req, res) => {
-  const config = await Config.findOne();
-  if (!config.bettingAllowed) {
-    return res.status(403).send("Det går inte längre att lägga ett tips");
+  if (req.headers["password"] !== process.env.API_SECRET_KEY) {
+    return res.status(401).send("Fel lösenord");
   }
+
+  const championship = await Championship.findOne().populate({
+    path: "matchGroups",
+    populate: {
+      path: "matches teams",
+    },
+  });
   const answerSheet = await AnswerSheet.findOne({
     championship: championship._id,
   }).populate({
@@ -33,10 +46,13 @@ const updatePoints = async (req, res) => {
     model: "Result",
     populate: [{ path: "team1 team2 penaltyWinner" }],
   });
+
+  const gameNumber = answerSheet.results.length;
+
   const allBetSlips = await BetSlip.find({
     championship: championship._id,
   })
-    .limit(10)
+    .limit(req.body.batchSize)
     .skip(req.body.skip)
     .populate({
       path: "bets",
@@ -67,11 +83,14 @@ const updatePoints = async (req, res) => {
         !isNaN(outcomeResult.team1Score) &&
         !isNaN(outcomeResult.team2Score)
       ) {
-        if (isNaN(bet.points)) {
+        if (isNaN(bet.points) || req.body.calculateAllPoints) {
+          console.log("New Point!");
           const matchPoint = getMatchPoint(outcomeResult, bet);
           totalPointsFromMatches += matchPoint;
           bet.points = matchPoint;
           await bet.save();
+        } else {
+          totalPointsFromMatches += bet.points;
         }
       } else {
         bet.points = null;

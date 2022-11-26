@@ -21,6 +21,19 @@ export function getBetSlip() {
   return http.get(`/api/bet-slips`);
 }
 
+export function updateBetSlip(
+  skip: number,
+  batchSize: 10,
+  calculateAllPoints: boolean,
+  password: string
+) {
+  return http.put(
+    `/api/bet-slips`,
+    { skip, batchSize, calculateAllPoints },
+    { headers: { password: password } }
+  );
+}
+
 export function getAllPlayers() {
   return http.get("/api/players");
 }
