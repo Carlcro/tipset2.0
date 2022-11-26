@@ -66,27 +66,27 @@ const AnswerSheet = () => {
     );
 
     const skip = 0;
-    const iterations = Math.ceil(294 / 10) + 1;
+    const iterations = Math.ceil(294 / 10);
 
-    for (let index = 0; index < iterations; index++) {
-      mutation.mutate({
-        answerSheet: {
-          answers: [...betslip, ...finalsNotPlayed].map((matchResult) =>
-            Object.assign({}, matchResult, {
-              team1: matchResult.team1._id,
-              team2: matchResult.team2._id,
-            })
-          ),
-          goalscorer: { ...goalscorer, goals },
-          skip,
-        },
-        password,
-      });
+    /*     for (let index = 0; index < iterations; index++) {
+     */ mutation.mutate({
+      answerSheet: {
+        answers: [...betslip, ...finalsNotPlayed].map((matchResult) =>
+          Object.assign({}, matchResult, {
+            team1: matchResult.team1._id,
+            team2: matchResult.team2._id,
+          })
+        ),
+        goalscorer: { ...goalscorer, goals },
+        skip,
+      },
+      password,
+    });
 
-      await new Promise((res) => setTimeout(res, 1000));
+    await new Promise((res) => setTimeout(res, 1000));
 
-      skip = skip + 10;
-    }
+    skip = skip + 10;
+    //}
 
     toast.success("allt sparat");
   };

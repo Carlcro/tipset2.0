@@ -57,9 +57,11 @@ const saveAnswerSheet = async (req, res) => {
   const gameNumber = req.body.answers.length;
 
   let newResults = [...answerSheet.results];
+  const matchIdsThatNeedsPointCalculations = [];
 
   for (const resultDto of req.body.answers) {
     let result = await Result.findOne({ matchId: resultDto.matchId });
+    console.log(result);
     if (!result) {
       result = new Result({
         matchId: resultDto.matchId,
@@ -73,8 +75,9 @@ const saveAnswerSheet = async (req, res) => {
       if (resultDto.penaltyWinner) {
         result.penaltyWinner = resultDto.penaltyWinner;
       }
+      matchIdsThatNeedsPointCalculations.push(result.matchId);
       newResults.push(result._id);
-      await result.save();
+      //await result.save();
     } else if (
       result.team1Score !== resultDto.team1Score ||
       result.team2Score !== resultDto.team2Score ||
@@ -86,13 +89,16 @@ const saveAnswerSheet = async (req, res) => {
       if (resultDto.penaltyWinner) {
         result.penaltyWinner = resultDto.penaltyWinner;
       }
-      await result.save();
+      matchIdsThatNeedsPointCalculations.push(resultDto.matchId);
+      //await result.save();
     }
   }
 
-  answerSheet.results = newResults;
-  await answerSheet.save();
+  console.log(matchIdsThatNeedsPointCalculations);
 
+  answerSheet.results = newResults;
+  //await answerSheet.save();
+  console.log("skip", req.body.skip);
   const newAnswerSheet = await AnswerSheet.findOne({
     championship: championship._id,
   }).populate({
@@ -103,7 +109,6 @@ const saveAnswerSheet = async (req, res) => {
   const allBetSlips = await BetSlip.find({
     championship: championship._id,
   })
-    .limit(10)
     .skip(req.body.skip)
     .populate({
       path: "bets",
@@ -134,18 +139,18 @@ const saveAnswerSheet = async (req, res) => {
         !isNaN(outcomeResult.team1Score) &&
         !isNaN(outcomeResult.team2Score)
       ) {
-        if (isNaN(bet.points)) {
-          console.log("New Points!");
+        if (matchIdsThatNeedsPointCalculations.includes(bet.matchId)) {
+          console.log("New point!", bet);
           const matchPoint = getMatchPoint(outcomeResult, bet);
           totalPointsFromMatches += matchPoint;
           bet.points = matchPoint;
-          await bet.save();
+          //await bet.save();
         } else {
           totalPointsFromMatches += bet.points;
         }
       } else {
         bet.points = null;
-        await bet.save();
+        //await bet.save();
       }
     });
     const pointsFromGroup = betSlipGroupResult.map((groupResult, i) => {
@@ -186,13 +191,13 @@ const saveAnswerSheet = async (req, res) => {
       0
     );
 
-    console.log(
+    /*     console.log(
       "asd",
       totalPointsFromMatches,
       totalPointsFromGroup,
       totalPointsFromAdvancement,
       goalScorerPoints
-    );
+    ); */
 
     const points =
       totalPointsFromMatches +
@@ -212,10 +217,9 @@ const saveAnswerSheet = async (req, res) => {
 
     betSlip.points = points;
     betSlip.pointsArray = pointsArray;
-    console.log("pointsArray", pointsArray);
 
     try {
-      await betSlip.save();
+      //await betSlip.save();
     } catch (error) {
       console.log(error);
     }
