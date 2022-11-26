@@ -43,6 +43,8 @@ const AnswerSheet = () => {
       }
     },
     {
+      refetchOnWindowFocus: false,
+      retry: false,
       onError: () => {
         setBetslip([]);
         setGoalscorer(null);
@@ -53,7 +55,6 @@ const AnswerSheet = () => {
 
   const mutation = useMutation(saveAnswerSheet, {
     onSuccess: () => {
-      queryClient.invalidateQueries(["answerSheet"]);
       toast.success("Sparat!");
     },
     onError: (error) => {
@@ -83,8 +84,6 @@ const AnswerSheet = () => {
         },
         password,
       });
-
-      await new Promise((res) => setTimeout(res, 1000));
 
       skip = skip + 10;
     }
