@@ -72,11 +72,19 @@ const AnswerSheet = () => {
     const batchSize = 5;
     const iterations = Math.ceil(294 / batchSize);
 
+    const requestArray = [];
     for (let index = 0; index < iterations; index++) {
-      await updateBetSlip(skip, batchSize, calculateAllPoints, password);
+      requestArray.push(skip);
       skip = skip + batchSize;
-      toast.success(`${iterations - index - 1} sparningar kvar`);
     }
+
+    await Promise.all(
+      requestArray.map(async (_skip) => {
+        await updateBetSlip(_skip, batchSize, calculateAllPoints, password);
+      })
+    );
+
+    toast.success(`Sparat!`);
   };
 
   const submitAnswer = async () => {
