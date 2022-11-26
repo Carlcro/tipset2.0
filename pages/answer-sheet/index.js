@@ -75,9 +75,8 @@ const AnswerSheet = () => {
     for (let index = 0; index < iterations; index++) {
       await updateBetSlip(skip, batchSize, calculateAllPoints, password);
       skip = skip + batchSize;
+      toast.success(`${iterations - index + 1} sparningar kvar`);
     }
-
-    toast.success("Allt sparat!");
   };
 
   const submitAnswer = async () => {
