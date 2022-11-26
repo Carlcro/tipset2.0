@@ -24,8 +24,8 @@ const saveAnswerSheet = async (req, res) => {
       path: "matches teams",
     },
   });
-  /* await AnswerSheet.deleteMany();
-  await Result.deleteMany(); */
+  await AnswerSheet.deleteMany();
+  await Result.deleteMany();
 
   const answerSheet = new AnswerSheet({
     championship: championship._id,
@@ -54,13 +54,13 @@ const saveAnswerSheet = async (req, res) => {
       result.penaltyWinner = resultDto.penaltyWinner;
     }
 
-    //await result.save();
+    await result.save();
     answerSheet.results.push(result._id);
   }
 
-  //await answerSheet.save();
+  await answerSheet.save();
 
-  res.status(201).send("Sparat Answer sheer");
+  res.status(201).send("Sparat Answer sheet");
 };
 
 const getAnswerSheet = async (_, res) => {
