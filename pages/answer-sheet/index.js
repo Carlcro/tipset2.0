@@ -9,6 +9,7 @@ import { betSlipState, goalscorerState } from "../../recoil/bet-slip/atoms";
 import { setFromBetslipState } from "../../recoil/bet-slip/selectors/selectors";
 import dynamic from "next/dynamic";
 import { toast } from "react-toastify";
+import { updateBetSlip } from "../../services/betSlipService";
 
 const DynamicBetslip = dynamic(
   () => import("../../components/bet-slip/BetSlip"),
@@ -26,7 +27,11 @@ const AnswerSheet = () => {
 
   const [finalsMatches, setFinalsMatches] = useState([]);
 
-  const queryClient = useQueryClient();
+  const [calculateAllPoints, setCalculateAllPoints] = useState(false);
+
+  const handleChange = () => {
+    setCalculateAllPoints(!calculateAllPoints);
+  };
 
   useQuery(
     "answerSheet",
@@ -55,38 +60,43 @@ const AnswerSheet = () => {
 
   const mutation = useMutation(saveAnswerSheet, {
     onSuccess: () => {
-      toast.success("Sparat!");
+      updateBetSlips();
     },
     onError: (error) => {
       toast.error(error.message);
     },
   });
 
+  const updateBetSlips = async () => {
+    const skip = 0;
+    const batchSize = 5;
+    const iterations = Math.ceil(294 / batchSize);
+
+    for (let index = 0; index < iterations; index++) {
+      await updateBetSlip(skip, batchSize, calculateAllPoints, password);
+      skip = skip + batchSize;
+    }
+
+    toast.success("Allt sparat!");
+  };
+
   const submitAnswer = async () => {
     const finalsNotPlayed = finalsMatches.filter(
       (x) => x.matchId > betslip.length
     );
 
-    const skip = 0;
-    const iterations = Math.ceil(294 / 5 + 1);
-
-    for (let index = 0; index < iterations; index++) {
-      mutation.mutate({
-        answerSheet: {
-          answers: [...betslip, ...finalsNotPlayed].map((matchResult) =>
-            Object.assign({}, matchResult, {
-              team1: matchResult.team1._id,
-              team2: matchResult.team2._id,
-            })
-          ),
-          goalscorer: { ...goalscorer, goals },
-          skip,
-        },
-        password,
-      });
-
-      skip = skip + 10;
-    }
+    mutation.mutate({
+      answerSheet: {
+        answers: [...betslip, ...finalsNotPlayed].map((matchResult) =>
+          Object.assign({}, matchResult, {
+            team1: matchResult.team1._id,
+            team2: matchResult.team2._id,
+          })
+        ),
+        goalscorer: { ...goalscorer, goals },
+      },
+      password,
+    });
 
     toast.success("allt sparat");
   };
@@ -116,6 +126,14 @@ const AnswerSheet = () => {
           value={goals}
           onChange={(e) => setGoals(e.target.value)}
         ></input>
+        <label>
+          <input
+            type="checkbox"
+            calculateAllPoints={calculateAllPoints}
+            onChange={handleChange}
+          />
+          Räkna ut ALLA poäng
+        </label>
       </div>
     </>
   );
