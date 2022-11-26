@@ -43,6 +43,8 @@ const AnswerSheet = () => {
       }
     },
     {
+      retry: false,
+      refetchOnWindowFocus: false,
       onError: () => {
         setBetslip([]);
         setGoalscorer(null);
@@ -83,7 +85,7 @@ const AnswerSheet = () => {
       password,
     });
 
-    await new Promise((res) => setTimeout(res, 1000));
+    //await new Promise((res) => setTimeout(res, 1000));
 
     skip = skip + 10;
     //}
