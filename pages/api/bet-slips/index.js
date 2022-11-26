@@ -7,16 +7,143 @@ import connectDB from "../../../middleware/mongodb";
 import { unstable_getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]";
 import Config from "../../../models/config";
+import AnswerSheet from "../../../models/answer-sheet";
 
 function handler(req, res) {
   if (req.method === "POST") {
     return createBetSlip(req, res);
   } else if (req.method === "GET") {
     return getBetSlip(req, res);
+  } else if (req.method === "PUT") {
+    return updatePoints(req, res);
   }
 }
 
 export default connectDB(handler);
+
+const updatePoints = async (req, res) => {
+  const config = await Config.findOne();
+  if (!config.bettingAllowed) {
+    return res.status(403).send("Det går inte längre att lägga ett tips");
+  }
+  const answerSheet = await AnswerSheet.findOne({
+    championship: championship._id,
+  }).populate({
+    path: "results",
+    model: "Result",
+    populate: [{ path: "team1 team2 penaltyWinner" }],
+  });
+  const allBetSlips = await BetSlip.find({
+    championship: championship._id,
+  })
+    .limit(10)
+    .skip(req.body.skip)
+    .populate({
+      path: "bets",
+      model: "Bet",
+      populate: [{ path: "team1 team2 penaltyWinner" }],
+    });
+
+  const answerSheetGroupResult = calculateGroupResults(
+    answerSheet.results,
+    championship.matchGroups
+  );
+
+  allBetSlips.forEach(async (betSlip) => {
+    const betSlipGroupResult = calculateGroupResults(
+      betSlip.bets,
+      championship.matchGroups
+    );
+
+    let totalPointsFromMatches = 0;
+
+    betSlip.bets.forEach(async (bet) => {
+      const outcomeResult = answerSheet.results.find(
+        (x) => x.matchId === bet.matchId
+      );
+
+      if (
+        outcomeResult &&
+        !isNaN(outcomeResult.team1Score) &&
+        !isNaN(outcomeResult.team2Score)
+      ) {
+        if (isNaN(bet.points)) {
+          const matchPoint = getMatchPoint(outcomeResult, bet);
+          totalPointsFromMatches += matchPoint;
+          bet.points = matchPoint;
+          await bet.save();
+        }
+      } else {
+        bet.points = null;
+        await bet.save();
+      }
+    });
+    const pointsFromGroup = betSlipGroupResult.map((groupResult, i) => {
+      return {
+        group: groupResult.name,
+        points: calculatePointsFromGroup(
+          groupResult,
+          answerSheetGroupResult[i],
+          betSlip.bets,
+          answerSheet.results
+        ),
+      };
+    });
+
+    betSlip.pointsFromGroup = pointsFromGroup;
+
+    const pointsFromAdvancement = calculateCorrectAdvanceTeam(
+      betSlip.bets,
+      answerSheet.results
+    );
+
+    betSlip.pointsFromAdvancement = pointsFromAdvancement;
+
+    const goalScorerPoints = calculateGoalScorer(
+      betSlip.goalscorer,
+      answerSheet.goalscorer
+    );
+
+    betSlip.pointsFromGoalscorer = goalScorerPoints;
+
+    const totalPointsFromGroup = pointsFromGroup.reduce(
+      (acc, x) => acc + x.points,
+      0
+    );
+
+    const totalPointsFromAdvancement = pointsFromAdvancement.reduce(
+      (acc, x) => acc + x.points,
+      0
+    );
+
+    const points =
+      totalPointsFromMatches +
+      totalPointsFromGroup +
+      totalPointsFromAdvancement +
+      goalScorerPoints;
+
+    let pointsArray = [];
+
+    if (betSlip.pointsArray) {
+      pointsArray = [...betSlip.pointsArray];
+    }
+
+    pointsArray = [...pointsArray.slice(0, gameNumber - 1)];
+
+    pointsArray.push({ gameNumber, points });
+
+    betSlip.points = points;
+    betSlip.pointsArray = pointsArray;
+
+    try {
+      await betSlip.save();
+    } catch (error) {
+      console.log(error);
+    }
+  });
+
+  res.status(201).send("Sparat");
+};
 
 const createBetSlip = async (req, res) => {
   const config = await Config.findOne();
