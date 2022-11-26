@@ -140,14 +140,10 @@ const saveAnswerSheet = async (req, res) => {
         !isNaN(outcomeResult.team1Score) &&
         !isNaN(outcomeResult.team2Score)
       ) {
-        if (matchIdsThatNeedsPointCalculations.includes(bet.matchId)) {
-          const matchPoint = getMatchPoint(outcomeResult, bet);
-          totalPointsFromMatches += matchPoint;
-          bet.points = matchPoint;
-          await bet.save();
-        } else {
-          totalPointsFromMatches += bet.points;
-        }
+        const matchPoint = getMatchPoint(outcomeResult, bet);
+        totalPointsFromMatches += matchPoint;
+        bet.points = matchPoint;
+        await bet.save();
       } else {
         bet.points = null;
         await bet.save();
