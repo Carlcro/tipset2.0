@@ -1,6 +1,7 @@
 import { Schema, model, models } from "mongoose";
 import Championship from "./championship";
 import Player from "./player";
+import Result from "./result";
 
 var AnswerSheetSchema = new Schema({
   championship: {
@@ -10,7 +11,7 @@ var AnswerSheetSchema = new Schema({
   results: [
     {
       type: Schema.Types.ObjectId,
-      ref: "Result",
+      ref: Result,
     },
   ],
   goalscorer: {
