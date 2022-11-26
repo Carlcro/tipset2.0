@@ -157,7 +157,7 @@ const updatePoints = async (req, res) => {
     try {
       await betSlip.save();
     } catch (error) {
-      console.log(error);
+      res.status(500).send("Something happened");
     }
   });
 
