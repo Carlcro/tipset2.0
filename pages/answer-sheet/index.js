@@ -68,10 +68,10 @@ const AnswerSheet = () => {
     );
 
     const skip = 0;
-    const iterations = Math.ceil(294 / 40);
+    const iterations = Math.ceil(294 / 20);
 
     for (let index = 0; index < iterations; index++) {
-      mutation.mutate({
+      await mutation.mutate({
         answerSheet: {
           answers: [...betslip, ...finalsNotPlayed].map((matchResult) =>
             Object.assign({}, matchResult, {
@@ -85,9 +85,7 @@ const AnswerSheet = () => {
         password,
       });
 
-      await new Promise((res) => setTimeout(res, 6000));
-
-      skip = skip + 40;
+      skip = skip + 20;
     }
 
     toast.success("allt sparat");
