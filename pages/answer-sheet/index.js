@@ -77,7 +77,7 @@ const AnswerSheet = () => {
       skip = skip + batchSize;
     }
 
-    toast.success("allt sparat");
+    toast.success("Allt sparat!");
   };
 
   const submitAnswer = async () => {
