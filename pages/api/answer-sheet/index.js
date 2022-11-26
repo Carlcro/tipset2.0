@@ -107,7 +107,7 @@ const saveAnswerSheet = async (req, res) => {
   let allBetSlips = await BetSlip.find({
     championship: championship._id,
   })
-    .limit(20)
+    .limit(40)
     .skip(req.body.skip)
     .populate({
       path: "bets",

@@ -68,7 +68,7 @@ const AnswerSheet = () => {
     );
 
     const skip = 0;
-    const iterations = Math.ceil(294 / 20);
+    const iterations = Math.ceil(294 / 40);
 
     for (let index = 0; index < iterations; index++) {
       mutation.mutate({
@@ -87,7 +87,7 @@ const AnswerSheet = () => {
 
       await new Promise((res) => setTimeout(res, 6000));
 
-      skip = skip + 20;
+      skip = skip + 40;
     }
 
     toast.success("allt sparat");
