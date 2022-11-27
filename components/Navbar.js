@@ -21,7 +21,7 @@ const MyLink = forwardRef((props, ref) => {
 
 MyLink.displayName = "MyLink";
 
-function BurgerMenu({ user }) {
+function BurgerMenu({ user, bettingAllowed }) {
   return (
     <Menu as="div" className="relative md:hidden z-10">
       <Menu.Button className="inline-flex justify-center w-full rounded border border-polarNight shadow-lg px-4 py-2 bg-slate text-sm font-medium text-gray-700">
@@ -41,7 +41,7 @@ function BurgerMenu({ user }) {
         </svg>
       </Menu.Button>
       <Menu.Items className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-slate ring ring-polarNight ring-opacity-5 divide-y divide-gray-100 focus:outline-none">
-        {routesLoggedIn(user).map((item) => (
+        {routesLoggedIn(user, bettingAllowed).map((item) => (
           <Menu.Item key={item.name}>
             {({ active, hover }) => (
               <MyLink
@@ -72,11 +72,11 @@ function BurgerMenu({ user }) {
   );
 }
 
-const routesLoggedIn = (user) => [
+const routesLoggedIn = (user, bettingAllowed) => [
   { name: "Hem", route: "/user-tournament" },
   {
     name: user && user.betSlip ? "Mitt tips" : "Gör ditt tips",
-    route: "/bet-slip",
+    route: bettingAllowed ? "/bet-slip" : `/placed-bets/${user._id}`,
   },
   { name: "Poängsystem", route: "/point-system" },
   { name: "Facit", route: "/championship" },
@@ -128,7 +128,7 @@ const Navbar = () => {
             </Link>
           </div>
 
-          <BurgerMenu user={user} />
+          <BurgerMenu user={user} bettingAllowed={config?.bettingAllowed} />
         </>
       )}
 
