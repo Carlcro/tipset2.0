@@ -83,8 +83,7 @@ const updatePoints = async (req, res) => {
         !isNaN(outcomeResult.team1Score) &&
         !isNaN(outcomeResult.team2Score)
       ) {
-        if (isNaN(bet.points) || req.body.calculateAllPoints) {
-          console.log("New Point!");
+        if (!Number.isInteger(bet.points) || req.body.calculateAllPoints) {
           const matchPoint = getMatchPoint(outcomeResult, bet);
           totalPointsFromMatches += matchPoint;
           bet.points = matchPoint;
