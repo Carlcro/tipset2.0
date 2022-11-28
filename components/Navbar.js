@@ -7,6 +7,11 @@ import { signOut, useSession } from "next-auth/react";
 import { getUser } from "../services/userService";
 import { useRouter } from "next/router";
 import { getConfig } from "../services/configService";
+import dynamic from "next/dynamic";
+
+const DynamicIsTestEnvironment = dynamic(() => import("./IsTestEnvironment"), {
+  ssr: false,
+});
 
 const MyLink = forwardRef((props, ref) => {
   let { href, children, ...rest } = props;
@@ -126,6 +131,7 @@ const Navbar = () => {
             <Link href="/user-tournament">
               <a>{user.fullName}</a>
             </Link>
+            <DynamicIsTestEnvironment />
           </div>
 
           <BurgerMenu user={user} bettingAllowed={config?.bettingAllowed} />
@@ -189,6 +195,7 @@ const Navbar = () => {
             </Link>
 
             <div className="text-right flex-1 mr-5 space-x-7 flex items-center justify-end">
+              <DynamicIsTestEnvironment />
               <Link href="/user">
                 <a
                   className={
