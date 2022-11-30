@@ -73,6 +73,7 @@ export async function getServerSideProps(context) {
       id: x._id.toString(),
       fullName: x.fullName,
       points: secondToLastPoint?.points || null,
+      email: x.email || null,
     };
   };
 
@@ -95,6 +96,7 @@ export async function getServerSideProps(context) {
       id: x.id,
       fullName: x.fullName,
       points: x.points,
+      email: x.email,
       difference,
     };
   });

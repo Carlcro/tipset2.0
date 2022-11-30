@@ -79,6 +79,22 @@ export const calculateSemiFinalAdvancePoints = (
   return points;
 };
 
+export const calculateThirdPlaceAdvancePoints = (
+  betMatchResults: MatchResult[],
+  outcomeMatchResults: MatchResult[],
+  matchId: number
+): number => {
+  let points = 0;
+  const bet = betMatchResults.find((mr) => mr.matchId === matchId);
+  const outcome = outcomeMatchResults.find((mr) => mr.matchId === matchId);
+
+  if (bet && outcome) {
+    points = calculateAdvancePoints(bet, outcome, 30);
+  }
+
+  return points;
+};
+
 export const calculateFinalAdvancePoints = (
   betMatchResults: MatchResult[],
   outcomeMatchResults: MatchResult[],
@@ -94,16 +110,6 @@ export const calculateFinalAdvancePoints = (
 
   return points;
 };
-
-export function calculateThirdPlaceMatchPoints(
-  bet: MatchResult,
-  outcome: MatchResult
-) {
-  return (
-    calculateThirdPlaceCorrectScorePoints(bet, outcome) +
-    calculateThirdPlaceSymbolPoints(bet, outcome)
-  );
-}
 
 export function calculateFinalMatchPoints(
   bet: MatchResult,
@@ -129,14 +135,14 @@ export function calculateThirdPlaceFinalCorrectScorePoints(
   bet: MatchResult,
   outcome: MatchResult
 ) {
-  return calculateStageMatchPoints(bet, outcome, 25);
+  return calculateStageMatchPoints(bet, outcome, 20);
 }
 
 export function calculateThirdPlaceFinalSymbolPoints(
   bet: MatchResult,
   outcome: MatchResult
 ) {
-  return calculateStageSymbolPoints(bet, outcome, 25);
+  return calculateStageSymbolPoints(bet, outcome, 20);
 }
 
 export function calculateFinalCorrectScorePoints(
@@ -151,27 +157,6 @@ export function calculateFinalSymbolPoints(
   outcome: MatchResult
 ) {
   return calculateStageSymbolPoints(bet, outcome, 25);
-}
-
-export function calculateThirdPlaceAdvancePoints(
-  bet: MatchResult,
-  outcome: MatchResult
-) {
-  return calculateAdvancePoints(bet, outcome, 30);
-}
-
-export function calculateThirdPlaceSymbolPoints(
-  bet: MatchResult,
-  outcome: MatchResult
-) {
-  return calculateStageSymbolPoints(bet, outcome, 20);
-}
-
-export function calculateThirdPlaceCorrectScorePoints(
-  bet: MatchResult,
-  outcome: MatchResult
-) {
-  return calculateStageMatchPoints(bet, outcome, 20);
 }
 
 export function calculateSemiFinalMatchPoints(

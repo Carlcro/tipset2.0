@@ -5,6 +5,11 @@ import { getPointsFromAdvancement } from "../../recoil/bet-slip/selectors/select
 import Container from "../Container";
 import Match from "../Match";
 
+const LabelMap = {
+  Bronsmatch: "Poäng rätt bronsmedaljör",
+  Final: "Poäng rätt världsmästare",
+};
+
 function MatchGroup({
   group,
   matchInfos,
@@ -61,7 +66,9 @@ function MatchGroup({
         })}
         {points !== null && mode === "placedBet" && (
           <div className="flex border-t justify-end border-black pt-1 pr-1 ">
-            {points > 0 ? `Poäng rätt lag vidare: ${points}` : ""}
+            {points > 0
+              ? `${LabelMap[group.name] || "Poäng rätt lag vidare"}: ${points}`
+              : ""}
           </div>
         )}
       </Container>

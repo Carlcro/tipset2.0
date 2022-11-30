@@ -27,10 +27,14 @@ const UserTournamentPage = ({ highscoreData, isOwner, name }) => {
     { initialData: highscoreData, enabled: Boolean(id) }
   );
 
+const handleKick = () => {
+  
+}
+
   return (
     <div className="flex flex-col-reverse md:flex-row md:space-x-8 px-5 items-center md:items-start md:justify-center">
       <DynamicUserTournamentPanel isOwner={isOwner} />
-      <HighScoreTable name={name} highscoreData={data} />
+      <HighScoreTable handleKick={handleKick} isOwner={isOwner} name={name} highscoreData={data} />
     </div>
   );
 };
@@ -58,6 +62,7 @@ export async function getServerSideProps({ params, res, req }) {
       id: x._id.toString(),
       fullName: x.fullName,
       points: secondToLastPoint?.points || null,
+      email: x.email || null,
     };
   };
 
@@ -80,6 +85,7 @@ export async function getServerSideProps({ params, res, req }) {
       id: x.id,
       fullName: x.fullName,
       points: x.points,
+      email: x.email,
       difference,
     };
   });

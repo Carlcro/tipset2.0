@@ -6,11 +6,47 @@ import { authOptions } from "../../auth/[...nextauth]";
 
 function handler(req, res) {
   if (req.method === "POST") {
-    addMember(req, res);
+    return addMember(req, res);
+  }
+  if (req.method === "DELETE") {
+    return kickMember(req, res);
   }
 }
 
 export default connectDB(handler);
+
+const kickMember = async (req, res) => {
+  const { id } = req.query;
+
+  const session = await unstable_getServerSession(req, res, authOptions);
+  const user = await User.findOne({ email: session?.user.email });
+
+  const userTournament = await UserTournament.findById(id);
+  const member = await User.findOne({ email: req.body.email }).populate({
+    path: "betSlip",
+    populate: "bets",
+  });
+
+  if (!member) {
+    return res.status(404).send(`Användaren hittades inte.`);
+  }
+  if (userTournament === null) {
+    return res.status(404).send("Hittade inte gruppen.");
+  }
+
+  if (!userTournament.owner !== user._id) {
+    return res
+      .status(400)
+      .send("Du måste vara gruppens skapare för att kunna kicka medlemmar");
+  }
+
+  userTournament.members = userTournament.members.filter(
+    (x) => x !== member._id
+  );
+
+  await userTournament.save();
+  return res.sendStatus(401);
+};
 
 const addMember = async (req, res) => {
   const { id } = req.query;
@@ -43,5 +79,5 @@ const addMember = async (req, res) => {
 
   userTournament.members.push(member._id);
   await userTournament.save();
-  res.status(201).send(member);
+  return res.status(201).send(member);
 };

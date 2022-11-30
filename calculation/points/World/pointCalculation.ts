@@ -1,3 +1,4 @@
+import { calculateThirdPlaceAdvancePoints } from "./../common";
 import { GoalScorer } from "../../types/goalScorer";
 import { GroupResult } from "../../results/groupResult";
 import {
@@ -128,7 +129,7 @@ export const calculateCorrectAdvanceTeam = (
     },
     {
       final: "Bronsmatch",
-      points: calculateFinalAdvancePoints(
+      points: calculateThirdPlaceAdvancePoints(
         betMatchResults,
         outcomeMatchResults,
         63
