@@ -3,11 +3,12 @@ import { motion } from "framer-motion";
 import DiffIndicator from "../../components/DiffIndicator";
 import Container from "../Container";
 
-const HighScoreTable = ({ highscoreData, name, isOwner = false }) => {
-  const handleKick = (email) => {
-    alert(`Kicked ${email}`);
-  };
-
+const HighScoreTable = ({
+  highscoreData,
+  name,
+  isOwner = false,
+  handleKick,
+}) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: -10 }}
@@ -25,7 +26,7 @@ const HighScoreTable = ({ highscoreData, name, isOwner = false }) => {
               <th>Rank</th>
               <th className="text-center md:text-left">Namn</th>
               <th>Poäng</th>
-              <th className="w-12">{""}</th>
+              <th className="w-12"></th>
             </tr>
           </thead>
           <tbody>
@@ -40,10 +41,10 @@ const HighScoreTable = ({ highscoreData, name, isOwner = false }) => {
               >
                 {isOwner && (
                   <td
-                    className="cursor-pointer"
-                    onClick={() => handleKick(score.email)}
+                    className="cursor-pointer text-sm"
+                    onClick={() => handleKick(score.email, score.fullName)}
                   >
-                    X
+                    ❌
                   </td>
                 )}
                 <td className="text-center">{index + 1}</td>

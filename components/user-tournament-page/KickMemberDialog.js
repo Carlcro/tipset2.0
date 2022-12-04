@@ -1,25 +1,26 @@
 import React from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import {
-  deleteUserTournament,
-  leaveUserTournament,
-} from "../../services/userTournamentService";
+
 import { useRouter } from "next/router";
-import { toast } from "react-toastify";
 import Container from "../Container";
+import { kickMember } from "../../services/userTournamentService";
+import { useQueryClient } from "react-query";
 
 export default function KickMemberDialog({
   isOpen,
   setIsOpen,
-  isOwner,
+  memberEmail,
   memberName,
 }) {
   const router = useRouter();
   const { id } = router.query;
+  const queryClient = useQueryClient();
 
-  const kickMember = async () => {
-    await deleteUserTournament(id);
-    router.push("/");
+  const handleKickMember = async () => {
+    await kickMember({ id, email: memberEmail });
+    queryClient.invalidateQueries(["highscoreData", id]);
+
+    setIsOpen(false);
   };
 
   return (
@@ -47,7 +48,7 @@ export default function KickMemberDialog({
             <div className="flex justify-between mt-3">
               <button
                 className="bg-auroraRed text-snowStorm3 border-polarNight py-1 px-2 rounded-sm border border-black"
-                onClick={kickMember}
+                onClick={handleKickMember}
               >
                 {`Ta bort`}
               </button>

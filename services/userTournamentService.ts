@@ -19,7 +19,7 @@ export function addMember({ id, email }: { id: string; email: string }) {
 }
 
 export function kickMember({ id, email }: { id: string; email: string }) {
-  return http.post(`/api/user-tournaments/${id}/members`, {
+  return http.put(`/api/user-tournaments/${id}/members`, {
     email,
   });
 }

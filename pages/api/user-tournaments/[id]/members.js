@@ -8,7 +8,7 @@ function handler(req, res) {
   if (req.method === "POST") {
     return addMember(req, res);
   }
-  if (req.method === "DELETE") {
+  if (req.method === "PUT") {
     return kickMember(req, res);
   }
 }
@@ -34,18 +34,18 @@ const kickMember = async (req, res) => {
     return res.status(404).send("Hittade inte gruppen.");
   }
 
-  if (!userTournament.owner !== user._id) {
+  if (userTournament.owner.toString() !== user._id.toString()) {
     return res
       .status(400)
       .send("Du måste vara gruppens skapare för att kunna kicka medlemmar");
   }
 
   userTournament.members = userTournament.members.filter(
-    (x) => x !== member._id
+    (x) => x.toString() !== member._id.toString()
   );
 
   await userTournament.save();
-  return res.sendStatus(401);
+  return res.status(200).send("Success!");
 };
 
 const addMember = async (req, res) => {

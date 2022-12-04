@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useQuery } from "react-query";
 
 import { useRouter } from "next/router";
@@ -9,6 +9,7 @@ import UserTournament from "../../models/user-tournament";
 import { unstable_getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]";
 import User from "../../models/user";
+import KickMemberDialog from "../../components/user-tournament-page/KickMemberDialog";
 
 const DynamicUserTournamentPanel = dynamic(
   () => import("../../components/user-tournament-page/UserTournamentPanel"),
@@ -19,7 +20,12 @@ const DynamicUserTournamentPanel = dynamic(
 
 const UserTournamentPage = ({ highscoreData, isOwner, name }) => {
   const router = useRouter();
+
   const { id } = router.query;
+  const [kickMemberDialogOpen, setKickMemberDialogOpen] = useState(false);
+  const [memberEmail, setMemberEmail] = useState("");
+  const [memberName, setMemberName] = useState("");
+
   const { data } = useQuery(
     ["highscoreData", id],
     () => getHighscore(id),
@@ -27,14 +33,27 @@ const UserTournamentPage = ({ highscoreData, isOwner, name }) => {
     { initialData: highscoreData, enabled: Boolean(id) }
   );
 
-const handleKick = () => {
-  
-}
+  const handleKick = (email, name) => {
+    setMemberEmail(email);
+    setMemberName(name);
+    setKickMemberDialogOpen(true);
+  };
 
   return (
     <div className="flex flex-col-reverse md:flex-row md:space-x-8 px-5 items-center md:items-start md:justify-center">
       <DynamicUserTournamentPanel isOwner={isOwner} />
-      <HighScoreTable handleKick={handleKick} isOwner={isOwner} name={name} highscoreData={data} />
+      <HighScoreTable
+        handleKick={handleKick}
+        isOwner={isOwner}
+        name={name}
+        highscoreData={data}
+      />
+      <KickMemberDialog
+        isOpen={kickMemberDialogOpen}
+        setIsOpen={setKickMemberDialogOpen}
+        memberEmail={memberEmail}
+        memberName={memberName}
+      />
     </div>
   );
 };
