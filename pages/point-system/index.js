@@ -50,6 +50,12 @@ function PointSystem() {
                 <td>30p</td>
               </tr>
               <tr>
+                <td className="font-semibold">Bronsmatch:</td>
+                <td>20p</td>
+                <td>20p</td>
+                <td>30p</td>
+              </tr>
+              <tr>
                 <td className="font-semibold">Final:</td>
                 <td>25p</td>
                 <td>25p</td>

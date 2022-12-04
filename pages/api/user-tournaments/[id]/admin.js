@@ -26,3 +26,4 @@ const deleteUserTournament = async (req, res) => {
 
   return res.sendStatus(401);
 };
+

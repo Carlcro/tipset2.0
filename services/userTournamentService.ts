@@ -18,6 +18,12 @@ export function addMember({ id, email }: { id: string; email: string }) {
   });
 }
 
+export function kickMember({ id, email }: { id: string; email: string }) {
+  return http.put(`/api/user-tournaments/${id}/members`, {
+    email,
+  });
+}
+
 export function leaveUserTournament(id: string) {
   return http.delete(`/api/user-tournaments/${id}`);
 }
