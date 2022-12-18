@@ -89,14 +89,14 @@ export const calculateThirdPlaceAdvancePoints = (
   return 0;
 
   // TODO på nått vis så får bronsmatchen samma lag som finalen. Vet inte varför men tillsvidare så får man 0 poäng från bronsmatchen
-  const bet = betMatchResults.find((mr) => mr.matchId === matchId);
+  /*  const bet = betMatchResults.find((mr) => mr.matchId === matchId);
   const outcome = outcomeMatchResults.find((mr) => mr.matchId === matchId);
 
   if (bet && outcome) {
     points = calculateAdvancePoints(bet, outcome, 30);
   }
 
-  return points;
+  return points; */
 };
 
 export const calculateFinalAdvancePoints = (
