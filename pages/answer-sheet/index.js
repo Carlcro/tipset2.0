@@ -69,7 +69,7 @@ const AnswerSheet = () => {
 
   const updateBetSlips = async () => {
     const skip = 0;
-    const batchSize = 10;
+    const batchSize = 294;
     const iterations = Math.ceil(294 / batchSize);
 
     for (let index = 0; index < iterations; index++) {
