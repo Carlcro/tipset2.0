@@ -55,7 +55,7 @@ const HighScoreTable = ({
                 </td>
                 <td className="text-center">{score.points || "-"}</td>
                 <td className="text-center">
-                  {false ? (
+                  {score.difference ? (
                     <div className="justify-around my-2 absolute">
                       <span
                         className={
